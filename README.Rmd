@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 An R package for exploring plant specimen collections from [REFLORA Virtual Herbarium](https://ipt.jbrj.gov.br/reflora) 
-hosteb by [Rio de Janeiro Botanical Garden](https://www.gov.br/jbrj).
+hosted by [Rio de Janeiro Botanical Garden](https://www.gov.br/jbrj).
 
 ## Overview
 

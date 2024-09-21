@@ -7,7 +7,7 @@
 <!-- badges: end -->
 
 An R package for exploring plant specimen collections from [REFLORA
-Virtual Herbarium](https://ipt.jbrj.gov.br/reflora) hosteb by [Rio de
+Virtual Herbarium](https://ipt.jbrj.gov.br/reflora) hosted by [Rio de
 Janeiro Botanical Garden](https://www.gov.br/jbrj).
 
 ## Overview

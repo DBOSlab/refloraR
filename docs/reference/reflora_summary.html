@@ -61,7 +61,7 @@ hosted by the <a href="https://www.gov.br/jbrj" class="external-link">Rio de Jan
 
 <dl><dt id="arg-herbarium">herbarium<a class="anchor" aria-label="anchor" href="#arg-herbarium"></a></dt>
 <dd><p>A vector of specific herbarium acronyms (collection code) in
-uppercase letters or leave it as NULL to summarize specimen records for all
+uppercase letters or leave it as <code>NULL</code> to summarize specimen records for all
 REFLORA-hosted herbaria.</p></dd>
 
 
@@ -98,7 +98,7 @@ REFLORA Virtual Herbarium.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">reflora_summary</span><span class="op">(</span>herbarium <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ALCB"</span>, <span class="st">"HUEFS"</span>, <span class="st">"K"</span>, <span class="st">"RB"</span>, <span class="st">"US"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="fu">reflora_summary</span><span class="op">(</span>herbarium <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ALCB"</span>, <span class="st">"HUEFS"</span>, <span class="st">"K"</span>, <span class="st">"RB"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                save <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                dir <span class="op">=</span> <span class="st">"reflora_summary"</span><span class="op">)</span></span></span>
