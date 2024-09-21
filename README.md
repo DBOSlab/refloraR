@@ -14,8 +14,8 @@ You can install the development version of refloraR from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("DBOSlab/refloraR")
+# install.packages("devtools")
+devtools::install_github("DBOSlab/refloraR")
 ```
 
 ## Example
