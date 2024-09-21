@@ -60,6 +60,210 @@ REFLORA systems will continue to provide unrestricted access to
 high-quality, accurate data on Brazil’s plants, algae, and fungi.  
   
 
+## The REFLORA Virtual Herbarium
+
+The mission to build a virtual herbarium to display the images of
+Brazilian plants housed in foreign herbaria was presented by the
+Brazilian Research Council (CNPq) to the Rio de Janeiro Botanical Garden
+(JBRJ) in December 2010. The objective was to provide the capacity to
+store and display high-quality data regarding Brazil’s Flora within a
+public institution. The Reflora Virtual Herbarium is designed to allow
+taxonomists to perform procedures similar to those they are accustomed
+to doing within physical collections. On this site, they have access to
+high-quality images rather than physical specimens, which can be
+consulted, re-determined, and typified, among other functionalities.
+Curators also have access to specimen determination reports to help
+update their physical collections. This innovative system has been
+available for study and update by a group of over 900 taxonomists
+involved in the List of Species of the Brazilian Flora and Brazilian
+Flora 2020 projects.
+
+The initial partners of this initiative were the herbaria
+[**K**](https://www.kew.org) (Royal Botanic Gardens, Kew),
+[**P**](https://www.mnhn.fr/fr/collection-des-plantes-vasculaires)
+(Muséum national d’histoire naturelle, Paris), and the
+[**RB**](https://www.gov.br/jbrj) (JBRJ) herbarium. From 2014 onwards,
+with the support of [**SiBBr**](https://www.sibbr.gov.br) (Sistema de
+Informação sobre a Biodiversidade Brasileira) and
+[**IFN**](https://www.gov.br/florestal/pt-br/assuntos/ifn) (National
+Forest Inventory), other European, American, and Brazilian herbaria were
+included in this initiative, many of which received equipment and
+training to digitize their plant specimens.
+
+Today, there are **81** collections published on this platform,
+including:
+
+[**ACAM**](https://ipt.jbrj.gov.br/reflora/resource?r=acam)
+(Universidade Estadual da Paraíba),
+[**ALCB**](https://ipt.jbrj.gov.br/reflora/resource?r=alcb_herbarium)
+(Universidade Federal da Bahia),
+[**ASE**](https://ipt.jbrj.gov.br/reflora/resource?r=ase_herbarium)
+(Universidade Federal de Sergipe),
+[**B**](https://ipt.jbrj.gov.br/reflora/resource?r=b_herb) (Botanischer
+Garten und Botanisches Museum Berlin-Dahlem Herbarium),
+[**BRBA**](https://ipt.jbrj.gov.br/reflora/resource?r=brba)
+(Universidade Federal do Oeste da Bahia),
+[**CEN**](https://ipt.jbrj.gov.br/reflora/resource?r=cen) ( Embrapa
+Recursos Genéticos e Biotecnologia),
+[**CEPEC**](https://ipt.jbrj.gov.br/reflora/resource?r=cepec_herbarium)
+(Centro de Pesquisas do Cacau),
+[**CESJ**](https://ipt.jbrj.gov.br/reflora/resource?r=cesj)
+(Universidade Federal de Juiz de Fora UFJF),
+[**CGMS**](https://ipt.jbrj.gov.br/reflora/resource?r=cgms)
+(Universidade Federal de Mato Grosso do Sul),
+[**COR**](https://ipt.jbrj.gov.br/reflora/resource?r=cor) (Universidade
+Federal de Mato Grosso do Sul / Campus Pantanal),
+[**CRI**](https://ipt.jbrj.gov.br/reflora/resource?r=cri) (Universidade
+do Extremo Sul Catarinense),
+[**DVPR**](https://ipt.jbrj.gov.br/reflora/resource?r=dvpr)
+(Universidade Tecnológica Federal do Paraná),
+[**E**](https://ipt.jbrj.gov.br/reflora/resource?r=e_hv) (Amostras
+Brasileiras Repatriadas),
+[**EAC**](https://ipt.jbrj.gov.br/reflora/resource?r=eac_herbarium)
+(Universidade Federal do Ceará),
+[**EBC**](https://ipt.jbrj.gov.br/reflora/resource?r=ebc) (Economic
+Botany Collection),
+[**ECT**](https://ipt.jbrj.gov.br/reflora/resource?r=ect) (Embrapa Clima
+Temperado),
+[**ESA**](https://ipt.jbrj.gov.br/reflora/resource?r=esa_herbarium)
+(Universidade de São Paulo),
+[**EVB**](https://ipt.jbrj.gov.br/reflora/resource?r=evb) (Herbário
+Evaldo Buttura),
+[**FLOR**](https://ipt.jbrj.gov.br/reflora/resource?r=flor_herbarium)
+(Universidade Federal de Santa Catarina),
+[**FURB**](https://ipt.jbrj.gov.br/reflora/resource?r=furb_herbarium)
+(Universidade Regional de Blumenau),
+[**GH**](https://ipt.jbrj.gov.br/reflora/resource?r=gh_herb) (Harvard
+University Herbarium),
+[**HBR**](https://ipt.jbrj.gov.br/reflora/resource?r=hbr_herbarium)
+(Universidade Federal de Santa Catarina),
+[**HCF**](https://ipt.jbrj.gov.br/reflora/resource?r=hcf) (Campus Campo
+Mourão),
+[**HDCF**](https://ipt.jbrj.gov.br/reflora/resource?r=hdcf_herbarium)
+(Universidade Federal de Santa Maria),
+[**HEPH**](https://ipt.jbrj.gov.br/reflora/resource?r=heph) (Jardim
+Botânico de Brasília),
+[**HERBAM**](https://ipt.jbrj.gov.br/reflora/resource?r=herbam)
+(Herbário da Amazônia Meridional),
+[**HJ**](https://ipt.jbrj.gov.br/reflora/resource?r=hj_herb) (Unidade
+Jataí), [**HRCB**](https://ipt.jbrj.gov.br/reflora/resource?r=hrcb)
+(Universidade Estadual Paulista UNESP),
+[**HSTM**](https://ipt.jbrj.gov.br/reflora/resource?r=hstm)
+(Universidade Federal do Oeste do Pará),
+[**HTO**](https://ipt.jbrj.gov.br/reflora/resource?r=hto) (UFT” ;),
+[**HUCP**](https://ipt.jbrj.gov.br/reflora/resource?r=hucp) (Pontífica
+Universidade Católica do Paraná PUC),
+[**HUEFS**](https://ipt.jbrj.gov.br/reflora/resource?r=huefs)
+(Universidade Estadual de Feira de Santana),
+[**HUEM**](https://ipt.jbrj.gov.br/reflora/resource?r=huem)
+(Universidade Estadual de Maringá),
+[**HUEMG**](https://ipt.jbrj.gov.br/reflora/resource?r=huemg) (Campus
+Carangola),
+[**HUENF**](https://ipt.jbrj.gov.br/reflora/resource?r=huenf)
+(Universidade Estadual do Norte Fluminense),
+[**HUFU**](https://ipt.jbrj.gov.br/reflora/resource?r=hufu_herbarium)
+(Universidade Federal de Uberlândia),
+[**HUNI**](https://ipt.jbrj.gov.br/reflora/resource?r=huni) (Herbário da
+Universidade Federal do Estado do Rio de Janeiro),
+[**HURB**](https://ipt.jbrj.gov.br/reflora/resource?r=hurb) (Herbário da
+Universidade do Recôncavo da Bahia),
+[**HVASF**](https://ipt.jbrj.gov.br/reflora/resource?r=hvasf) (Fundação
+Universidade Federal do Vale do São Francisco),
+[**HVAT**](https://ipt.jbrj.gov.br/reflora/resource?r=hvat) (Herbário da
+Universidade do Vale do Taquari. Herbário Virtual REFLORA.” ;),
+[**IAN**](https://ipt.jbrj.gov.br/reflora/resource?r=ian) (Embrapa
+Amazônia Oriental),
+[**IBGE**](https://ipt.jbrj.gov.br/reflora/resource?r=ibge) (Herbário
+IBGE), [**ICN**](https://ipt.jbrj.gov.br/reflora/resource?r=icn)
+(Universidade Federal do Rio Grande Do Sul),
+[**JOI**](https://ipt.jbrj.gov.br/reflora/resource?r=joi) (Univilleda
+Região de Joinville),
+[**K**](https://ipt.jbrj.gov.br/reflora/resource?r=k_reflora) (Amostras
+Brasileiras Repatriadas),
+[**LUSC**](https://ipt.jbrj.gov.br/reflora/resource?r=lusc)
+(Universidade do Estado de Santa Catarina),
+[**MAC**](https://ipt.jbrj.gov.br/reflora/resource?r=mac) (Instituto do
+Meio Ambiente do Estado de Alagoas),
+[**MBM**](https://ipt.jbrj.gov.br/reflora/resource?r=mbm_herbarium)
+(Museu Botânico Municipal  Curitiba),
+[**MBML**](https://ipt.jbrj.gov.br/reflora/resource?r=mbml) (Museu de
+Biologia Mello Leitão),
+[**MG**](https://ipt.jbrj.gov.br/reflora/resource?r=mg_herbarium) (Museu
+Paraense Emílio Goeldi),
+[**MOH**](https://ipt.jbrj.gov.br/reflora/resource?r=moh) (Amostras
+Brasileiras Repatriadas),
+[**MUFAL**](https://ipt.jbrj.gov.br/reflora/resource?r=mufal) (Museu de
+História Natural da Universidade Federal de Alagoas),
+[**NYH**](https://ipt.jbrj.gov.br/reflora/resource?r=nyh) (Amostras
+Brasileiras Repatriadas),
+[**P**](https://ipt.jbrj.gov.br/reflora/resource?r=p_reflora) (Amostras
+Brasileiras Repatriadas),
+[**PC**](https://ipt.jbrj.gov.br/reflora/resource?r=pc_herb) (Cryptogamy
+Collection at the Muséum National d’Histoire Naturelle),
+[**PEL**](https://ipt.jbrj.gov.br/reflora/resource?r=pel) (Universidade
+Federal de Pelotas),
+[**PMSP**](https://ipt.jbrj.gov.br/reflora/resource?r=pmsp) (Prefeitura
+do Município de São Paulo),
+[**R**](https://ipt.jbrj.gov.br/reflora/resource?r=r_herbarium)
+(Herbário do Museu Nacional),
+[**RB**](https://ipt.jbrj.gov.br/reflora/resource?r=rb_herbarium) (RB
+Herbarium- Jardim Botânico do Rio de Janeiro),
+[**RBR**](https://ipt.jbrj.gov.br/reflora/resource?r=rbr) (Universidade
+Federal Rural do Rio de Janeiro),
+[**REAL**](https://ipt.jbrj.gov.br/reflora/resource?r=real)
+(Universidade Federal da Fronteira Sul),
+[**RFA**](https://ipt.jbrj.gov.br/reflora/resource?r=rfa) (Herbário da
+Universidade Federal do Rio de Janeiro. Herbário Virtual REFLORA.” ;),
+[**RFFP**](https://ipt.jbrj.gov.br/reflora/resource?r=rffp) (Herbário da
+Faculdade de Formação de Professores da Universidade do Estado do Rio de
+Janeiro. Herbário Virtual REFLORA” ;),
+[**RON**](https://ipt.jbrj.gov.br/reflora/resource?r=ron) (Universidade
+Federal de Rondônia),
+[**RSPF**](https://ipt.jbrj.gov.br/reflora/resource?r=rspf) ( Herbário
+da Universidade de Passo Fundo),
+[**S**](https://ipt.jbrj.gov.br/reflora/resource?r=s_reflora) (Amostras
+Brasileiras Repatriadas),
+[**SAMES**](https://ipt.jbrj.gov.br/reflora/resource?r=sames) (Herbário
+São Mateus), [**SJRP**](https://ipt.jbrj.gov.br/reflora/resource?r=sjrp)
+(Universidade Estadual Paulista Júlio de Mesquita Filho),
+[**SLUI**](https://ipt.jbrj.gov.br/reflora/resource?r=slui)
+(Universidade Estadual do Maranhão. Herbário Virtual REFLORA” ;),
+[**SOF**](https://ipt.jbrj.gov.br/reflora/resource?r=sof) (Amostras
+Brasileiras Repatriadas),
+[**SPF**](https://ipt.jbrj.gov.br/reflora/resource?r=spf_herbarium)
+(Universidade de são Paulo),
+[**TEPB**](https://ipt.jbrj.gov.br/reflora/resource?r=tepb) (Herbário da
+Universidade Federal do Piauí),
+[**UB**](https://ipt.jbrj.gov.br/reflora/resource?r=ub_herbarium)
+(Herbário da Universidade de Brasília),
+[**UFG**](https://ipt.jbrj.gov.br/reflora/resource?r=ufg) (Herbário da
+Universidade Federal de Goiás),
+[**UFRN**](https://ipt.jbrj.gov.br/reflora/resource?r=ufrn) (Herbário da
+Universidade Federal do Rio Grande do Norte),
+[**UNIP**](https://ipt.jbrj.gov.br/reflora/resource?r=unip)
+(Universidade Paulista),
+[**UNOP**](https://ipt.jbrj.gov.br/reflora/resource?r=unop)
+(Universidade Estadual do Oeste do Paraná),
+[**UPCB**](https://ipt.jbrj.gov.br/reflora/resource?r=upcb_herbarium)
+(Universidade Federal de Paraná),
+[**US**](https://ipt.jbrj.gov.br/reflora/resource?r=us_reflora)
+(Amostras Brasileiras Repatriadas),
+[**VIES**](https://ipt.jbrj.gov.br/reflora/resource?r=vies_herbarium)
+(Universidade Federal do Espírito Santo),
+[**W**](https://ipt.jbrj.gov.br/reflora/resource?r=w_reflora) (Amostras
+Brasileiras Repatriadas),
+
+There are now 4,602,397 images of specimens available in the Reflora
+Virtual Herbarium. Among them, 157,652 are nomenclatural types and
+1,985,843 are georeferenced records.
+
+If you are a trained taxonomist and would like to contribute to the
+Reflora Virtual Herbarium, send a request to our contact email. If you
+are a curator and wish to publish images and data from your collection
+in this herbarium, please contact us. We would be delighted to make your
+initiative possible.  
+  
+
 ## Installation
 
 You can install the development version of ***refloraR*** from
