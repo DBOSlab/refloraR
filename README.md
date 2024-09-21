@@ -6,7 +6,11 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of refloraR is to …
+An R package for exploring plant specimen collections from [REFLORA
+Virtual Herbarium](https://ipt.jbrj.gov.br/reflora) hosteb by [Rio de
+Janeiro Botanical Garden](https://www.gov.br/jbrj).
+
+## Overview
 
 ## Installation
 
@@ -18,9 +22,56 @@ You can install the development version of refloraR from
 devtools::install_github("DBOSlab/refloraR")
 ```
 
-## Example
-
 ``` r
 library(refloraR)
-## basic example code
 ```
+
+  
+  
+
+## Usage
+
+A general description of each of the three available functions
+(``` reflora_download`` and ```reflora_summary\`) are provided below.  
+  
+
+#### *1. `reflora_summary`: Downloading plant specimen records*
+
+add text describing here
+
+##### Example of using `reflora_summary`:
+
+``` r
+
+library(refloraR)
+```
+
+  
+  
+
+#### *2. `reflora_download`: Downloading plant specimen records*
+
+add text describing here
+
+##### Example of using `reflora_download`:
+
+``` r
+
+library(refloraR)
+```
+
+  
+  
+
+## Documentation
+
+A detailed description of the **refloraR**’s full functionality is
+available in different
+[articles](https://dboslab.github.io/refloraR/).  
+  
+
+## Citation
+
+Cardoso, D. & Caldéron, M. (2024). refloraR: An R package for exploring
+plant specimen collections from REFLORA Virtual Herbarium.
+<https://github.com/dboslab/refloraR>
