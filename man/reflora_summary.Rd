@@ -11,8 +11,8 @@ reflora_summary(herbarium = NULL,
 }
 \arguments{
 \item{herbarium}{A vector of specific herbarium acronyms (collection code) in
-uppercase letters or leave it as NULL to summarize records for all REFLORA
-herbaria.}
+uppercase letters or leave it as NULL to summarize specimen records for all
+REFLORA-hosted herbaria.}
 
 \item{verbose}{Logical, if \code{FALSE}, a message showing steps when
 summarizing specimen records will not be printed in the console in full.}
