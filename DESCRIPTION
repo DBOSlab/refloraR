@@ -1,18 +1,33 @@
 Package: refloraR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: An R package for exploring plant specimen collections from REFLORA Virtual Herbarium
 Version: 1.0.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Authors@R:
+    c(person(given = "Domingos",
+             family = "Cardoso",
+             role = c("aut", "cre", "cph"),
+             email = "cardosobot@gmail.com",
+             comment = c(ORCID = "0000-0001-7072-2656")),
+      person(given = "Carlos",
+             family = "Calderón",
+             role = c("aut", "cph"),
+             email = "caldecid@gmail.com ",
+             comment = c(ORCID = "0000-0002-3897-4615")))
+Maintainer: Domingos Cardoso <cardosobot@gmail.com>
+Description: Explore plant specimen collections from REFLORA Virtual Herbarium.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports:
+    stringr
 Suggests: 
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
+URL: 
+    https://dboslab.github.io/refloraR/,
+    https://github.com/dboslab/refloraR
+BugReports: https://github.com/DBOSlab/refloraR/issues
 VignetteBuilder: knitr
 RoxygenNote: 7.3.2
 Config/testthat/edition: 3
