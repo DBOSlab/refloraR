@@ -12,8 +12,8 @@ Janeiro Botanical Garden](https://www.gov.br/jbrj).
 
 ## REFLORA programme
 
-The study of Brazil’s flora, renowned as the richest in the world [BFG
-2022](https://doi.org/10.1002/tax.12640), has a long and storied
+The study of Brazil’s flora, renowned as the richest in the world ([BFG
+2022](https://doi.org/10.1002/tax.12640)), has a long and storied
 history. During the 18th and 19th centuries, European naturalists, along
 with a few Brazilian botanists, collected plant specimens while in
 Brazil, sending them to herbaria in Europe. The primary aim during this
@@ -36,20 +36,21 @@ collections published under the Reflora project.
 The [REFLORA Virtual
 Herbarium](https://floradobrasil.jbrj.gov.br/reflora/herbarioVirtual/ConsultaPublicoHVUC/ConsultaPublicoHVUC.do)
 platform was developed through a partnership between the [Rio de Janeiro
-Botanical Garden (JBRJ)](https://www.gov.br/jbrj) and COPPE (Alberto
+Botanical Garden (JBRJ)](https://www.gov.br/jbrj) and [COPPE (Alberto
 Luiz Coimbra Institute for Graduate Studies and Research in Engineering,
-UFRJ). JBRJ hosts the system, overseeing the reception, storage, and
-publication of the herbarium images.
+UFRJ)](https://coppe.ufrj.br/en/home-en/). JBRJ hosts the system,
+overseeing the reception, storage, and publication of the herbarium
+images.
 
 Complementing the REFLORA Virtual Herbarium is the Flora platform, first
 launched in 2008. This system has evolved through several
-stages—including the Lista de Espécies da Flora do Brasil, Flora do
-Brasil 2020, and now [Flora e Funga do
-Brasil](https://floradobrasil.jbrj.gov.br/consulta/)—and is also part of
-the broader REFLORA Programme. Flora e Funga do Brasil serves as a
-critical validator for the nomenclature of the REFLORA Virtual
-Herbarium’s images, which are continuously refined and enriched by
-taxonomists working collaboratively in an online system.
+stages—including the Lista de Espécies da Flora do Brasil, [Flora do
+Brasil 2020](http://doi.org/10.47871/jbrj2021004), and now [Flora e
+Funga do Brasil](https://floradobrasil.jbrj.gov.br/consulta/)—and is
+also part of the broader REFLORA Programme. Flora e Funga do Brasil
+serves as a critical validator for the nomenclature of the REFLORA
+Virtual Herbarium’s images, which are continuously refined and enriched
+by taxonomists working collaboratively in an online system.
 
 The REFLORA Programme has played a crucial role in Brazil’s success in
 meeting the goals of the Global Strategy for Plant Conservation, part of
@@ -61,7 +62,7 @@ high-quality, accurate data on Brazil’s plants, algae, and fungi.
 
 ## Installation
 
-You can install the development version of *refloraR* from
+You can install the development version of ***refloraR*** from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -112,7 +113,7 @@ library(refloraR)
 
 ## Documentation
 
-A detailed description of the *refloraR*’s full functionality is
+A detailed description of the ***refloraR***’s full functionality is
 available in different
 [articles](https://dboslab.github.io/refloraR/).  
   
