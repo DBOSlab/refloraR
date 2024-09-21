@@ -11,7 +11,7 @@ reflora_summary(herbarium = NULL,
 }
 \arguments{
 \item{herbarium}{A vector of specific herbarium acronyms (collection code) in
-uppercase letters or leave it as NULL to summarize specimen records for all
+uppercase letters or leave it as \code{NULL} to summarize specimen records for all
 REFLORA-hosted herbaria.}
 
 \item{verbose}{Logical, if \code{FALSE}, a message showing steps when
@@ -35,7 +35,7 @@ hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
 \examples{
 \dontrun{
 
-reflora_summary(herbarium = c("ALCB", "HUEFS", "K", "RB", "US"),
+reflora_summary(herbarium = c("ALCB", "HUEFS", "K", "RB"),
                 verbose = TRUE,
                 save = TRUE,
                 dir = "reflora_summary")

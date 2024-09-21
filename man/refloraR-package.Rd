@@ -18,11 +18,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Carlos Calderón \email{caldecid@gmail.com} (\href{https://orcid.org/0000-0002-3897-4615}{ORCID}) [copyright holder]
+\strong{Maintainer}: Domingos Cardoso \email{cardosobot@gmail.com} (\href{https://orcid.org/0000-0001-7072-2656}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{
-  \item Domingos Cardoso \email{cardosobot@gmail.com} (\href{https://orcid.org/0000-0001-7072-2656}{ORCID}) [thesis advisor, copyright holder]
+  \item Carlos Calderón \email{caldecid@gmail.com} (\href{https://orcid.org/0000-0002-3897-4615}{ORCID}) [copyright holder]
 }
 
 }

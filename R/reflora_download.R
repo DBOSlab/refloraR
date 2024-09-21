@@ -29,7 +29,7 @@
 #' @examples
 #' \dontrun{
 #'
-#' reflora_download(herbarium = c("ALCB", "HUEFS", "K", "RB", "US"),
+#' reflora_download(herbarium = c("ALCB", "HUEFS", "K", "RB"),
 #'                  verbose = TRUE,
 #'                  dir = "downloaded_reflora")
 #'}
