@@ -17,8 +17,8 @@ herbarium specimen records will not be printed in the console in full.}
 
 \item{dir}{Pathway to the computer's directory, where the file will be saved.
 The default is to create a directory named **reflora_download**
-and the search results will be saved within a subfolder named by collection
-code.}
+and the results will be saved within a subfolder named by each searched
+REFLORA-associated herbarium collection.}
 }
 \value{
 Folder with DwC-A files for an specific or all REFLORA-associated herbaria.

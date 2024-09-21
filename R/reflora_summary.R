@@ -49,6 +49,7 @@ reflora_summary <- function(herbarium = NULL,
                             save = TRUE,
                             dir = "reflora_summary") {
 
+  # Get raw metadata from REFLORA repository
   ipt_metadata <- readLines("https://ipt.jbrj.gov.br/reflora/dcat",
                             encoding = "UTF-8",
                             warn = F)
