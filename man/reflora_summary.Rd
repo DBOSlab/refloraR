@@ -29,8 +29,8 @@ REFLORA Virtual Herbarium.
 }
 \description{
 Summarize current available plant specimen records at
-[Herbário Virtual REFLORA](https://ipt.jbrj.gov.br/reflora)
-hosted by the [Rio de Janeiro Botanical Garden](https://www.gov.br/jbrj).
+\href{https://ipt.jbrj.gov.br/reflora}{Herbário Virtual REFLORA}
+hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
 }
 \examples{
 \dontrun{

@@ -3,8 +3,8 @@
 #' @author Domingos Cardoso
 #'
 #' @description Download plant specimen records in Darwin Core Format from any
-#' herbarium collection at [Herbário Virtual REFLORA](https://ipt.jbrj.gov.br/reflora)
-#' hosted by the [Rio de Janeiro Botanical Garden](https://www.gov.br/jbrj).
+#' herbarium collection at \href{https://ipt.jbrj.gov.br/reflora}{Herbário Virtual REFLORA}
+#' hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
 #'
 #' @usage
 #' reflora_download(herbarium = NULL,
