@@ -251,7 +251,7 @@ Federal de Goiás),
 [**VIES**](https://ipt.jbrj.gov.br/reflora/resource?r=vies_herbarium)
 (Universidade Federal do Espírito Santo),
 [**W**](https://ipt.jbrj.gov.br/reflora/resource?r=w_reflora)
-(Naturhistorisches Museum Wien)
+(Naturhistorisches Museum Wien).
 
 There are now 4,602,397 images of specimens available in the REFLORA
 Virtual Herbarium. Among them, 157,652 are nomenclatural types and

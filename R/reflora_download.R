@@ -3,7 +3,7 @@
 #' @author Domingos Cardoso
 #'
 #' @description Download plant specimen records in Darwin Core Format from any
-#' herbarium collection at \href{https://ipt.jbrj.gov.br/reflora}{Herbário Virtual REFLORA}
+#' herbarium collection at \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
 #' hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
 #'
 #' @usage
@@ -35,6 +35,7 @@
 #'}
 #'
 #' @importFrom stringr str_split
+#' @importFrom utils download.file unzip write.csv
 #'
 #' @export
 #'
@@ -98,15 +99,15 @@ reflora_download <- function(herbarium = NULL,
                        length(herb_code)))
       }
 
-      download.file(url = dwca_file,
-                    destfile = destdirfile,
-                    method = "curl")
+      utils::download.file(url = dwca_file,
+                           destfile = destdirfile,
+                           method = "curl")
 
-      unzip(destdirfile, exdir = ex_dwca_folder)
+      utils::unzip(destdirfile, exdir = ex_dwca_folder)
       unlink(destdirfile)
 
-      write.csv(summary_df, paste0(ex_dwca_folder, "/", herb_code[i], "_Reflora_version.csv"),
-                row.names = FALSE)
+      utils::write.csv(summary_df, paste0(ex_dwca_folder, "/", herb_code[i], "_Reflora_version.csv"),
+                       row.names = FALSE)
 
       if (verbose) {
         message(paste0(herb_code[i], " collection sucessfully downloaded!"))

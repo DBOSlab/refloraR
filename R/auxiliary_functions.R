@@ -4,10 +4,10 @@
 #_______________________________________________________________________________
 ### Function save csv files ###
 
-saveCSV <- function(df,
-                    verbose = TRUE,
-                    filename = NULL,
-                    dir = dir) {
+.save_csv <- function(df,
+                      verbose = TRUE,
+                      filename = NULL,
+                      dir = dir) {
 
   # Save the data frame if param save is TRUE
   # Create a new directory to save the results with current date
@@ -23,8 +23,7 @@ saveCSV <- function(df,
                    filename, "' within '",
                    dir, "' folder on disk."))
   }
-  write.csv(df, file = paste0(dir, "/", filename), row.names = FALSE)
-
+  utils::write.csv(df, file = paste0(dir, "/", filename), row.names = FALSE)
 }
 
 
@@ -91,12 +90,12 @@ saveCSV <- function(df,
   email <- regmatches(contact, gregexpr(email_pattern, contact, perl = TRUE))[[1]]
   email <- gsub('<mailto:|>', "", email)  # Remove the '<mailto:' part
 
-  rights_holder <- gsub("^dct:title\\s\"|\\s-\\sHerbário Virtual.*",
-                          "", ipt_metadata[[i]][2])
+  rights_holder <- gsub("^dct:title\\s\"|\\s-\\sHerb\u00E1rio Virtual.*",
+                        "", ipt_metadata[[i]][2])
   rights_holder <- gsub("-\\sAmostras\\sBrasileiras.*",
-                          "", rights_holder)
-  rights_holder <- gsub(".*\\s-\\s|^\\s|\\s$|.*(H|h)erbarium-\\s|.*Herbário\\s(da|do)\\s|[.]\\sHerbário\\sVirtual\\s.*",
-                          "", rights_holder)
+                        "", rights_holder)
+  rights_holder <- gsub(".*\\s-\\s|^\\s|\\s$|.*(H|h)erbarium-\\s|.*Herb\u00E1rio\\s(da|do)\\s|[.]\\sHerb\u00E1rio\\sVirtual\\s.*",
+                        "", rights_holder)
 
   return(list(version, name, email, rights_holder, herb_url))
 }

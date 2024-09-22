@@ -55,9 +55,9 @@ Today, there are **`r length(summary_df$collectionCode)`** collections published
 ```{r, herbaria, results='asis', echo=FALSE}
 for (i in seq_along(summary_df$collectionCode)) {
   if (i < length(summary_df$collectionCode)) {
-  cat(paste0("[**", summary_df$collectionCode[i], "**]", "(", summary_df$Reflora_URL[i], ")"), paste0("(", summary_df$collectionName[i], "), "))
+  cat(paste0("[**", summary_df$collectionCode[i], "**]", "(", summary_df$Reflora_URL[i], ")"), paste0("(", summary_df$rightsHolder[i], "), "))
   } else {
-    cat(paste0("[**", summary_df$collectionCode[i], "**]", "(", summary_df$Reflora_URL[i], ")"), paste0("(", summary_df$collectionName[i], ")"))
+    cat(paste0("[**", summary_df$collectionCode[i], "**]", "(", summary_df$Reflora_URL[i], ")"), paste0("(", summary_df$rightsHolder[i], ")."))
   }
 }
 ```
