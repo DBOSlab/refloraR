@@ -57,9 +57,9 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>An R package for exploring plant specimen collections from <a href="https://ipt.jbrj.gov.br/reflora" class="external-link">REFLORA Virtual Herbarium</a> hosted by <a href="https://www.gov.br/jbrj" class="external-link">Rio de Janeiro Botanical Garden</a>.</p>
+<p>An R package for exploring plant specimen collections from <a href="https://ipt.jbrj.gov.br/reflora" class="external-link">REFLORA Virtual Herbarium</a> hosted by <a href="https://www.gov.br/jbrj" class="external-link">Rio de Janeiro Botanical Garden</a>. The package interacts with the REFLORA Integrated Publishing Toolkit (IPT) by readily downloading full specimen records for any herbarium in Darwin Core Format. Also, the package has specific functions to summarize information and filter specific information by taxonomic or geographical search.</p>
 <div class="section level2">
-<h2 id="reflora-programme">REFLORA programme<a class="anchor" aria-label="anchor" href="#reflora-programme"></a>
+<h2 id="the-reflora-programme">The REFLORA programme<a class="anchor" aria-label="anchor" href="#the-reflora-programme"></a>
 </h2>
 <p>The study of Brazil’s flora, renowned as the richest in the world (<a href="https://doi.org/10.1002/tax.12640" class="external-link">BFG 2022</a>), has a long and storied history. During the 18th and 19th centuries, European naturalists, along with a few Brazilian botanists, collected plant specimens while in Brazil, sending them to herbaria in Europe. The primary aim during this period was to investigate the flora and its potential uses. Many of these collections laid the groundwork for the description of new species or genera (serving as nomenclatural types), and were integral to the monumental work Flora brasiliensis (<a href="https://www.biodiversitylibrary.org/bibliography/454" class="external-link">Martius, Eichler &amp; Urban, 1840–1906</a>), which described over 22,000 species.</p>
 <p>In 2010, the Brazilian government launched the REFLORA/CNPq Programme, with the primary goal of retrieving and making accessible images and data related to Brazilian plant specimens stored primarily in overseas herbaria. These resources are now available through the REFLORA Virtual Herbarium. In 2014, this initiative was strengthened by the collaboration of SiBBr (Sistema de Informação sobre a Biodiversidade Brasileira) and the National Forest Inventory (IFN), which expanded the collections published under the Reflora project.</p>
@@ -90,31 +90,47 @@
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>A general description of each of the three available functions (<code>reflora_download</code> and <code>reflora_summary</code>) are provided below.</p>
+<p>A general description of the available main functions (<code>reflora_download</code> and <code>reflora_summary</code>) that extract original REFLORA collections are provided below.</p>
 <div class="section level4">
 <h4 id="id_1-reflora_summary-downloading-plant-specimen-records">
 <em>1. <code>reflora_summary</code>: Downloading plant specimen records</em><a class="anchor" aria-label="anchor" href="#id_1-reflora_summary-downloading-plant-specimen-records"></a>
 </h4>
-<p>add text describing here</p>
 <div class="section level5">
 <h5 id="example-of-using-reflora_summary">Example of using <code>reflora_summary</code>:<a class="anchor" aria-label="anchor" href="#example-of-using-reflora_summary"></a>
 </h5>
+<p>The following code can be used to extract a summary of all REFLORA-associated collections, including herbarium acronym, curator’s email contact, number of records and a direct link to the original REFLORA Integrated Publishing Toolkit (IPT).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dboslab.github.io/refloraR/">refloraR</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dboslab.github.io/refloraR/">refloraR</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">summary_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/reflora_summary.html">reflora_summary</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                              save <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                              dir <span class="op">=</span> <span class="st">"reflora_summary"</span><span class="op">)</span></span></code></pre></div>
+<p>By specifying a vector of herbarium acronyms, the user can extract a summary for just the specific herbarium collection.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">summary_some_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/reflora_summary.html">reflora_summary</a></span><span class="op">(</span>herbarium <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ALCB"</span>, <span class="st">"RB"</span>, <span class="st">"HUEFS"</span>, <span class="st">"US"</span>, <span class="st">"K"</span><span class="op">)</span>,</span>
+<span>                                   verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                                   save <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                                   dir <span class="op">=</span> <span class="st">"reflora_summary"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level4">
 <h4 id="id_2-reflora_download-downloading-plant-specimen-records">
 <em>2. <code>reflora_download</code>: Downloading plant specimen records</em><a class="anchor" aria-label="anchor" href="#id_2-reflora_download-downloading-plant-specimen-records"></a>
 </h4>
-<p>add text describing here</p>
 <div class="section level5">
 <h5 id="example-of-using-reflora_download">Example of using <code>reflora_download</code>:<a class="anchor" aria-label="anchor" href="#example-of-using-reflora_download"></a>
 </h5>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dboslab.github.io/refloraR/">refloraR</a></span><span class="op">)</span></span></code></pre></div>
+<p>The following code can be used to download original specimen records in Darwin Core Format and associated metada for all REFLORA collections.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dboslab.github.io/refloraR/">refloraR</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/reflora_download.html">reflora_download</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                 dir <span class="op">=</span> <span class="st">"reflora_download"</span><span class="op">)</span></span></code></pre></div>
+<p>By specifying a vector of herbarium acronyms, the user can download specimens records for just the specific herbarium collection.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/reflora_download.html">reflora_download</a></span><span class="op">(</span>herbarium <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ALCB"</span>, <span class="st">"HUEFS"</span>, <span class="st">"RB"</span>, <span class="st">"US"</span>, <span class="st">"K"</span><span class="op">)</span>,</span>
+<span>                 verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                 dir <span class="op">=</span> <span class="st">"reflora_download"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
