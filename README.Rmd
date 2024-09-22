@@ -87,11 +87,9 @@ library(refloraR)
 A general description of the available main functions (`reflora_download` and `reflora_summary`) that extract original REFLORA collections are provided below.\
 \
 
-#### _1. `reflora_summary`: Downloading plant specimen records_
+#### _1. `reflora_summary`: Summarizing REFLORA collections_
 
-##### Example of using `reflora_summary`:
-
-The following code can be used to extract a summary of all REFLORA-associated collections, including herbarium acronym, curator's email contact, number of records and a direct link to the original REFLORA Integrated Publishing Toolkit (IPT).\
+The following code can be used to extract a summary of all REFLORA-associated collections, including herbarium acronym, curator's email contact, number of records and a direct link to the original REFLORA Integrated Publishing Toolkit ([IPT](https://ipt.jbrj.gov.br/reflora)).\
 ```r
 library(refloraR)
 
@@ -111,9 +109,7 @@ summary_some_df <- reflora_summary(herbarium = c("ALCB", "RB", "HUEFS", "US", "K
 \
 \
 
-#### _2. `reflora_download`: Downloading plant specimen records_
-
-##### Example of using `reflora_download`:
+#### _2. `reflora_download`: Downloading REFLORA specimen records_
 
 The following code can be used to download original specimen records in Darwin Core Format and associated metada for all REFLORA collections.\
 ```r
