@@ -8,9 +8,14 @@
 
 An R package for exploring plant specimen collections from [REFLORA
 Virtual Herbarium](https://ipt.jbrj.gov.br/reflora) hosted by [Rio de
-Janeiro Botanical Garden](https://www.gov.br/jbrj).
+Janeiro Botanical Garden](https://www.gov.br/jbrj). The package
+interacts with the REFLORA Integrated Publishing Toolkit (IPT) by
+readily downloading full specimen records for any herbarium in Darwin
+Core Format. Also, the package has specific functions to summarize
+information and filter specific information by taxonomic or geographical
+search.
 
-## REFLORA programme
+## The REFLORA programme
 
 The study of Brazil’s flora, renowned as the richest in the world ([BFG
 2022](https://doi.org/10.1002/tax.12640)), has a long and storied
@@ -281,19 +286,37 @@ library(refloraR)
 
 ## Usage
 
-A general description of each of the three available functions
-(`reflora_download` and `reflora_summary`) are provided below.  
+A general description of the available main functions
+(`reflora_download` and `reflora_summary`) that extract original REFLORA
+collections are provided below.  
   
 
 #### *1. `reflora_summary`: Downloading plant specimen records*
 
-add text describing here
-
 ##### Example of using `reflora_summary`:
 
-``` r
+The following code can be used to extract a summary of all
+REFLORA-associated collections, including herbarium acronym, curator’s
+email contact, number of records and a direct link to the original
+REFLORA Integrated Publishing Toolkit (IPT).  
 
+``` r
 library(refloraR)
+
+summary_df <- reflora_summary(verbose = TRUE,
+                              save = TRUE,
+                              dir = "reflora_summary")
+```
+
+  
+By specifying a vector of herbarium acronyms, the user can extract a
+summary for just the specific herbarium collection.  
+
+``` r
+summary_some_df <- reflora_summary(herbarium = c("ALCB", "RB", "HUEFS", "US", "K"),
+                                   verbose = TRUE,
+                                   save = TRUE,
+                                   dir = "reflora_summary")
 ```
 
   
@@ -301,13 +324,26 @@ library(refloraR)
 
 #### *2. `reflora_download`: Downloading plant specimen records*
 
-add text describing here
-
 ##### Example of using `reflora_download`:
 
-``` r
+The following code can be used to download original specimen records in
+Darwin Core Format and associated metada for all REFLORA collections.  
 
+``` r
 library(refloraR)
+
+reflora_download(verbose = TRUE,
+                 dir = "reflora_download")
+```
+
+  
+By specifying a vector of herbarium acronyms, the user can download
+specimens records for just the specific herbarium collection.  
+
+``` r
+reflora_download(herbarium = c("ALCB", "HUEFS", "RB", "US", "K"),
+                 verbose = TRUE,
+                 dir = "reflora_download")
 ```
 
   

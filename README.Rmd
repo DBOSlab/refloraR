@@ -18,10 +18,9 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-An R package for exploring plant specimen collections from [REFLORA Virtual Herbarium](https://ipt.jbrj.gov.br/reflora) 
-hosted by [Rio de Janeiro Botanical Garden](https://www.gov.br/jbrj).
+An R package for exploring plant specimen collections from [REFLORA Virtual Herbarium](https://ipt.jbrj.gov.br/reflora) hosted by [Rio de Janeiro Botanical Garden](https://www.gov.br/jbrj). The package interacts with the REFLORA Integrated Publishing Toolkit (IPT) by readily downloading full specimen records for any herbarium in Darwin Core Format. Also, the package has specific functions to summarize information and filter specific information by taxonomic or geographical search.
 
-## REFLORA programme
+## The REFLORA programme
 
 The study of Brazil's flora, renowned as the richest in the world ([BFG 2022](https://doi.org/10.1002/tax.12640)), has a long and storied history. During the 18th and 19th centuries, European naturalists, along with a few Brazilian botanists, collected plant specimens while in Brazil, sending them to herbaria in Europe. The primary aim during this period was to investigate the flora and its potential uses. Many of these collections laid the groundwork for the description of new species or genera (serving as nomenclatural types), and were integral to the monumental work Flora brasiliensis ([Martius, Eichler & Urban, 1840–1906](https://www.biodiversitylibrary.org/bibliography/454)), which described over 22,000 species.
 
@@ -85,34 +84,51 @@ library(refloraR)
 
 ## Usage
 
-A general description of each of the three available functions (`reflora_download` and `reflora_summary`) are provided below.\
+A general description of the available main functions (`reflora_download` and `reflora_summary`) that extract original REFLORA collections are provided below.\
 \
 
 #### _1. `reflora_summary`: Downloading plant specimen records_
 
-add text describing here
-
 ##### Example of using `reflora_summary`:
 
+The following code can be used to extract a summary of all REFLORA-associated collections, including herbarium acronym, curator's email contact, number of records and a direct link to the original REFLORA Integrated Publishing Toolkit (IPT).\
 ```r
-
 library(refloraR)
 
+summary_df <- reflora_summary(verbose = TRUE,
+                              save = TRUE,
+                              dir = "reflora_summary")
+```
+\
+By specifying a vector of herbarium acronyms, the user can extract a summary for just the specific herbarium collection.\
+
+```r
+summary_some_df <- reflora_summary(herbarium = c("ALCB", "RB", "HUEFS", "US", "K"),
+                                   verbose = TRUE,
+                                   save = TRUE,
+                                   dir = "reflora_summary")
 ```
 \
 \
 
 #### _2. `reflora_download`: Downloading plant specimen records_
 
-add text describing here
-
 ##### Example of using `reflora_download`:
 
-
+The following code can be used to download original specimen records in Darwin Core Format and associated metada for all REFLORA collections.\
 ```r
-
 library(refloraR)
 
+reflora_download(verbose = TRUE,
+                 dir = "reflora_download")
+```
+\
+By specifying a vector of herbarium acronyms, the user can download specimens records for just the specific herbarium collection.\
+
+```r
+reflora_download(herbarium = c("ALCB", "HUEFS", "RB", "US", "K"),
+                 verbose = TRUE,
+                 dir = "reflora_download")
 ```
 \
 \
