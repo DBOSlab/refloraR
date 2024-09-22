@@ -69,7 +69,7 @@ If you are an herbarium curator and wish to publish images and data from your co
 
 ## Installation
 
-You can install the development version of ***refloraR*** from [GitHub](https://github.com/) with:
+You can install the development version of ***refloraR*** from [GitHub](https://github.com/DBOSlab/refloraR) with:
 
 ``` r
 # install.packages("devtools")

@@ -270,7 +270,7 @@ contact email **<reflora@jbrj.gov.br>**.
 ## Installation
 
 You can install the development version of ***refloraR*** from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/DBOSlab/refloraR) with:
 
 ``` r
 # install.packages("devtools")
