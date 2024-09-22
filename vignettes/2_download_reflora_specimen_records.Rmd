@@ -1,8 +1,8 @@
 ---
-title: "Download REFLORA specimen records"
+title: "1. Download REFLORA specimen records"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{2 Download REFLORA specimen records}
+  %\VignetteIndexEntry{2. Download REFLORA specimen records}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

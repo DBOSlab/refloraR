@@ -4,6 +4,13 @@
 # refloraR <img src="man/figures/refloraR_hex_sticker.png" align="right" alt="" width="120" />
 
 <!-- badges: start -->
+
+[![Codecov test
+coverage](https://codecov.io/gh/DBOSlab/refloraR/graph/badge.svg)](https://app.codecov.io/gh/DBOSlab/refloraR)
+[![CRAN
+Downloads](https://cran.r-project.org/package=refloraR)](https://cranlogs.r-pkg.org/badges/grand-total/refloraR)
+[![R-CMD-check](https://github.com/DBOSlab/refloraR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DBOSlab/refloraR/actions/workflows/R-CMD-check.yaml)
+[![License](LICENSE)](https://img.shields.io/badge/license-MIT-blue.svg)
 <!-- badges: end -->
 
 An R package for exploring plant specimen collections from [REFLORA

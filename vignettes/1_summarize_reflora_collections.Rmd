@@ -1,8 +1,8 @@
 ---
-title: "Summarize REFLORA collections"
+title: "1. Summarize REFLORA collections"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{1 Summarize REFLORA collections}
+  %\VignetteIndexEntry{1. Summarize REFLORA collections}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
