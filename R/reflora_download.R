@@ -51,70 +51,23 @@ reflora_download <- function(herbarium = NULL,
   }
 
   # Get raw metadata from REFLORA repository
-  ipt_metadata <- readLines("https://ipt.jbrj.gov.br/reflora/dcat",
-                            encoding = "UTF-8",
-                            warn = F)
-
-  pos = which(grepl("dcat[:]downloadURL\\s", ipt_metadata))
-  URLs <- gsub(".*\\s[<]|[>]\\s;$", "", ipt_metadata[pos])
-  herb_URLs <- gsub(".*r[=]|[>]\\s;$", "", URLs)
-  herb_code <- toupper(gsub("_.*", "", herb_URLs))
-
-  ini = which(grepl("a dcat:Dataset ;", ipt_metadata))
-  end = which(grepl("dcat:mediaType \"application/zip\" ;", ipt_metadata))
-  temp <- list()
-  for (i in seq_along(ini)) {
-    temp[[i]] = paste0(ipt_metadata[ini[i]:end[i]], collapse = " | ")
-  }
-  ipt_metadata = temp
-
-  ipt_metadata <- lapply(ipt_metadata, function(x) strsplit(x, "\\s[|]\\s")[[1]])
-
-  if (!is.null(herbarium)) {
-    ipt_metadata <- ipt_metadata[herb_code %in% herbarium]
-    URLs <- URLs[herb_code %in% herbarium]
-    herb_URLs <- herb_URLs[herb_code %in% herbarium]
-    herb_code <- herb_code[herb_code %in% herbarium]
-  }
+  ipt_info <- .get_ipt_info(herbarium)
+  ipt_metadata = ipt_info[[1]]
+  herb_URLs = ipt_info[[2]]
+  herb_code = ipt_info[[3]]
 
   for (i in seq_along(herb_URLs)) {
 
-    herb_url <- paste0("https://ipt.jbrj.gov.br/reflora/resource?r=", herb_URLs[i])
-    getVersion <- readLines(herb_url,
-                            encoding = "UTF-8",
-                            warn = F)
-
-    ini = which(grepl("latestVersion", getVersion))[1]
-    end = which(grepl("None provided", getVersion))[1]
-
-    getVersion = getVersion[ini:end]
-
-    getVersion <- gsub("(\\s){2,}|\\'|,$", "", getVersion)
-    getVersion <- gsub(".*[>]", "", getVersion)
-
-    contact <- ipt_metadata[[i]][which(grepl("dcat:contactPoint", ipt_metadata[[i]]))[1]]
-    # Regular expression for extracting the name
-    name_pattern <- 'vcard:fn "([^"]+)"'
-    name <- regmatches(contact, gregexpr(name_pattern, contact, perl = TRUE))[[1]]
-    name <- gsub('vcard:fn "|\"', "", name)  # Remove the 'vcard:fn "' part
-
-    # Regular expression for extracting the email
-    email_pattern <- '<mailto:([^>]+)>'
-    email <- regmatches(contact, gregexpr(email_pattern, contact, perl = TRUE))[[1]]
-    email <- gsub('<mailto:|>', "", email)  # Remove the '<mailto:' part
-
-    collection_name <- gsub("^dct:title\\s\"|\\s-\\sHerbário Virtual.*", "", ipt_metadata[[i]][2])
-    collection_name <- gsub(".*\\s-\\s", "", collection_name)
+    herb_info <- .get_herb_info(herb_URLs, ipt_metadata, i)
 
     summary_df <- data.frame(collectionCode = herb_code[i],
-                             collectionName = collection_name,
-                             contactPoint = name[1],
-                             hasEmail = email[1],
-                             Version = getVersion[1],
-                             Published.on = getVersion[2],
-                             Records = getVersion[3],
-                             Reflora_URL = herb_url)
-
+                             rightsHolder = herb_info[[4]][1],
+                             contactPoint = herb_info[[2]][1],
+                             hasEmail = herb_info[[3]][1],
+                             Version = herb_info[[1]][1],
+                             Published.on = herb_info[[1]][2],
+                             Records = herb_info[[1]][3],
+                             Reflora_URL = herb_info[[5]])
 
     vdest = gsub("[.].*", "", summary_df$Version)
     vlast = gsub(".*[.]", "", summary_df$Version)

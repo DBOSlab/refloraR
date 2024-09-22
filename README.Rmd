@@ -46,21 +46,25 @@ summary_df <- reflora_summary(verbose = FALSE,
 
 ## The REFLORA Virtual Herbarium
 
-The mission to build a virtual herbarium to display the images of Brazilian plants housed in foreign herbaria was presented by the Brazilian Research Council (CNPq) to the Rio de Janeiro Botanical Garden (JBRJ) in December 2010. The objective was to provide the capacity to store and display high-quality data regarding Brazil’s Flora within a public institution. The Reflora Virtual Herbarium is designed to allow taxonomists to perform procedures similar to those they are accustomed to doing within physical collections. On this site, they have access to high-quality images rather than physical specimens, which can be consulted, re-determined, and typified, among other functionalities. Curators also have access to specimen determination reports to help update their physical collections. This innovative system has been available for study and update by a group of over 900 taxonomists involved in the List of Species of the Brazilian Flora and Brazilian Flora 2020 projects.
+The mission to build a virtual herbarium to display the images of Brazilian plants housed in foreign herbaria was presented by the [Conselho Nacional de Desenvolvimento Científico e Tecnológico (CNPq)](https://www.gov.br/cnpq/pt-br) to the Rio de Janeiro Botanical Garden (JBRJ) in December 2010. The objective was to provide the capacity to store and display high-quality data regarding Brazil’s Flora within a public institution. The Reflora Virtual Herbarium is designed to allow taxonomists to perform procedures similar to those they are accustomed to doing within physical collections. On this site, they have access to high-quality images rather than physical specimens, which can be consulted, re-determined, and typified, among other functionalities. Curators also have access to specimen determination reports to help update their physical collections. This innovative system has been available for study and update by a group of over 900 taxonomists involved in the List of Species of the Brazilian Flora and Brazilian Flora 2020 projects.
 
-The initial partners of this initiative were the herbaria [**K**](https://www.kew.org) (Royal Botanic Gardens, Kew), [**P**](https://www.mnhn.fr/fr/collection-des-plantes-vasculaires) (Muséum national d’histoire naturelle, Paris), and the [**RB**](https://www.gov.br/jbrj) (JBRJ) herbarium. From 2014 onwards, with the support of [**SiBBr**](https://www.sibbr.gov.br) (Sistema de Informação sobre a Biodiversidade Brasileira) and [**IFN**](https://www.gov.br/florestal/pt-br/assuntos/ifn) (National Forest Inventory), other European, American, and Brazilian herbaria were included in this initiative, many of which received equipment and training to digitize their plant specimens.
+The initial partners of this initiative were the herbaria [**K**](https://www.kew.org) (Royal Botanic Gardens, Kew), [**P**](https://www.mnhn.fr/fr/collection-des-plantes-vasculaires) (Muséum national d’histoire naturelle, Paris), and the [**RB**](https://www.gov.br/jbrj) (JBRJ) herbarium. From 2014 onwards, with the support of [**SiBBr**](https://www.sibbr.gov.br) (Sistema de Informação sobre a Biodiversidade Brasileira) and [**IFN**](https://www.gov.br/florestal/pt-br/assuntos/ifn) (Inventário Florestal Nacional), other European, American, and Brazilian herbaria were included in this initiative, many of which received equipment and training to digitize their plant specimens.
 
 Today, there are **`r length(summary_df$collectionCode)`** collections published on this platform, including:
 
 ```{r, herbaria, results='asis', echo=FALSE}
 for (i in seq_along(summary_df$collectionCode)) {
+  if (i < length(summary_df$collectionCode)) {
   cat(paste0("[**", summary_df$collectionCode[i], "**]", "(", summary_df$Reflora_URL[i], ")"), paste0("(", summary_df$collectionName[i], "), "))
+  } else {
+    cat(paste0("[**", summary_df$collectionCode[i], "**]", "(", summary_df$Reflora_URL[i], ")"), paste0("(", summary_df$collectionName[i], ")"))
+  }
 }
 ```
 
-There are now 4,602,397 images of specimens available in the Reflora Virtual Herbarium. Among them, 157,652 are nomenclatural types and 1,985,843 are georeferenced records.
+There are now 4,602,397 images of specimens available in the REFLORA Virtual Herbarium. Among them, 157,652 are nomenclatural types and 1,985,843 are georeferenced records.
 
-If you are a trained taxonomist and would like to contribute to the Reflora Virtual Herbarium, send a request to our contact email. If you are a curator and wish to publish images and data from your collection in this herbarium, please contact us. We would be delighted to make your initiative possible.
+If you are an herbarium curator and wish to publish images and data from your collection in REFLORA Virtual Herbarium, send a request to the contact email **reflora@jbrj.gov.br**.
 \
 \
 
@@ -119,6 +123,6 @@ different [articles](https://dboslab.github.io/refloraR/).\
 \
 
 ## Citation
-Cardoso, D. & Caldéron, M. (2024). _refloraR_: An R package for exploring plant 
+Cardoso, D. & Caldéron, C. (2024). _refloraR_: An R package for exploring plant 
 specimen collections from REFLORA Virtual Herbarium. https://github.com/dboslab/refloraR
 
