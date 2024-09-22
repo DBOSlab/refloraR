@@ -92,13 +92,10 @@
 </h2>
 <p>A general description of the available main functions (<code>reflora_download</code> and <code>reflora_summary</code>) that extract original REFLORA collections are provided below.</p>
 <div class="section level4">
-<h4 id="id_1-reflora_summary-downloading-plant-specimen-records">
-<em>1. <code>reflora_summary</code>: Downloading plant specimen records</em><a class="anchor" aria-label="anchor" href="#id_1-reflora_summary-downloading-plant-specimen-records"></a>
+<h4 id="id_1-reflora_summary-summarizing-reflora-collections">
+<em>1. <code>reflora_summary</code>: Summarizing REFLORA collections</em><a class="anchor" aria-label="anchor" href="#id_1-reflora_summary-summarizing-reflora-collections"></a>
 </h4>
-<div class="section level5">
-<h5 id="example-of-using-reflora_summary">Example of using <code>reflora_summary</code>:<a class="anchor" aria-label="anchor" href="#example-of-using-reflora_summary"></a>
-</h5>
-<p>The following code can be used to extract a summary of all REFLORA-associated collections, including herbarium acronym, curator’s email contact, number of records and a direct link to the original REFLORA Integrated Publishing Toolkit (IPT).</p>
+<p>The following code can be used to extract a summary of all REFLORA-associated collections, including herbarium acronym, curator’s email contact, number of records and a direct link to the original REFLORA Integrated Publishing Toolkit (<a href="https://ipt.jbrj.gov.br/reflora" class="external-link">IPT</a>).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dboslab.github.io/refloraR/">refloraR</a></span><span class="op">)</span></span>
 <span></span>
@@ -112,14 +109,10 @@
 <span>                                   save <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                                   dir <span class="op">=</span> <span class="st">"reflora_summary"</span><span class="op">)</span></span></code></pre></div>
 </div>
-</div>
 <div class="section level4">
-<h4 id="id_2-reflora_download-downloading-plant-specimen-records">
-<em>2. <code>reflora_download</code>: Downloading plant specimen records</em><a class="anchor" aria-label="anchor" href="#id_2-reflora_download-downloading-plant-specimen-records"></a>
+<h4 id="id_2-reflora_download-downloading-reflora-specimen-records">
+<em>2. <code>reflora_download</code>: Downloading REFLORA specimen records</em><a class="anchor" aria-label="anchor" href="#id_2-reflora_download-downloading-reflora-specimen-records"></a>
 </h4>
-<div class="section level5">
-<h5 id="example-of-using-reflora_download">Example of using <code>reflora_download</code>:<a class="anchor" aria-label="anchor" href="#example-of-using-reflora_download"></a>
-</h5>
 <p>The following code can be used to download original specimen records in Darwin Core Format and associated metada for all REFLORA collections.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dboslab.github.io/refloraR/">refloraR</a></span><span class="op">)</span></span>
@@ -131,7 +124,6 @@
 <code class="sourceCode R"><span><span class="fu"><a href="reference/reflora_download.html">reflora_download</a></span><span class="op">(</span>herbarium <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ALCB"</span>, <span class="st">"HUEFS"</span>, <span class="st">"RB"</span>, <span class="st">"US"</span>, <span class="st">"K"</span><span class="op">)</span>,</span>
 <span>                 verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                 dir <span class="op">=</span> <span class="st">"reflora_download"</span><span class="op">)</span></span></code></pre></div>
-</div>
 </div>
 </div>
 <div class="section level2">
