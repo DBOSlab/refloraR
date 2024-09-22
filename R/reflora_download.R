@@ -18,7 +18,7 @@
 #' herbarium specimen records will not be printed in the console in full.
 #'
 #' @param dir Pathway to the computer's directory, where the file will be saved.
-#' The default is to create a directory named **reflora_download**
+#' The default is to create a directory named \code{reflora_download}
 #' and the results will be saved within a subfolder named by each searched
 #' REFLORA-associated herbarium collection.
 #'

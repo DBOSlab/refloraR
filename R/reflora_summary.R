@@ -23,7 +23,7 @@
 #'
 #' @param dir Pathway to the computer's directory, where the table-formatted
 #' summary will be saved. The default is to create a directory named
-#' **reflora_summary**.
+#'  \code{reflora_summary}.
 #'
 #' @return A dataframe summarizing current available plant specimen records in
 #' REFLORA Virtual Herbarium.
