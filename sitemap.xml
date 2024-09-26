@@ -1,16 +1,12 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>https://dboslab.github.io/refloraR/404.html</loc></url>
-<url><loc>https://dboslab.github.io/refloraR/LICENSE-text.html</loc></url>
-<url><loc>https://dboslab.github.io/refloraR/LICENSE.html</loc></url>
-<url><loc>https://dboslab.github.io/refloraR/articles/1_summarize_reflora_collections.html</loc></url>
-<url><loc>https://dboslab.github.io/refloraR/articles/2_download_reflora_specimen_records.html</loc></url>
-<url><loc>https://dboslab.github.io/refloraR/articles/index.html</loc></url>
-<url><loc>https://dboslab.github.io/refloraR/authors.html</loc></url>
-<url><loc>https://dboslab.github.io/refloraR/index.html</loc></url>
-<url><loc>https://dboslab.github.io/refloraR/news/index.html</loc></url>
-<url><loc>https://dboslab.github.io/refloraR/reference/index.html</loc></url>
-<url><loc>https://dboslab.github.io/refloraR/reference/refloraR-package.html</loc></url>
-<url><loc>https://dboslab.github.io/refloraR/reference/reflora_download.html</loc></url>
-<url><loc>https://dboslab.github.io/refloraR/reference/reflora_summary.html</loc></url>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/refloraR-package.html</loc></url>
+<url><loc>/reference/reflora_download.html</loc></url>
+<url><loc>/reference/reflora_summary.html</loc></url>
 </urlset>
 

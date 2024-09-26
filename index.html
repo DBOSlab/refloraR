@@ -4,80 +4,70 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>An R package for exploring plant specimen collections from REFLORA Virtual Herbarium • refloraR</title>
-<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="An R package for exploring plant specimen collections from REFLORA Virtual Herbarium">
-<meta name="description" content="Explore plant specimen collections from REFLORA Virtual Herbarium.">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script><meta property="og:title" content="An R package for exploring plant specimen collections from REFLORA Virtual Herbarium">
 <meta property="og:description" content="Explore plant specimen collections from REFLORA Virtual Herbarium.">
+<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
 </head>
-<body>
-    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+<body data-spy="scroll" data-target="#toc">
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <div class="container template-home">
+      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="index.html">refloraR</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+      </span>
+    </div>
 
-    <a class="navbar-brand me-2" href="index.html">refloraR</a>
-
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
-
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/1_summarize_reflora_collections.html">1. Summarize REFLORA collections</a></li>
-    <li><a class="dropdown-item" href="articles/2_download_reflora_specimen_records.html">1. Download REFLORA specimen records</a></li>
-  </ul>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+<li>
+  <a href="reference/index.html">Reference</a>
 </li>
-<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
-<ul class="navbar-nav">
-<li class="nav-item"><form class="form-inline" role="search">
- <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
-</form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/DBOSlab/refloraR/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/DBOSlab/refloraR/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+
+  </a>
+</li>
       </ul>
 </div>
-
-
+<!--/.nav-collapse -->
   </div>
-</nav><div class="container template-home">
-<div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="reflorar-">refloraR <img src="reference/figures/refloraR_hex_sticker.png" align="right" alt="" width="120"><a class="anchor" aria-label="anchor" href="#reflorar-"></a>
+<!--/.container -->
+</div>
+<!--/.navbar -->
+
+
+
+      </header><div class="row">
+  <div class="contents col-md-9">
+<div class="section level1">
+<div class="page-header"><h1 id="reflorar-">refloraR <img src="website-refloraR/figures/refloraR_hex_sticker.png" align="right" alt="" width="120"><a class="anchor" aria-label="anchor" href="#reflorar-"></a>
 </h1></div>
 <!-- badges: start -->
 
 <p>An R package for exploring plant specimen collections from <a href="https://ipt.jbrj.gov.br/reflora" class="external-link">REFLORA Virtual Herbarium</a> hosted by <a href="https://www.gov.br/jbrj" class="external-link">Rio de Janeiro Botanical Garden</a>. The package interacts with the REFLORA Integrated Publishing Toolkit (IPT) by readily downloading full specimen records for any herbarium in Darwin Core Format. Also, the package has specific functions to summarize information and filter specific information by taxonomic or geographical search.</p>
-<div class="section level2">
-<h2 id="the-reflora-programme">The REFLORA programme<a class="anchor" aria-label="anchor" href="#the-reflora-programme"></a>
-</h2>
-<p>The study of Brazil’s flora, renowned as the richest in the world (<a href="https://doi.org/10.1002/tax.12640" class="external-link">BFG 2022</a>), has a long and storied history. During the 18th and 19th centuries, European naturalists, along with a few Brazilian botanists, collected plant specimens while in Brazil, sending them to herbaria in Europe. The primary aim during this period was to investigate the flora and its potential uses. Many of these collections laid the groundwork for the description of new species or genera (serving as nomenclatural types), and were integral to the monumental work Flora brasiliensis (<a href="https://www.biodiversitylibrary.org/bibliography/454" class="external-link">Martius, Eichler &amp; Urban, 1840–1906</a>), which described over 22,000 species.</p>
-<p>In 2010, the Brazilian government launched the REFLORA/CNPq Programme, with the primary goal of retrieving and making accessible images and data related to Brazilian plant specimens stored primarily in overseas herbaria. These resources are now available through the REFLORA Virtual Herbarium. In 2014, this initiative was strengthened by the collaboration of SiBBr (Sistema de Informação sobre a Biodiversidade Brasileira) and the National Forest Inventory (IFN), which expanded the collections published under the Reflora project.</p>
-<p>The <a href="https://floradobrasil.jbrj.gov.br/reflora/herbarioVirtual/ConsultaPublicoHVUC/ConsultaPublicoHVUC.do" class="external-link">REFLORA Virtual Herbarium</a> platform was developed through a partnership between the <a href="https://www.gov.br/jbrj" class="external-link">Rio de Janeiro Botanical Garden (JBRJ)</a> and <a href="https://coppe.ufrj.br/en/home-en/" class="external-link">COPPE (Alberto Luiz Coimbra Institute for Graduate Studies and Research in Engineering, UFRJ)</a>. JBRJ hosts the system, overseeing the reception, storage, and publication of the herbarium images.</p>
-<p>Complementing the REFLORA Virtual Herbarium is the Flora platform, first launched in 2008. This system has evolved through several stages—including the Lista de Espécies da Flora do Brasil, <a href="http://doi.org/10.47871/jbrj2021004" class="external-link">Flora do Brasil 2020</a>, and now <a href="https://floradobrasil.jbrj.gov.br/consulta/" class="external-link">Flora e Funga do Brasil</a>—and is also part of the broader REFLORA Programme. Flora e Funga do Brasil serves as a critical validator for the nomenclature of the REFLORA Virtual Herbarium’s images, which are continuously refined and enriched by taxonomists working collaboratively in an online system.</p>
-<p>The REFLORA Programme has played a crucial role in Brazil’s success in meeting the goals of the Global Strategy for Plant Conservation, part of the Convention on Biological Diversity, for 2010 and 2020. As the challenges of understanding and studying biodiversity persist, the REFLORA systems will continue to provide unrestricted access to high-quality, accurate data on Brazil’s plants, algae, and fungi.</p>
-</div>
-<div class="section level2">
-<h2 id="the-reflora-virtual-herbarium">The REFLORA Virtual Herbarium<a class="anchor" aria-label="anchor" href="#the-reflora-virtual-herbarium"></a>
-</h2>
-<p>The mission to build a virtual herbarium to display the images of Brazilian plants housed in foreign herbaria was presented by the <a href="https://www.gov.br/cnpq/pt-br" class="external-link">Conselho Nacional de Desenvolvimento Científico e Tecnológico (CNPq)</a> to the Rio de Janeiro Botanical Garden (JBRJ) in December 2010. The objective was to provide the capacity to store and display high-quality data regarding Brazil’s Flora within a public institution. The Reflora Virtual Herbarium is designed to allow taxonomists to perform procedures similar to those they are accustomed to doing within physical collections. On this site, they have access to high-quality images rather than physical specimens, which can be consulted, re-determined, and typified, among other functionalities. Curators also have access to specimen determination reports to help update their physical collections. This innovative system has been available for study and update by a group of over 900 taxonomists involved in the List of Species of the Brazilian Flora and Brazilian Flora 2020 projects.</p>
-<p>The initial partners of this initiative were the herbaria <a href="https://www.kew.org" class="external-link"><strong>K</strong></a> (Royal Botanic Gardens, Kew), <a href="https://www.mnhn.fr/fr/collection-des-plantes-vasculaires" class="external-link"><strong>P</strong></a> (Muséum national d’histoire naturelle, Paris), and the <a href="https://www.gov.br/jbrj" class="external-link"><strong>RB</strong></a> (JBRJ) herbarium. From 2014 onwards, with the support of <a href="https://www.sibbr.gov.br" class="external-link"><strong>SiBBr</strong></a> (Sistema de Informação sobre a Biodiversidade Brasileira) and <a href="https://www.gov.br/florestal/pt-br/assuntos/ifn" class="external-link"><strong>IFN</strong></a> (Inventário Florestal Nacional), other European, American, and Brazilian herbaria were included in this initiative, many of which received equipment and training to digitize their plant specimens.</p>
-<p>Today, there are <strong>81</strong> collections published on this platform, including:</p>
-<p><a href="https://ipt.jbrj.gov.br/reflora/resource?r=acam" class="external-link"><strong>ACAM</strong></a> (Universidade Estadual da Paraíba), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=alcb_herbarium" class="external-link"><strong>ALCB</strong></a> (Universidade Federal da Bahia), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=ase_herbarium" class="external-link"><strong>ASE</strong></a> (Universidade Federal de Sergipe), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=b_herb" class="external-link"><strong>B</strong></a> (Botanischer Garten und Botanisches Museum Berlin-Dahlem Herbarium), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=brba" class="external-link"><strong>BRBA</strong></a> (Universidade Federal do Oeste da Bahia), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=cen" class="external-link"><strong>CEN</strong></a> ( Embrapa Recursos Genéticos e Biotecnologia), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=cepec_herbarium" class="external-link"><strong>CEPEC</strong></a> (Centro de Pesquisas do Cacau), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=cesj" class="external-link"><strong>CESJ</strong></a> (Universidade Federal de Juiz de Fora UFJF), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=cgms" class="external-link"><strong>CGMS</strong></a> (Universidade Federal de Mato Grosso do Sul), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=cor" class="external-link"><strong>COR</strong></a> (Universidade Federal de Mato Grosso do Sul / Campus Pantanal), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=cri" class="external-link"><strong>CRI</strong></a> (Universidade do Extremo Sul Catarinense), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=dvpr" class="external-link"><strong>DVPR</strong></a> (Universidade Tecnológica Federal do Paraná), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=e_hv" class="external-link"><strong>E</strong></a> (Royal Botanic Garden Edinburgh), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=eac_herbarium" class="external-link"><strong>EAC</strong></a> (Universidade Federal do Ceará), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=ebc" class="external-link"><strong>EBC</strong></a> (Economic Botany Collection), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=ect" class="external-link"><strong>ECT</strong></a> (Embrapa Clima Temperado), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=esa_herbarium" class="external-link"><strong>ESA</strong></a> (Universidade de São Paulo), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=evb" class="external-link"><strong>EVB</strong></a> (Herbário Evaldo Buttura), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=flor_herbarium" class="external-link"><strong>FLOR</strong></a> (Universidade Federal de Santa Catarina), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=furb_herbarium" class="external-link"><strong>FURB</strong></a> (Universidade Regional de Blumenau), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=gh_herb" class="external-link"><strong>GH</strong></a> (Harvard University Herbarium), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=hbr_herbarium" class="external-link"><strong>HBR</strong></a> (Universidade Federal de Santa Catarina), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=hcf" class="external-link"><strong>HCF</strong></a> (Campus Campo Mourão), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=hdcf_herbarium" class="external-link"><strong>HDCF</strong></a> (Universidade Federal de Santa Maria), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=heph" class="external-link"><strong>HEPH</strong></a> (Jardim Botânico de Brasília), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=herbam" class="external-link"><strong>HERBAM</strong></a> (Amazônia Meridional), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=hj_herb" class="external-link"><strong>HJ</strong></a> (Unidade Jataí), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=hrcb" class="external-link"><strong>HRCB</strong></a> (Universidade Estadual Paulista UNESP), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=hstm" class="external-link"><strong>HSTM</strong></a> (Universidade Federal do Oeste do Pará), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=hto" class="external-link"><strong>HTO</strong></a> (UFT” ;), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=hucp" class="external-link"><strong>HUCP</strong></a> (Pontífica Universidade Católica do Paraná PUC), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=huefs" class="external-link"><strong>HUEFS</strong></a> (Universidade Estadual de Feira de Santana), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=huem" class="external-link"><strong>HUEM</strong></a> (Universidade Estadual de Maringá), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=huemg" class="external-link"><strong>HUEMG</strong></a> (Campus Carangola), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=huenf" class="external-link"><strong>HUENF</strong></a> (Universidade Estadual do Norte Fluminense), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=hufu_herbarium" class="external-link"><strong>HUFU</strong></a> (Universidade Federal de Uberlândia), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=huni" class="external-link"><strong>HUNI</strong></a> (Universidade Federal do Estado do Rio de Janeiro), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=hurb" class="external-link"><strong>HURB</strong></a> (Universidade do Recôncavo da Bahia), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=hvasf" class="external-link"><strong>HVASF</strong></a> (Fundação Universidade Federal do Vale do São Francisco), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=hvat" class="external-link"><strong>HVAT</strong></a> (Universidade do Vale do Taquari), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=ian" class="external-link"><strong>IAN</strong></a> (Embrapa Amazônia Oriental), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=ibge" class="external-link"><strong>IBGE</strong></a> (Herbário IBGE), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=icn" class="external-link"><strong>ICN</strong></a> (Universidade Federal do Rio Grande Do Sul), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=joi" class="external-link"><strong>JOI</strong></a> (Univilleda Região de Joinville), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=k_reflora" class="external-link"><strong>K</strong></a> (Royal Botanic Gardens, Kew), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=lusc" class="external-link"><strong>LUSC</strong></a> (Universidade do Estado de Santa Catarina), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=mac" class="external-link"><strong>MAC</strong></a> (Instituto do Meio Ambiente do Estado de Alagoas), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=mbm_herbarium" class="external-link"><strong>MBM</strong></a> (Museu Botânico Municipal  Curitiba), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=mbml" class="external-link"><strong>MBML</strong></a> (Museu de Biologia Mello Leitão), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=mg_herbarium" class="external-link"><strong>MG</strong></a> (Museu Paraense Emílio Goeldi), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=moh" class="external-link"><strong>MOH</strong></a> ( Missouri Botanical Garden), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=mufal" class="external-link"><strong>MUFAL</strong></a> (Museu de História Natural da Universidade Federal de Alagoas), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=nyh" class="external-link"><strong>NYH</strong></a> (The New York Botanical Garden), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=p_reflora" class="external-link"><strong>P</strong></a> (Muséum national d’histoire naturelle, Paris), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=pc_herb" class="external-link"><strong>PC</strong></a> (Cryptogamy Collection at the Muséum National d’Histoire Naturelle), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=pel" class="external-link"><strong>PEL</strong></a> (Universidade Federal de Pelotas), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=pmsp" class="external-link"><strong>PMSP</strong></a> (Prefeitura do Município de São Paulo), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=r_herbarium" class="external-link"><strong>R</strong></a> (Museu Nacional), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=rb_herbarium" class="external-link"><strong>RB</strong></a> (Jardim Botânico do Rio de Janeiro), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=rbr" class="external-link"><strong>RBR</strong></a> (Universidade Federal Rural do Rio de Janeiro), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=real" class="external-link"><strong>REAL</strong></a> (Universidade Federal da Fronteira Sul), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=rfa" class="external-link"><strong>RFA</strong></a> (Universidade Federal do Rio de Janeiro), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=rffp" class="external-link"><strong>RFFP</strong></a> (Faculdade de Formação de Professores da Universidade do Estado do Rio de Janeiro), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=ron" class="external-link"><strong>RON</strong></a> (Universidade Federal de Rondônia), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=rspf" class="external-link"><strong>RSPF</strong></a> (Universidade de Passo Fundo), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=s_reflora" class="external-link"><strong>S</strong></a> (Naturhistoriska Riksmuseet), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=sames" class="external-link"><strong>SAMES</strong></a> (Herbário São Mateus), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=sjrp" class="external-link"><strong>SJRP</strong></a> (Universidade Estadual Paulista Júlio de Mesquita Filho), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=slui" class="external-link"><strong>SLUI</strong></a> (Universidade Estadual do Maranhão), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=sof" class="external-link"><strong>SOF</strong></a> (Swiss Orchid Foundation), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=spf_herbarium" class="external-link"><strong>SPF</strong></a> (Universidade de são Paulo), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=tepb" class="external-link"><strong>TEPB</strong></a> (Universidade Federal do Piauí), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=ub_herbarium" class="external-link"><strong>UB</strong></a> (Universidade de Brasília), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=ufg" class="external-link"><strong>UFG</strong></a> (Universidade Federal de Goiás), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=ufrn" class="external-link"><strong>UFRN</strong></a> (Universidade Federal do Rio Grande do Norte), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=unip" class="external-link"><strong>UNIP</strong></a> (Universidade Paulista), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=unop" class="external-link"><strong>UNOP</strong></a> (Universidade Estadual do Oeste do Paraná), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=upcb_herbarium" class="external-link"><strong>UPCB</strong></a> (Universidade Federal de Paraná), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=us_reflora" class="external-link"><strong>US</strong></a> (Smithsonian Institute), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=vies_herbarium" class="external-link"><strong>VIES</strong></a> (Universidade Federal do Espírito Santo), <a href="https://ipt.jbrj.gov.br/reflora/resource?r=w_reflora" class="external-link"><strong>W</strong></a> (Naturhistorisches Museum Wien).</p>
-<p>There are now 4,602,397 images of specimens available in the REFLORA Virtual Herbarium. Among them, 157,652 are nomenclatural types and 1,985,843 are georeferenced records.</p>
-<p>If you are an herbarium curator and wish to publish images and data from your collection in REFLORA Virtual Herbarium, send a request to the contact email <strong><a href="mailto:reflora@jbrj.gov.br" class="email">reflora@jbrj.gov.br</a></strong>.</p>
-</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -86,7 +76,7 @@
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"DBOSlab/refloraR"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dboslab.github.io/refloraR/">refloraR</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dboslab.github.io/refloraR/" class="external-link">refloraR</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -98,7 +88,7 @@
 </h4>
 <p>The following code can be used to extract a summary of all REFLORA-associated collections, including herbarium acronym, curator’s email contact, number of records and a direct link to the original REFLORA Integrated Publishing Toolkit (<a href="https://ipt.jbrj.gov.br/reflora" class="external-link">IPT</a>).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dboslab.github.io/refloraR/">refloraR</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dboslab.github.io/refloraR/" class="external-link">refloraR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">summary_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/reflora_summary.html">reflora_summary</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                              save <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -116,7 +106,7 @@
 </h4>
 <p>The following code can be used to download original specimen records in Darwin Core Format and associated metada for all REFLORA collections.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dboslab.github.io/refloraR/">refloraR</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dboslab.github.io/refloraR/" class="external-link">refloraR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/reflora_download.html">reflora_download</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                 dir <span class="op">=</span> <span class="st">"reflora_download"</span><span class="op">)</span></span></code></pre></div>
@@ -130,7 +120,7 @@
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
-<p>A detailed description of the <strong><em>refloraR</em></strong>’s full functionality is available in different <a href="https://dboslab.github.io/refloraR/">articles</a>.</p>
+<p>A detailed description of the <strong><em>refloraR</em></strong>’s full functionality is available in different <a href="https://dboslab.github.io/refloraR/" class="external-link">articles</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
@@ -138,7 +128,10 @@
 <p>Cardoso, D. &amp; Caldéron, C. (2024). <em>refloraR</em>: An R package for exploring plant specimen collections from REFLORA Virtual Herbarium. <a href="https://github.com/dboslab/refloraR" class="external-link uri">https://github.com/dboslab/refloraR</a></p>
 </div>
 </div>
-  </main><aside class="col-md-3"><div class="links">
+  </div>
+
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/DBOSlab/refloraR/" class="external-link">Browse source code</a></li>
@@ -180,20 +173,23 @@
 </ul>
 </div>
 
-  </aside>
+  </div>
 </div>
 
 
-    <footer><div class="pkgdown-footer-left">
-  <p>Developed by Domingos Cardoso, Carlos Calderón.</p>
+      <footer><div class="copyright">
+  <p></p>
+<p>Developed by Domingos Cardoso, Carlos Calderón.</p>
 </div>
 
-<div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+<div class="pkgdown">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
-    </footer>
+      </footer>
 </div>
+
 
 
 
