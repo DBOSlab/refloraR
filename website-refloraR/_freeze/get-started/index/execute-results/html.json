@@ -1,0 +1,15 @@
+{
+  "hash": "d74e46fce8431e7053a3ed82c906ad42",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Install\"\nformat:\n  html:\n    theme: default\n    toc: true\nexecute:\n  eval: true\n  freeze: true\n---\n\n\n\n\n## Install the package\n\nYou can install the latest development version of `refloraR` package from [GitHub](https://github.com/DBOSlab/refloraR) as follows:\n\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\n#install.packages(\"devtools\")\ndevtools::install_github(\"DBOSlab/refloraR\")\n```\n:::\n\n\n\n\n:::{.callout-caution}\nThe steps in this section are only needed if you need to run [...]. If you already have a running [...], then skip this section. \n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

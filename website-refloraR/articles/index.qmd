@@ -1,0 +1,26 @@
+---
+title: "Articles"
+format: html
+---
+
+<style>
+  body {
+  background-image: url("/figures/reflora_bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+</style>
+
+::: {layout-ncol="2"}
+::: {style="display: block;"}
+### Summarize REFLORA collections
+
+- [Summarize collections](/articles/summarize_reflora_collections.qmd)  
+:::
+::: {style="display: block;"}
+
+### Download REFLORA specimen records   
+
+- [Download specimen records](/articles/download_reflora_collections.qmd)
+:::
+:::

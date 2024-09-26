@@ -21,14 +21,13 @@ LazyData: true
 Imports:
     stringr,
     utils
-Suggests: 
-    knitr,
-    rmarkdown,
+Suggests:
+    quarto,
     testthat (>= 3.0.0)
 URL: 
     https://dboslab.github.io/refloraR/,
     https://github.com/dboslab/refloraR
 BugReports: https://github.com/DBOSlab/refloraR/issues
-VignetteBuilder: knitr
+VignetteBuilder: quarto
 RoxygenNote: 7.3.2
 Config/testthat/edition: 3

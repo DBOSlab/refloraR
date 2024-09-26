@@ -1,0 +1,26 @@
+---
+title: "Install"
+format:
+  html:
+    theme: default
+    toc: true
+execute:
+  eval: true
+  freeze: true
+---
+
+## Install the package
+
+You can install the latest development version of `refloraR` package from [GitHub](https://github.com/DBOSlab/refloraR) as follows:
+
+
+```{r}
+#| eval: false
+
+#install.packages("devtools")
+devtools::install_github("DBOSlab/refloraR")
+```
+
+:::{.callout-caution}
+The steps in this section are only needed if you need to run [...]. If you already have a running [...], then skip this section. 
+:::

@@ -1,0 +1,30 @@
+---
+title: "Download REFLORA specimen records"
+format: html
+---
+
+Here in this article, we show how to use the package's function `reflora_summary` for summarizing information about all REFLORA-associated collections.\
+\
+
+## Download all specimen records
+
+\
+The following code can be used to download original specimen records in Darwin Core Format and associated metada for all REFLORA collections.\
+\
+
+``` r
+reflora_download(verbose = TRUE,
+                 dir = "reflora_download")
+```
+
+## Download specimen records for specific collections
+
+\
+By specifying a vector of herbarium acronyms, the user can download specimens records for just the specific herbarium collection.\
+\
+
+``` r
+reflora_download(herbarium = c("ALCB", "HUEFS", "RB", "US", "K"),
+                 verbose = TRUE,
+                 dir = "reflora_download")
+```

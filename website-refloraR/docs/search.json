@@ -1,0 +1,121 @@
+[
+  {
+    "objectID": "get-started/index.html",
+    "href": "get-started/index.html",
+    "title": "Install",
+    "section": "",
+    "text": "You can install the latest development version of refloraR package from GitHub as follows:\n\n#install.packages(\"devtools\")\ndevtools::install_github(\"DBOSlab/refloraR\")\n\n\n\n\n\n\n\nCaution\n\n\n\nThe steps in this section are only needed if you need to run […]. If you already have a running […], then skip this section.",
+    "crumbs": [
+      "Get Started",
+      "Install"
+    ]
+  },
+  {
+    "objectID": "get-started/index.html#install-the-package",
+    "href": "get-started/index.html#install-the-package",
+    "title": "Install",
+    "section": "",
+    "text": "You can install the latest development version of refloraR package from GitHub as follows:\n\n#install.packages(\"devtools\")\ndevtools::install_github(\"DBOSlab/refloraR\")\n\n\n\n\n\n\n\nCaution\n\n\n\nThe steps in this section are only needed if you need to run […]. If you already have a running […], then skip this section.",
+    "crumbs": [
+      "Get Started",
+      "Install"
+    ]
+  },
+  {
+    "objectID": "articles/download_reflora_collections.html",
+    "href": "articles/download_reflora_collections.html",
+    "title": "Download REFLORA specimen records",
+    "section": "",
+    "text": "Here in this article, we show how to use the package’s function reflora_summary for summarizing information about all REFLORA-associated collections.",
+    "crumbs": [
+      "Articles",
+      "Download REFLORA specimen records",
+      "Download all specimen records"
+    ]
+  },
+  {
+    "objectID": "articles/download_reflora_collections.html#download-all-specimen-records",
+    "href": "articles/download_reflora_collections.html#download-all-specimen-records",
+    "title": "Download REFLORA specimen records",
+    "section": "Download all specimen records",
+    "text": "Download all specimen records\n\nThe following code can be used to download original specimen records in Darwin Core Format and associated metada for all REFLORA collections.\n\n\nreflora_download(verbose = TRUE,\n                 dir = \"reflora_download\")",
+    "crumbs": [
+      "Articles",
+      "Download REFLORA specimen records",
+      "Download all specimen records"
+    ]
+  },
+  {
+    "objectID": "articles/download_reflora_collections.html#download-specimen-records-for-specific-collections",
+    "href": "articles/download_reflora_collections.html#download-specimen-records-for-specific-collections",
+    "title": "Download REFLORA specimen records",
+    "section": "Download specimen records for specific collections",
+    "text": "Download specimen records for specific collections\n\nBy specifying a vector of herbarium acronyms, the user can download specimens records for just the specific herbarium collection.\n\n\nreflora_download(herbarium = c(\"ALCB\", \"HUEFS\", \"RB\", \"US\", \"K\"),\n                 verbose = TRUE,\n                 dir = \"reflora_download\")",
+    "crumbs": [
+      "Articles",
+      "Download REFLORA specimen records",
+      "Download all specimen records"
+    ]
+  },
+  {
+    "objectID": "articles/summarize_reflora_collections.html",
+    "href": "articles/summarize_reflora_collections.html",
+    "title": "Summarize REFLORA collections",
+    "section": "",
+    "text": "Here in this article, we show how to use the package’s function reflora_summary for summarizing information about all REFLORA-associated collections.",
+    "crumbs": [
+      "Articles",
+      "Summarize REFLORA collections",
+      "Summarize all collections"
+    ]
+  },
+  {
+    "objectID": "articles/summarize_reflora_collections.html#summarize-all-collections",
+    "href": "articles/summarize_reflora_collections.html#summarize-all-collections",
+    "title": "Summarize REFLORA collections",
+    "section": "Summarize all collections",
+    "text": "Summarize all collections\n\nThe following code can be used to extract a summary of all REFLORA-associated collections, including herbarium acronym, curator’s email contact, number of records and a direct link to the original REFLORA Integrated Publishing Toolkit (IPT).\n\n\nsummary_df &lt;- reflora_summary(verbose = TRUE,\n                              save = TRUE,\n                              dir = \"reflora_summary\")",
+    "crumbs": [
+      "Articles",
+      "Summarize REFLORA collections",
+      "Summarize all collections"
+    ]
+  },
+  {
+    "objectID": "articles/summarize_reflora_collections.html#summarize-specific-collections",
+    "href": "articles/summarize_reflora_collections.html#summarize-specific-collections",
+    "title": "Summarize REFLORA collections",
+    "section": "Summarize specific collections",
+    "text": "Summarize specific collections\n\nBy specifying a vector of herbarium acronyms, the user can extract a summary for just the specific herbarium collection.\n\n\nsummary_some_df &lt;- reflora_summary(herbarium = c(\"ALCB\", \"RB\", \"HUEFS\", \"US\", \"K\"),\n                                   verbose = TRUE,\n                                   save = TRUE,\n                                   dir = \"reflora_summary\")",
+    "crumbs": [
+      "Articles",
+      "Summarize REFLORA collections",
+      "Summarize all collections"
+    ]
+  },
+  {
+    "objectID": "articles/index.html",
+    "href": "articles/index.html",
+    "title": "Articles",
+    "section": "",
+    "text": "Summarize REFLORA collections\n\nSummarize collections\n\n\n\n\nDownload REFLORA specimen records\n\nDownload specimen records",
+    "crumbs": [
+      "Articles",
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#the-reflora-programme",
+    "href": "index.html#the-reflora-programme",
+    "title": "refloraR",
+    "section": "The REFLORA programme",
+    "text": "The REFLORA programme\nThe study of Brazil’s flora, renowned as the richest in the world (BFG 2022), has a long and storied history. During the 18th and 19th centuries, European naturalists, along with a few Brazilian botanists, collected plant specimens while in Brazil, sending them to herbaria in Europe. The primary aim during this period was to investigate the flora and its potential uses. Many of these collections laid the groundwork for the description of new species or genera (serving as nomenclatural types), and were integral to the monumental work Flora brasiliensis (Martius, Eichler & Urban, 1840–1906), which described over 22,000 species.\nIn 2010, the Brazilian government launched the REFLORA/CNPq Programme, with the primary goal of retrieving and making accessible images and data related to Brazilian plant specimens stored primarily in overseas herbaria. These resources are now available through the REFLORA Virtual Herbarium. In 2014, this initiative was strengthened by the collaboration of SiBBr (Sistema de Informação sobre a Biodiversidade Brasileira) and the National Forest Inventory (IFN), which expanded the collections published under the Reflora project.\nThe REFLORA Virtual Herbarium platform was developed through a partnership between the Rio de Janeiro Botanical Garden (JBRJ) and COPPE (Alberto Luiz Coimbra Institute for Graduate Studies and Research in Engineering, UFRJ). JBRJ hosts the system, overseeing the reception, storage, and publication of the herbarium images.\nComplementing the REFLORA Virtual Herbarium is the Flora platform, first launched in 2008. This system has evolved through several stages—including the Lista de Espécies da Flora do Brasil, Flora do Brasil 2020, and now Flora e Funga do Brasil—and is also part of the broader REFLORA Programme. Flora e Funga do Brasil serves as a critical validator for the nomenclature of the REFLORA Virtual Herbarium’s images, which are continuously refined and enriched by taxonomists working collaboratively in an online system.\nThe REFLORA Programme has played a crucial role in Brazil’s success in meeting the goals of the Global Strategy for Plant Conservation, part of the Convention on Biological Diversity, for 2010 and 2020. As the challenges of understanding and studying biodiversity persist, the REFLORA systems will continue to provide unrestricted access to high-quality, accurate data on Brazil’s plants, algae, and fungi."
+  },
+  {
+    "objectID": "index.html#the-reflora-virtual-herbarium",
+    "href": "index.html#the-reflora-virtual-herbarium",
+    "title": "refloraR",
+    "section": "The REFLORA Virtual Herbarium",
+    "text": "The REFLORA Virtual Herbarium\nThe mission to build a virtual herbarium to display the images of Brazilian plants housed in foreign herbaria was presented by the Conselho Nacional de Desenvolvimento Científico e Tecnológico (CNPq) to the Rio de Janeiro Botanical Garden (JBRJ) in December 2010. The objective was to provide the capacity to store and display high-quality data regarding Brazil’s Flora within a public institution. The Reflora Virtual Herbarium is designed to allow taxonomists to perform procedures similar to those they are accustomed to doing within physical collections. On this site, they have access to high-quality images rather than physical specimens, which can be consulted, re-determined, and typified, among other functionalities. Curators also have access to specimen determination reports to help update their physical collections. This innovative system has been available for study and update by a group of over 900 taxonomists involved in the List of Species of the Brazilian Flora and Brazilian Flora 2020 projects.\nThe initial partners of this initiative were the herbaria K (Royal Botanic Gardens, Kew), P (Muséum national d’histoire naturelle, Paris), and the RB (JBRJ) herbarium. From 2014 onwards, with the support of SiBBr (Sistema de Informação sobre a Biodiversidade Brasileira) and IFN (Inventário Florestal Nacional), other European, American, and Brazilian herbaria were included in this initiative, many of which received equipment and training to digitize their plant specimens.\nToday, there are 81 collections published on this platform, including:\n\n\nThere are now 4,602,397 images of specimens available in the REFLORA Virtual Herbarium. Among them, 157,652 are nomenclatural types and 1,985,843 are georeferenced records.\nIf you are an herbarium curator and wish to publish images and data from your collection in REFLORA Virtual Herbarium, send a request to the contact email reflora@jbrj.gov.br."
+  }
+]

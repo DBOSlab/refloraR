@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>index</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div class="page-layout-custom">  
+
+
+
+
+<div class="whitebox">
+<div style="padding-left: 100px; padding-right: 100px; display: inline-block;">
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p>An R package for exploring plant specimen collections from <a href="https://ipt.jbrj.gov.br/reflora">REFLORA Virtual Herbarium</a> hosted by <a href="https://www.gov.br/jbrj">Rio de Janeiro Botanical Garden</a>. The package interacts with the REFLORA Integrated Publishing Toolkit (IPT) by readily downloading full specimen records for any herbarium in Darwin Core Format. Also, the package has specific functions to summarize information and filter specific information by taxonomic or geographical search.</p>
+<section id="the-reflora-programme" class="level2">
+<h2 data-anchor-id="the-reflora-programme">The REFLORA programme</h2>
+<p>The study of Brazil’s flora, renowned as the richest in the world (<a href="https://doi.org/10.1002/tax.12640">BFG 2022</a>), has a long and storied history. During the 18th and 19th centuries, European naturalists, along with a few Brazilian botanists, collected plant specimens while in Brazil, sending them to herbaria in Europe. The primary aim during this period was to investigate the flora and its potential uses. Many of these collections laid the groundwork for the description of new species or genera (serving as nomenclatural types), and were integral to the monumental work Flora brasiliensis (<a href="https://www.biodiversitylibrary.org/bibliography/454">Martius, Eichler &amp; Urban, 1840–1906</a>), which described over 22,000 species.</p>
+<p>In 2010, the Brazilian government launched the REFLORA/CNPq Programme, with the primary goal of retrieving and making accessible images and data related to Brazilian plant specimens stored primarily in overseas herbaria. These resources are now available through the REFLORA Virtual Herbarium. In 2014, this initiative was strengthened by the collaboration of SiBBr (Sistema de Informação sobre a Biodiversidade Brasileira) and the National Forest Inventory (IFN), which expanded the collections published under the Reflora project.</p>
+<p>The <a href="https://floradobrasil.jbrj.gov.br/reflora/herbarioVirtual/ConsultaPublicoHVUC/ConsultaPublicoHVUC.do">REFLORA Virtual Herbarium</a> platform was developed through a partnership between the <a href="https://www.gov.br/jbrj">Rio de Janeiro Botanical Garden (JBRJ)</a> and <a href="https://coppe.ufrj.br/en/home-en/">COPPE (Alberto Luiz Coimbra Institute for Graduate Studies and Research in Engineering, UFRJ)</a>. JBRJ hosts the system, overseeing the reception, storage, and publication of the herbarium images.</p>
+<p>Complementing the REFLORA Virtual Herbarium is the Flora platform, first launched in 2008. This system has evolved through several stages—including the Lista de Espécies da Flora do Brasil, <a href="http://doi.org/10.47871/jbrj2021004">Flora do Brasil 2020</a>, and now <a href="https://floradobrasil.jbrj.gov.br/consulta/">Flora e Funga do Brasil</a>—and is also part of the broader REFLORA Programme. Flora e Funga do Brasil serves as a critical validator for the nomenclature of the REFLORA Virtual Herbarium’s images, which are continuously refined and enriched by taxonomists working collaboratively in an online system.</p>
+<p>The REFLORA Programme has played a crucial role in Brazil’s success in meeting the goals of the Global Strategy for Plant Conservation, part of the Convention on Biological Diversity, for 2010 and 2020. As the challenges of understanding and studying biodiversity persist, the REFLORA systems will continue to provide unrestricted access to high-quality, accurate data on Brazil’s plants, algae, and fungi.<br>
+<br>
+</p>
+</section>
+<section id="the-reflora-virtual-herbarium" class="level2">
+<h2 data-anchor-id="the-reflora-virtual-herbarium">The REFLORA Virtual Herbarium</h2>
+<p>The mission to build a virtual herbarium to display the images of Brazilian plants housed in foreign herbaria was presented by the <a href="https://www.gov.br/cnpq/pt-br">Conselho Nacional de Desenvolvimento Científico e Tecnológico (CNPq)</a> to the Rio de Janeiro Botanical Garden (JBRJ) in December 2010. The objective was to provide the capacity to store and display high-quality data regarding Brazil’s Flora within a public institution. The Reflora Virtual Herbarium is designed to allow taxonomists to perform procedures similar to those they are accustomed to doing within physical collections. On this site, they have access to high-quality images rather than physical specimens, which can be consulted, re-determined, and typified, among other functionalities. Curators also have access to specimen determination reports to help update their physical collections. This innovative system has been available for study and update by a group of over 900 taxonomists involved in the List of Species of the Brazilian Flora and Brazilian Flora 2020 projects.</p>
+<p>The initial partners of this initiative were the herbaria <a href="https://www.kew.org"><strong>K</strong></a> (Royal Botanic Gardens, Kew), <a href="https://www.mnhn.fr/fr/collection-des-plantes-vasculaires"><strong>P</strong></a> (Muséum national d’histoire naturelle, Paris), and the <a href="https://www.gov.br/jbrj"><strong>RB</strong></a> (JBRJ) herbarium. From 2014 onwards, with the support of <a href="https://www.sibbr.gov.br"><strong>SiBBr</strong></a> (Sistema de Informação sobre a Biodiversidade Brasileira) and <a href="https://www.gov.br/florestal/pt-br/assuntos/ifn"><strong>IFN</strong></a> (Inventário Florestal Nacional), other European, American, and Brazilian herbaria were included in this initiative, many of which received equipment and training to digitize their plant specimens.</p>
+<p>Today, there are <strong>81</strong> collections published on this platform, including:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[**ACAM**](https://ipt.jbrj.gov.br/reflora/resource?r=acam) (Universidade Estadual da Paraíba), [**ALCB**](https://ipt.jbrj.gov.br/reflora/resource?r=alcb_herbarium) (Universidade Federal da Bahia), [**ASE**](https://ipt.jbrj.gov.br/reflora/resource?r=ase_herbarium) (Universidade Federal de Sergipe), [**B**](https://ipt.jbrj.gov.br/reflora/resource?r=b_herb) (Botanischer Garten und Botanisches Museum Berlin-Dahlem Herbarium), [**BRBA**](https://ipt.jbrj.gov.br/reflora/resource?r=brba) (Universidade Federal do Oeste da Bahia), [**CEN**](https://ipt.jbrj.gov.br/reflora/resource?r=cen) ( Embrapa Recursos Genéticos e Biotecnologia), [**CEPEC**](https://ipt.jbrj.gov.br/reflora/resource?r=cepec_herbarium) (Centro de Pesquisas do Cacau), [**CESJ**](https://ipt.jbrj.gov.br/reflora/resource?r=cesj) (Universidade Federal de Juiz de Fora UFJF), [**CGMS**](https://ipt.jbrj.gov.br/reflora/resource?r=cgms) (Universidade Federal de Mato Grosso do Sul), [**COR**](https://ipt.jbrj.gov.br/reflora/resource?r=cor) (Universidade Federal de Mato Grosso do Sul / Campus Pantanal), [**CRI**](https://ipt.jbrj.gov.br/reflora/resource?r=cri) (Universidade do Extremo Sul Catarinense), [**DVPR**](https://ipt.jbrj.gov.br/reflora/resource?r=dvpr) (Universidade Tecnológica Federal do Paraná), [**E**](https://ipt.jbrj.gov.br/reflora/resource?r=e_hv) (Royal Botanic Garden Edinburgh), [**EAC**](https://ipt.jbrj.gov.br/reflora/resource?r=eac_herbarium) (Universidade Federal do Ceará), [**EBC**](https://ipt.jbrj.gov.br/reflora/resource?r=ebc) (Economic Botany Collection), [**ECT**](https://ipt.jbrj.gov.br/reflora/resource?r=ect) (Embrapa Clima Temperado), [**ESA**](https://ipt.jbrj.gov.br/reflora/resource?r=esa_herbarium) (Universidade de São Paulo), [**EVB**](https://ipt.jbrj.gov.br/reflora/resource?r=evb) (Herbário Evaldo Buttura), [**FLOR**](https://ipt.jbrj.gov.br/reflora/resource?r=flor_herbarium) (Universidade Federal de Santa Catarina), [**FURB**](https://ipt.jbrj.gov.br/reflora/resource?r=furb_herbarium) (Universidade Regional de Blumenau), [**GH**](https://ipt.jbrj.gov.br/reflora/resource?r=gh_herb) (Harvard University Herbarium), [**HBR**](https://ipt.jbrj.gov.br/reflora/resource?r=hbr_herbarium) (Universidade Federal de Santa Catarina), [**HCF**](https://ipt.jbrj.gov.br/reflora/resource?r=hcf) (Campus Campo Mourão), [**HDCF**](https://ipt.jbrj.gov.br/reflora/resource?r=hdcf_herbarium) (Universidade Federal de Santa Maria), [**HEPH**](https://ipt.jbrj.gov.br/reflora/resource?r=heph) (Jardim Botânico de Brasília), [**HERBAM**](https://ipt.jbrj.gov.br/reflora/resource?r=herbam) (Amazônia Meridional), [**HJ**](https://ipt.jbrj.gov.br/reflora/resource?r=hj_herb) (Unidade Jataí), [**HRCB**](https://ipt.jbrj.gov.br/reflora/resource?r=hrcb) (Universidade Estadual Paulista UNESP), [**HSTM**](https://ipt.jbrj.gov.br/reflora/resource?r=hstm) (Universidade Federal do Oeste do Pará), [**HTO**](https://ipt.jbrj.gov.br/reflora/resource?r=hto) (UFT" ;), [**HUCP**](https://ipt.jbrj.gov.br/reflora/resource?r=hucp) (Pontífica Universidade Católica do Paraná PUC), [**HUEFS**](https://ipt.jbrj.gov.br/reflora/resource?r=huefs) (Universidade Estadual de Feira de Santana), [**HUEM**](https://ipt.jbrj.gov.br/reflora/resource?r=huem) (Universidade Estadual de Maringá), [**HUEMG**](https://ipt.jbrj.gov.br/reflora/resource?r=huemg) (Campus Carangola), [**HUENF**](https://ipt.jbrj.gov.br/reflora/resource?r=huenf) (Universidade Estadual do Norte Fluminense), [**HUFU**](https://ipt.jbrj.gov.br/reflora/resource?r=hufu_herbarium) (Universidade Federal de Uberlândia), [**HUNI**](https://ipt.jbrj.gov.br/reflora/resource?r=huni) (Universidade Federal do Estado do Rio de Janeiro), [**HURB**](https://ipt.jbrj.gov.br/reflora/resource?r=hurb) (Universidade do Recôncavo da Bahia), [**HVASF**](https://ipt.jbrj.gov.br/reflora/resource?r=hvasf) (Fundação Universidade Federal do Vale do São Francisco), [**HVAT**](https://ipt.jbrj.gov.br/reflora/resource?r=hvat) (Universidade do Vale do Taquari), [**IAN**](https://ipt.jbrj.gov.br/reflora/resource?r=ian) (Embrapa Amazônia Oriental), [**IBGE**](https://ipt.jbrj.gov.br/reflora/resource?r=ibge) (Herbário IBGE), [**ICN**](https://ipt.jbrj.gov.br/reflora/resource?r=icn) (Universidade Federal do Rio Grande Do Sul), [**JOI**](https://ipt.jbrj.gov.br/reflora/resource?r=joi) (Univille\Universidade da Região de Joinville), [**K**](https://ipt.jbrj.gov.br/reflora/resource?r=k_reflora) (Royal Botanic Gardens, Kew), [**LUSC**](https://ipt.jbrj.gov.br/reflora/resource?r=lusc) (Universidade do Estado de Santa Catarina), [**MAC**](https://ipt.jbrj.gov.br/reflora/resource?r=mac) (Instituto do Meio Ambiente do Estado de Alagoas), [**MBM**](https://ipt.jbrj.gov.br/reflora/resource?r=mbm_herbarium) (Museu Botânico Municipal \ Curitiba), [**MBML**](https://ipt.jbrj.gov.br/reflora/resource?r=mbml) (Museu de Biologia Mello Leitão), [**MG**](https://ipt.jbrj.gov.br/reflora/resource?r=mg_herbarium) (Museu Paraense Emílio Goeldi), [**MOH**](https://ipt.jbrj.gov.br/reflora/resource?r=moh) ( Missouri Botanical Garden), [**MUFAL**](https://ipt.jbrj.gov.br/reflora/resource?r=mufal) (Museu de História Natural da Universidade Federal de Alagoas), [**NYH**](https://ipt.jbrj.gov.br/reflora/resource?r=nyh) (The New York Botanical Garden), [**P**](https://ipt.jbrj.gov.br/reflora/resource?r=p_reflora) (Muséum national d’histoire naturelle, Paris), [**PC**](https://ipt.jbrj.gov.br/reflora/resource?r=pc_herb) (Cryptogamy Collection at the Muséum National d'Histoire Naturelle), [**PEL**](https://ipt.jbrj.gov.br/reflora/resource?r=pel) (Universidade Federal de Pelotas), [**PMSP**](https://ipt.jbrj.gov.br/reflora/resource?r=pmsp) (Prefeitura do Município de São Paulo), [**R**](https://ipt.jbrj.gov.br/reflora/resource?r=r_herbarium) (Museu Nacional), [**RB**](https://ipt.jbrj.gov.br/reflora/resource?r=rb_herbarium) (Jardim Botânico do Rio de Janeiro), [**RBR**](https://ipt.jbrj.gov.br/reflora/resource?r=rbr) (Universidade Federal Rural do Rio de Janeiro), [**REAL**](https://ipt.jbrj.gov.br/reflora/resource?r=real) (Universidade Federal da Fronteira Sul), [**RFA**](https://ipt.jbrj.gov.br/reflora/resource?r=rfa) (Universidade Federal do Rio de Janeiro), [**RFFP**](https://ipt.jbrj.gov.br/reflora/resource?r=rffp) (Faculdade de Formação de Professores da Universidade do Estado do Rio de Janeiro), [**RON**](https://ipt.jbrj.gov.br/reflora/resource?r=ron) (Universidade Federal de Rondônia), [**RSPF**](https://ipt.jbrj.gov.br/reflora/resource?r=rspf) (Universidade de Passo Fundo), [**S**](https://ipt.jbrj.gov.br/reflora/resource?r=s_reflora) (Naturhistoriska Riksmuseet), [**SAMES**](https://ipt.jbrj.gov.br/reflora/resource?r=sames) (Herbário São Mateus), [**SJRP**](https://ipt.jbrj.gov.br/reflora/resource?r=sjrp) (Universidade Estadual Paulista Júlio de Mesquita Filho), [**SLUI**](https://ipt.jbrj.gov.br/reflora/resource?r=slui) (Universidade Estadual do Maranhão), [**SOF**](https://ipt.jbrj.gov.br/reflora/resource?r=sof) (Swiss Orchid Foundation), [**SPF**](https://ipt.jbrj.gov.br/reflora/resource?r=spf_herbarium) (Universidade de são Paulo), [**TEPB**](https://ipt.jbrj.gov.br/reflora/resource?r=tepb) (Universidade Federal do Piauí), [**UB**](https://ipt.jbrj.gov.br/reflora/resource?r=ub_herbarium) (Universidade de Brasília), [**UFG**](https://ipt.jbrj.gov.br/reflora/resource?r=ufg) (Universidade Federal de Goiás), [**UFRN**](https://ipt.jbrj.gov.br/reflora/resource?r=ufrn) (Universidade Federal do Rio Grande do Norte), [**UNIP**](https://ipt.jbrj.gov.br/reflora/resource?r=unip) (Universidade Paulista), [**UNOP**](https://ipt.jbrj.gov.br/reflora/resource?r=unop) (Universidade Estadual do Oeste do Paraná), [**UPCB**](https://ipt.jbrj.gov.br/reflora/resource?r=upcb_herbarium) (Universidade Federal de Paraná), [**US**](https://ipt.jbrj.gov.br/reflora/resource?r=us_reflora) (Smithsonian Institute), [**VIES**](https://ipt.jbrj.gov.br/reflora/resource?r=vies_herbarium) (Universidade Federal do Espírito Santo), [**W**](https://ipt.jbrj.gov.br/reflora/resource?r=w_reflora) (Naturhistorisches Museum Wien).</code></pre>
+</div>
+</div>
+<p>for (i in seq_along(summary_df<span class="math inline">\(collectionCode)) {
+  if (i &lt; length(summary_df\)</span>collectionCode)) { cat(paste0(“**[“, summary_df<span class="math inline">\(collectionCode[i], "](", summary_df\)</span>Reflora_URL[i],”)**“,” (“, summary_df<span class="math inline">\(rightsHolder[i], "), "))
+  } else {
+    cat(paste0("**[", summary_df\)</span>collectionCode[i],”](“, summary_df<span class="math inline">\(Reflora_URL[i], ")**", " (", summary_df\)</span>rightsHolder[i],”).”)) } }</p>
+<p>There are now 4,602,397 images of specimens available in the REFLORA Virtual Herbarium. Among them, 157,652 are nomenclatural types and 1,985,843 are georeferenced records.</p>
+<p>If you are an herbarium curator and wish to publish images and data from your collection in REFLORA Virtual Herbarium, send a request to the contact email <strong>reflora@jbrj.gov.br</strong>.<br>
+<br>
+</p>
+</section>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="figures/refloraR_hex_sticker.png" class="img-fluid" style="align: right;" width="300"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mainbox">
+<div style="padding-left: 100px; padding-right: 100px; display: inline-block;">
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<section id="get-started" class="level3 quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<h3 data-anchor-id="get-started"><a href="./get-started/index.qmd">Get Started</a></h3>
+<p><strong>Welcome new users!</strong> Start here to learn how to install and use <code>refloraR</code>.</p>
+</section>
+<section id="articles" class="level3 quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<h3 data-anchor-id="articles"><a href="./articles/index.qmd">Articles</a></h3>
+<p>“How-to” articles to help you learn how to interact with <code>refloraR</code>.</p>
+</section>
+</div>
+</div>
+</div>
+</div>
+<p>:::</p>
+
+
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /container fluid -->
+
+
+
+
+</body></html>
