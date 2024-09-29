@@ -44,6 +44,8 @@ reflora_download <- function(herbarium = NULL,
                              verbose = TRUE,
                              dir = "reflora_download") {
 
+  # dir check
+  dir <- .arg_check_dir(dir)
 
   # Create a new directory to save the results.
   # If there is no directory... make one!

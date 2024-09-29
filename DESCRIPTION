@@ -20,12 +20,13 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     stringr,
-    utils
+    utils,
+    finch
 Suggests:
     quarto,
     testthat (>= 3.0.0)
 URL: 
-    https://dboslab.github.io/refloraR/,
+    https://dboslab.github.io/refloraR-website/,
     https://github.com/dboslab/refloraR
 BugReports: https://github.com/DBOSlab/refloraR/issues
 VignetteBuilder: quarto

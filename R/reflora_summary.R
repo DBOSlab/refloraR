@@ -50,6 +50,9 @@ reflora_summary <- function(herbarium = NULL,
                             save = TRUE,
                             dir = "reflora_summary") {
 
+  # dir check
+  dir <- .arg_check_dir(dir)
+
   # Get raw metadata from REFLORA repository
   ipt_info <- .get_ipt_info(herbarium)
   ipt_metadata = ipt_info[[1]]

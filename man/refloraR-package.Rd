@@ -11,7 +11,7 @@ Explore plant specimen collections from REFLORA Virtual Herbarium.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://dboslab.github.io/refloraR/}
+  \item \url{https://dboslab.github.io/refloraR-website/}
   \item \url{https://github.com/dboslab/refloraR}
   \item Report bugs at \url{https://github.com/DBOSlab/refloraR/issues}
 }

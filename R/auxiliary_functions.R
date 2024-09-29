@@ -99,3 +99,46 @@
 
   return(list(version, name, email, rights_holder, herb_url))
 }
+
+
+
+####WORKING HERE
+#_______________________________________________________________________________
+### Function get the downloaded herbarium version ###
+
+.update_ipt <- function(herb_URLs, ipt_metadata, i) {
+
+  herb_url <- paste0("https://ipt.jbrj.gov.br/reflora/resource?r=", herb_URLs[i])
+  version <- readLines(herb_url,
+                       encoding = "UTF-8",
+                       warn = F)
+
+  ini = which(grepl("latestVersion", version))[1]
+  end = which(grepl("None provided", version))[1]
+
+  version = version[ini:end]
+
+  version <- gsub("(\\s){2,}|\\'|,$", "", version)
+  version <- gsub(".*[>]", "", version)
+
+  contact <- ipt_metadata[[i]][which(grepl("dcat:contactPoint", ipt_metadata[[i]]))[1]]
+  # Regular expression for extracting the name
+  name_pattern <- 'vcard:fn "([^"]+)"'
+  name <- regmatches(contact, gregexpr(name_pattern, contact, perl = TRUE))[[1]]
+  name <- gsub('vcard:fn "|\"', "", name)  # Remove the 'vcard:fn "' part
+
+  # Regular expression for extracting the email
+  email_pattern <- '<mailto:([^>]+)>'
+  email <- regmatches(contact, gregexpr(email_pattern, contact, perl = TRUE))[[1]]
+  email <- gsub('<mailto:|>', "", email)  # Remove the '<mailto:' part
+
+  rights_holder <- gsub("^dct:title\\s\"|\\s-\\sHerb\u00E1rio Virtual.*",
+                        "", ipt_metadata[[i]][2])
+  rights_holder <- gsub("-\\sAmostras\\sBrasileiras.*",
+                        "", rights_holder)
+  rights_holder <- gsub(".*\\s-\\s|^\\s|\\s$|.*(H|h)erbarium-\\s|.*Herb\u00E1rio\\s(da|do)\\s|[.]\\sHerb\u00E1rio\\sVirtual\\s.*",
+                        "", rights_holder)
+
+  return(list(version, name, email, rights_holder, herb_url))
+}
+
