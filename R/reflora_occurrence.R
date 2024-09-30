@@ -126,7 +126,6 @@ reflora_ocurrence <- function(herbarium = NULL,
   #_____________________________________________________________________________
   # Filter by taxon only
 
-  taxon <- c("Dalbergia", "Mimosa")
   if (!is.null(taxon)) {
 
     tf_fam <- grepl("aceae$", taxon)

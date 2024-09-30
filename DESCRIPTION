@@ -21,7 +21,10 @@ LazyData: true
 Imports:
     stringr,
     utils,
-    finch
+    finch,
+    dplyr,
+    tidyr,
+    magrittr
 Suggests:
     quarto,
     testthat (>= 3.0.0)
