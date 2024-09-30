@@ -2,6 +2,7 @@
 
 export(reflora_download)
 export(reflora_summary)
+importFrom(dplyr,bind_rows)
 importFrom(dplyr,filter)
 importFrom(dplyr,mutate)
 importFrom(dplyr,select)

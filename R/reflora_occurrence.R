@@ -25,11 +25,14 @@
 #'
 #' @param state A vector with the the required Brazilian states
 #'
-#' @param path Pathway to the computer's directory, where the REFLORA-downloaded
-#' dwca folders are.
+#' @param path Optional; a pathway to the computer's directory, where the REFLORA-downloaded
+#' dwca folders are. If you do not provide a path, the function will download the
+#' most updated version of the REFLORA dwca files.
 #'
 #' @param updates Logical, if \code{FALSE}, the search will not check for the
-#' most updated version of the REFLORA dwca files.
+#' most updated version of the REFLORA dwca files. This argument is often used if
+#' you have defined a specific path to previously downloaded REFLORA dwca files
+#' either manually or with function \code{reflora_download}.
 #'
 #' @param verbose Logical, if \code{FALSE}, a message showing steps when
 #' summarizing specimen records will not be printed in the console in full.
@@ -63,7 +66,7 @@
 #'
 #' @importFrom stringr str_split
 #' @importFrom utils write.csv
-#' @importFrom dplyr filter bind_rows
+#' @importFrom dplyr bind_rows filter
 #' @importFrom magrittr "%>%"
 #'
 

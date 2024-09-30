@@ -22,9 +22,9 @@ Imports:
     stringr,
     utils,
     finch,
-    dplyr,
     tidyr,
-    magrittr
+    magrittr,
+    dplyr
 Suggests:
     quarto,
     testthat (>= 3.0.0)
