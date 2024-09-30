@@ -4,10 +4,10 @@
 \alias{reflora_ocurrence}
 \title{Retrieve specific taxon from the downloaded REFLORA collections}
 \usage{
-reflora_record(path = NULL,
-               herbarium = NULL,
+reflora_record(herbarium = NULL,
                taxon = NULL,
                state = NULL,
+               path = NULL,
                updates = TRUE,
                verbose = TRUE,
                save = TRUE,
@@ -22,6 +22,9 @@ for all REFLORA-hosted herbaria.}
 \item{taxon}{A vector with the required taxon.}
 
 \item{state}{A vector with the the required Brazilian states}
+
+\item{path}{Pathway to the computer's directory, where the REFLORA-downloaded
+dwca folders are.}
 
 \item{updates}{Logical, if \code{FALSE}, the search will not check for the
 most updated version of the REFLORA dwca files.}
@@ -47,11 +50,24 @@ Retrieve specific taxon from the Reflora virtual Herbarium at
 \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
 hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
 }
+\examples{
+\dontrun{
+
+fam_taxa <- c("Fabaceae", "Ochnaceae")
+reflora_ocurrence(herbarium = c("ALCB", "HUEFS", "K", "RB"),
+                 taxon = fam_taxa,
+                 verbose = TRUE,
+                 save = TRUE,
+                 dir = "reflora_ocurrence",
+                 filename = "reflora_ocurrence_search")
+}
+
+}
 \seealso{
 \code{\link{reflora_download}}
 
 \code{\link{reflora_parse}}
 }
 \author{
-Carlos Calderón and Domingos Cardoso
+Domingos Cardoso & Carlos Calderón
 }

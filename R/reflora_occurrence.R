@@ -1,16 +1,16 @@
 #' Retrieve specific taxon from the downloaded REFLORA collections
 #'
-#' @author Carlos Calderón and Domingos Cardoso
+#' @author Domingos Cardoso & Carlos Calderón
 #'
 #' @description Retrieve specific taxon from the Reflora virtual Herbarium at
 #' \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
 #' hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
 #'
 #' @usage
-#' reflora_record(path = NULL,
-#'                herbarium = NULL,
+#' reflora_record(herbarium = NULL,
 #'                taxon = NULL,
 #'                state = NULL,
+#'                path = NULL,
 #'                updates = TRUE,
 #'                verbose = TRUE,
 #'                save = TRUE,
@@ -24,6 +24,9 @@
 #' @param taxon A vector with the required taxon.
 #'
 #' @param state A vector with the the required Brazilian states
+#'
+#' @param path Pathway to the computer's directory, where the REFLORA-downloaded
+#' dwca folders are.
 #'
 #' @param updates Logical, if \code{FALSE}, the search will not check for the
 #' most updated version of the REFLORA dwca files.
@@ -45,6 +48,18 @@
 #'
 #' @seealso \code{\link{reflora_download}}
 #' @seealso \code{\link{reflora_parse}}
+#'
+#' @examples
+#' \dontrun{
+#'
+#' fam_taxa <- c("Fabaceae", "Ochnaceae")
+#' reflora_ocurrence(herbarium = c("ALCB", "HUEFS", "K", "RB"),
+#'                  taxon = fam_taxa,
+#'                  verbose = TRUE,
+#'                  save = TRUE,
+#'                  dir = "reflora_ocurrence",
+#'                  filename = "reflora_ocurrence_search")
+#'}
 #'
 #' @importFrom stringr str_split
 #' @importFrom utils write.csv
