@@ -84,13 +84,16 @@ for all REFLORA-hosted herbaria.</p></dd>
 
 
 <dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
-<dd><p>Pathway to the computer's directory, where the REFLORA-downloaded
-dwca folders are.</p></dd>
+<dd><p>Optional; a pathway to the computer's directory, where the REFLORA-downloaded
+dwca folders are. If you do not provide a path, the function will download the
+most updated version of the REFLORA dwca files.</p></dd>
 
 
 <dt id="arg-updates">updates<a class="anchor" aria-label="anchor" href="#arg-updates"></a></dt>
 <dd><p>Logical, if <code>FALSE</code>, the search will not check for the
-most updated version of the REFLORA dwca files.</p></dd>
+most updated version of the REFLORA dwca files. This argument is often used if
+you have defined a specific path to previously downloaded REFLORA dwca files
+either manually or with function <code>reflora_download</code>.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
