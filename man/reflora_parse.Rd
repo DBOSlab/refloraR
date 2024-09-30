@@ -5,11 +5,16 @@
 \title{Parse Darwin Core Archive files}
 \usage{
 reflora_parse(path = NULL,
+              herbarium = NULL,
               verbose = TRUE)
 }
 \arguments{
 \item{path}{Pathway to the computer's directory, where the REFLORA-downloaded
 dwca folders are.}
+
+\item{herbarium}{A vector of specific herbarium acronyms (collection code) in
+uppercase letters or leave it as \code{NULL} to parse specimen records for all
+herbarim dcwa folders in the defined path directory.}
 
 \item{verbose}{Logical, if \code{FALSE}, a message showing steps when
 summarizing specimen records will not be printed in the console in full.}

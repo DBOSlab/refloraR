@@ -103,7 +103,7 @@ reflora_summary <- function(herbarium = NULL,
   if (save) {
     .save_csv(df = summary_df,
               verbose = verbose,
-              filename = "reflora_summary.csv",
+              filename = "reflora_summary",
               dir = dir)
   }
 
