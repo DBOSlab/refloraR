@@ -130,19 +130,16 @@ reflora_ocurrence <- function(herbarium = NULL,
 
     tf_fam <- grepl("aceae$", taxon)
     if (any(tf_fam)) {
-      taxon <- taxon[tf_fam]
       df_filtered <- merged_occurrence_df %>%  dplyr::filter(family %in% taxon)
     }
 
     tf_gen <- grepl("^[^ ]+$", taxon) & !grepl("aceae$", taxon)
     if (any(tf_gen)) {
-      taxon <- taxon[tf_gen]
       df_filtered <- merged_occurrence_df %>% dplyr::filter(genus %in% taxon)
     }
 
     tf_spp <- grepl("\\s", taxon)
     if (any(tf_spp)) {
-      taxon <- taxon[tf_spp]
       df_filtered <- merged_occurrence_df %>% dplyr::filter(grepl(paste0(taxon, collapse = "|"),
                                                                   taxonName))
     }
