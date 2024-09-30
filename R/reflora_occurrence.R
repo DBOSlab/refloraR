@@ -63,7 +63,7 @@
 #'
 #' @importFrom stringr str_split
 #' @importFrom utils write.csv
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter bind_rows
 #' @importFrom magrittr "%>%"
 #'
 
@@ -120,8 +120,8 @@ reflora_ocurrence <- function(herbarium = NULL,
 
 
   # Extract each "occurrence.txt" data frame and merge them
-  merged_occurrence_df <- bind_rows(lapply(dwca_files,
-                                           function(x) x[["data"]][["occurrence.txt"]]))
+  merged_occurrence_df <- dplyr::bind_rows(lapply(dwca_files,
+                                                  function(x) x[["data"]][["occurrence.txt"]]))
 
   #_____________________________________________________________________________
   # Filter by taxon only
@@ -144,8 +144,8 @@ reflora_ocurrence <- function(herbarium = NULL,
     tf_spp <- grepl("\\s", taxon)
     if (any(tf_spp)) {
       taxon <- taxon[tf_spp]
-      df_filtered <- merged_occurrence_df %>%  dplyr::filter(grepl(paste0(taxon, collapse = "|"),
-                                                                   taxonName))
+      df_filtered <- merged_occurrence_df %>% dplyr::filter(grepl(paste0(taxon, collapse = "|"),
+                                                                  taxonName))
     }
 
   }
