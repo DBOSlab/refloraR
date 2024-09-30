@@ -55,6 +55,7 @@ hosted by the <a href="https://www.gov.br/jbrj" class="external-link">Rio de Jan
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">reflora_parse</span><span class="op">(</span>path <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>              herbarium <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>              verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -65,6 +66,12 @@ hosted by the <a href="https://www.gov.br/jbrj" class="external-link">Rio de Jan
 <dl><dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
 <dd><p>Pathway to the computer's directory, where the REFLORA-downloaded
 dwca folders are.</p></dd>
+
+
+<dt id="arg-herbarium">herbarium<a class="anchor" aria-label="anchor" href="#arg-herbarium"></a></dt>
+<dd><p>A vector of specific herbarium acronyms (collection code) in
+uppercase letters or leave it as <code>NULL</code> to parse specimen records for all
+herbarim dcwa folders in the defined path directory.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
