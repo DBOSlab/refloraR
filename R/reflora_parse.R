@@ -115,21 +115,24 @@ reflora_parse <- function(path = NULL,
   )
 
   for (i in seq_along(dwca_files)) {
-
+    
     dwca_files[[i]][["data"]][["occurrence.txt"]] <- dwca_files[[i]][["data"]][["occurrence.txt"]] %>%
-      dplyr::mutate(family = stringr::str_to_title(family),
-                    genus = stringr::str_to_title(genus),
-                    taxonName = paste(genus, specificEpithet, infraspecificEpithet)) %>%
+      dplyr::mutate(
+        family = stringr::str_to_title(family),
+        genus = stringr::str_to_title(genus),
+        taxonName = paste(genus, specificEpithet, infraspecificEpithet)
+      ) %>%
       dplyr::select(all_of(fields)) %>%
       dplyr::mutate(taxonRank = tidyr::replace_na(taxonRank, "FAMILY"))
-
-    dwca_files[[i]][["data"]][["occurrence.txt"]][["taxonName"]] <-
-      gsub("(\\sNA){1,}$", "", dwca_files[[i]][["data"]][["occurrence.txt"]][["taxonName"]])
-
-    dwca_files[[i]][["data"]][["occurrence.txt"]][["taxonName"]] <-
-      gsub("^NA$", NA, dwca_files[[i]][["data"]][["occurrence.txt"]][["taxonName"]])
-
+    
+    # Correct the access to taxonName column using $
+    dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName <- 
+      gsub("(\\sNA){1,}$", "", dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName)
+    
+    dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName <- 
+      gsub("^NA$", NA, dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName)
   }
+  
 
   # Parsing csv files, if they exist
   tf <- lapply(dwca_filenames, function(x) grepl("[.]csv$", x))

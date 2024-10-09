@@ -7,15 +7,15 @@
 #' hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
 #'
 #' @usage
-#' reflora_record(herbarium = NULL,
-#'                taxon = NULL,
-#'                state = NULL,
-#'                path = NULL,
-#'                updates = TRUE,
-#'                verbose = TRUE,
-#'                save = TRUE,
-#'                dir = "reflora_ocurrence",
-#'                filename = "reflora_ocurrence_search")
+#' reflora_occurrence(herbarium = NULL,
+#'                    taxon = NULL,
+#'                    state = NULL,
+#'                    path = NULL,
+#'                    updates = TRUE,
+#'                    verbose = TRUE,
+#'                    save = TRUE,
+#'                    dir = "reflora_ocurrence",
+#'                    filename = "reflora_ocurrence_search")
 #'
 #' @param herbarium A vector of specific herbarium acronyms (collection code) in
 #' uppercase letters or leave it as \code{NULL} to summarize specimen records
@@ -56,12 +56,12 @@
 #' \dontrun{
 #'
 #' fam_taxa <- c("Fabaceae", "Ochnaceae")
-#' reflora_ocurrence(herbarium = c("ALCB", "HUEFS", "K", "RB"),
-#'                  taxon = fam_taxa,
-#'                  verbose = TRUE,
-#'                  save = TRUE,
-#'                  dir = "reflora_ocurrence",
-#'                  filename = "reflora_ocurrence_search")
+#' reflora_occurrence(herbarium = c("ALCB", "HUEFS", "K", "RB"),
+#'                    taxon = fam_taxa,
+#'                    verbose = TRUE,
+#'                    save = TRUE,
+#'                    dir = "reflora_ocurrence",
+#'                    filename = "reflora_ocurrence_search")
 #'}
 #'
 #' @importFrom stringr str_split
@@ -70,15 +70,15 @@
 #' @importFrom magrittr "%>%"
 #'
 
-reflora_ocurrence <- function(herbarium = NULL,
-                              taxon = NULL,
-                              state = NULL,
-                              path = NULL,
-                              updates = TRUE,
-                              verbose = TRUE,
-                              save = TRUE,
-                              dir = "reflora_ocurrence",
-                              filename = "reflora_ocurrence_search") {
+reflora_occurrence <- function(herbarium = NULL,
+                               taxon = NULL,
+                               state = NULL,
+                               path = NULL,
+                               updates = TRUE,
+                               verbose = TRUE,
+                               save = TRUE,
+                               dir = "reflora_ocurrence",
+                               filename = "reflora_ocurrence_search") {
 
   # dir check
   dir <- .arg_check_dir(dir)
