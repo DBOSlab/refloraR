@@ -69,6 +69,8 @@
 #' @importFrom dplyr bind_rows filter
 #' @importFrom magrittr "%>%"
 #'
+#' @export
+#'
 
 reflora_occurrence <- function(herbarium = NULL,
                                taxon = NULL,
