@@ -67,3 +67,41 @@
   }
 }
 
+
+#_______________________________________________________________________________
+# Check the recordYear input
+.arg_check_recordYear <- function(x) {
+  if (length(x) > 2) {
+    stop("The argument 'recordYear' should be either a single year or a range of two years with four digits.")
+  }
+}
+
+
+#_______________________________________________________________________________
+# Check the state input
+.arg_check_state <- function(x) {
+  if (x) {
+    stop("The argument 'recordYear' should be either a single year or a range of two years with four digits.")
+  }
+}
+
+
+#_______________________________________________________________________________
+# Check the herbarium input
+.arg_check_herbarium <- function(x) {
+
+  temp <- reflora_summary(herbarium = NULL,
+                          verbose = FALSE,
+                          save = FALSE)
+
+  l <- which(x %in% temp$collectionCode == FALSE)
+
+  if (length(l) >=1) {
+
+    stop(paste0("The chosen herbarium collections ", paste0(x[l], collapse = ", "),
+                " does not exist in the REFLORA Virtual Herbarium.\n\n"),
+         "Use the fucntion 'reflora_summary' to check which are the collections currently available in the REFLORA.")
+  }
+}
+
+

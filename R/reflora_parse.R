@@ -109,13 +109,12 @@ reflora_parse <- function(path = NULL,
     "typeStatus",
     "identifiedBy",
     "dateIdentified",
-    "identificationVerificationStatus",
     "identificationRemarks",
     "basisOfRecord"
   )
 
   for (i in seq_along(dwca_files)) {
-    
+
     dwca_files[[i]][["data"]][["occurrence.txt"]] <- dwca_files[[i]][["data"]][["occurrence.txt"]] %>%
       dplyr::mutate(
         family = stringr::str_to_title(family),
@@ -124,15 +123,14 @@ reflora_parse <- function(path = NULL,
       ) %>%
       dplyr::select(all_of(fields)) %>%
       dplyr::mutate(taxonRank = tidyr::replace_na(taxonRank, "FAMILY"))
-    
-    # Correct the access to taxonName column using $
-    dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName <- 
+
+    dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName <-
       gsub("(\\sNA){1,}$", "", dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName)
-    
-    dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName <- 
+
+    dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName <-
       gsub("^NA$", NA, dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName)
   }
-  
+
 
   # Parsing csv files, if they exist
   tf <- lapply(dwca_filenames, function(x) grepl("[.]csv$", x))

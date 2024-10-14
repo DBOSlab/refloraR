@@ -101,4 +101,3 @@
   return(list(version, name, email, rights_holder, herb_url))
 }
 
-

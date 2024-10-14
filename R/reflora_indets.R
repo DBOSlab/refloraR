@@ -7,10 +7,9 @@
 #' hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
 #'
 #' @usage
-#' reflora_occurrence(herbarium = NULL,
-#'                    taxon = NULL,
+#' reflora_indets(taxon = NULL,
+#'                    herbarium = NULL,
 #'                    state = NULL,
-#'                    recordYear = NULL,
 #'                    path = NULL,
 #'                    updates = TRUE,
 #'                    verbose = TRUE,
@@ -18,13 +17,16 @@
 #'                    dir = "reflora_ocurrence",
 #'                    filename = "reflora_ocurrence_search")
 #'
+#' @param taxon A vector with the required taxon.
+#'
 #' @param herbarium A vector of specific herbarium acronyms (collection code) in
 #' uppercase letters or leave it as \code{NULL} to summarize specimen records
 #' for all REFLORA-hosted herbaria.
 #'
-#' @param taxon A vector with the required taxon.
-#'
 #' @param state A vector with the the required Brazilian states.
+#'
+#' @param level A vector with the taxonomic level as \code{FAMILY} or \code{GENUS}
+#' or both.
 #'
 #' @param recordYear A vector with the required record year or year range. For example,
 #' \code{"1992"} or \code{c("1992", "2024")}
@@ -60,8 +62,7 @@
 #' \dontrun{
 #'
 #' fam_taxa <- c("Fabaceae", "Ochnaceae")
-#' reflora_occurrence(herbarium = c("ALCB", "HUEFS", "K", "RB"),
-#'                    taxon = fam_taxa,
+#' reflora_indets(taxon = fam_taxa,
 #'                    verbose = TRUE,
 #'                    save = TRUE,
 #'                    dir = "reflora_ocurrence",
@@ -74,16 +75,16 @@
 #' @importFrom magrittr "%>%"
 #'
 
-reflora_occurrence <- function(herbarium = NULL,
-                               taxon = NULL,
-                               state = NULL,
-                               recordYear = NULL,
-                               path = NULL,
-                               updates = TRUE,
-                               verbose = TRUE,
-                               save = TRUE,
-                               dir = "reflora_occurrence",
-                               filename = "reflora_occurrence_search") {
+reflora_indets <- function(taxon = NULL,
+                           herbarium = NULL,
+                           state = NULL,
+                           level = NULL,
+                           path = NULL,
+                           updates = TRUE,
+                           verbose = TRUE,
+                           save = TRUE,
+                           dir = "reflora_occurrence",
+                           filename = "reflora_occurrence_search") {
 
 
   # herbarium check
@@ -94,9 +95,6 @@ reflora_occurrence <- function(herbarium = NULL,
 
   # state check
   .arg_check_state(state)
-
-  # recordYear check
-  .arg_check_recordYear(recordYear)
 
   # dir check
   dir <- .arg_check_dir(dir)
@@ -145,7 +143,7 @@ reflora_occurrence <- function(herbarium = NULL,
                                       function(x) x[["data"]][["occurrence.txt"]]))
 
   #_____________________________________________________________________________
-  # Filter by taxon only
+  # Filter by taxon only FILTRAR OS NAs
 
   if (!is.null(taxon)) {
 
@@ -161,13 +159,6 @@ reflora_occurrence <- function(herbarium = NULL,
         dplyr::filter(genus %in% taxon)
     }
 
-    tf_spp <- grepl("\\s", taxon)
-    if (any(tf_spp)) {
-      occur_df <- occur_df %>%
-        dplyr::filter(grepl(paste0(taxon, collapse = "|"),
-                            taxonName))
-    }
-
   }
 
 
@@ -177,20 +168,6 @@ reflora_occurrence <- function(herbarium = NULL,
   if (!is.null(state)) {
     doccur_df <- occur_df %>%
       dplyr::filter(stateProvince %in% state)
-  }
-
-
-  #_____________________________________________________________________________
-  # Filter by record year only
-
-  if (!is.null(recordYear)) {
-    if (length(recordYear) == 1) {
-      # If only one year is given, filter for that specific year
-      occur_df <- occur_df[occur_df$year == recordYear, ]
-    } else if (length(recordYear) == 2) {
-      # If a range is given, filter for records within that range (inclusive)
-      occur_df <- occur_df[occur_df$year >= recordYear[1] & occur_df$year <= recordYear[2], ]
-    }
   }
 
 
