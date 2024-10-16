@@ -3,6 +3,7 @@
 export(reflora_download)
 export(reflora_duplicates)
 export(reflora_fix)
+export(reflora_occurrence)
 export(reflora_reorder)
 export(reflora_summary)
 importFrom(dplyr,bind_rows)
