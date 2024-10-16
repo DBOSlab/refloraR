@@ -24,7 +24,7 @@
 #'
 #' @param taxon A vector with the required taxon.
 #'
-#' @param state A vector with the the required Brazilian states.
+#' @param state A vector with the the required Brazilian states (full name or acronym).
 #'
 #' @param recordYear A vector with the required record year or year range. For example,
 #' \code{"1992"} or \code{c("1992", "2024")}
@@ -72,7 +72,7 @@
 #' @importFrom utils write.csv
 #' @importFrom dplyr bind_rows filter
 #' @importFrom magrittr "%>%"
-#'
+#' @importFrom stringi stri_trans_general
 
 reflora_occurrence <- function(herbarium = NULL,
                                taxon = NULL,
@@ -93,7 +93,7 @@ reflora_occurrence <- function(herbarium = NULL,
   .arg_check_herbarium(herbarium)
 
   # state check
-  .arg_check_state(state)
+  state <- .arg_check_state(state)
 
   # recordYear check
   .arg_check_recordYear(recordYear)
@@ -175,7 +175,7 @@ reflora_occurrence <- function(herbarium = NULL,
   # Filter by state only
 
   if (!is.null(state)) {
-    doccur_df <- occur_df %>%
+    occur_df <- occur_df %>%
       dplyr::filter(stateProvince %in% state)
   }
 
