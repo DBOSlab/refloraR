@@ -7,8 +7,12 @@
 <url><loc>/reference/index.html</loc></url>
 <url><loc>/reference/refloraR-package.html</loc></url>
 <url><loc>/reference/reflora_download.html</loc></url>
+<url><loc>/reference/reflora_duplicates.html</loc></url>
+<url><loc>/reference/reflora_fix.html</loc></url>
+<url><loc>/reference/reflora_indets.html</loc></url>
 <url><loc>/reference/reflora_occurrence.html</loc></url>
 <url><loc>/reference/reflora_parse.html</loc></url>
+<url><loc>/reference/reflora_reorder.html</loc></url>
 <url><loc>/reference/reflora_summary.html</loc></url>
 </urlset>
 
