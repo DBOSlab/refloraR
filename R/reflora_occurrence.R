@@ -80,7 +80,8 @@
 #'
 #' @importFrom stringr str_split
 #' @importFrom utils write.csv
-#' @importFrom dplyr bind_rows filter
+#' @importFrom dplyr bind_rows filter arrange across
+#' @importFrom tidyselect all_of
 #' @importFrom magrittr "%>%"
 #' @importFrom stringi stri_trans_general
 #'

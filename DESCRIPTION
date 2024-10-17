@@ -25,7 +25,8 @@ Imports:
     finch,
     tidyr,
     magrittr,
-    dplyr
+    dplyr,
+    tidyselect
 Suggests:
     quarto,
     testthat (>= 3.0.0)

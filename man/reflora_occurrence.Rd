@@ -8,6 +8,7 @@ reflora_occurrence(herbarium = NULL,
                    taxon = NULL,
                    state = NULL,
                    recordYear = NULL,
+                   reorder = c("herbarium", "taxa", "collector", "area", "year")
                    path = NULL,
                    updates = TRUE,
                    verbose = TRUE,
@@ -26,6 +27,15 @@ for all REFLORA-hosted herbaria.}
 
 \item{recordYear}{A vector with the required record year or year range. For example,
 \code{"1992"} or \code{c("1992", "2024")}}
+
+\item{reorder}{Provide a vector with any of \code{c("herbarium", "taxa", "collector", "area", "year")}
+to reorder the retrieved records based on the specified columns. By default, the
+data will be redordered according to this vector, meaning the returned dataset
+will be specifcially reordered based on the columns \code{'herbarium'}, \code{'family'},
+\code{'genus'}, \code{'specificEpithet'}, \code{'recordedBy'}, \code{'recordNumber'},
+\code{'country'}, \code{'stateProvince'}, \code{'municipality'} and \code{'year'}.
+You can modify the order of the vector or provide a subset of these columns to
+customize the reordering of the data accordingly.}
 
 \item{path}{Optional; a pathway to the computer's directory, where the REFLORA-downloaded
 dwca folders are. If you do not provide a path, the function will download the
