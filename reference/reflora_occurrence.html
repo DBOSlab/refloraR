@@ -54,16 +54,17 @@ hosted by the <a href="https://www.gov.br/jbrj" class="external-link">Rio de Jan
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">reflora_occurrence</span><span class="op">(</span>herbarium <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                   taxon <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                   state <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                   recordYear <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                   path <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                   updates <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                   verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                   save <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                   dir <span class="op">=</span> <span class="st">"reflora_ocurrence"</span>,</span>
-<span>                   filename <span class="op">=</span> <span class="st">"reflora_ocurrence_search"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre><code>reflora_occurrence(herbarium = NULL,
+                   taxon = NULL,
+                   state = NULL,
+                   recordYear = NULL,
+                   reorder = c("herbarium", "taxa", "collector", "area", "year")
+                   path = NULL,
+                   updates = TRUE,
+                   verbose = TRUE,
+                   save = TRUE,
+                   dir = "reflora_ocurrence",
+                   filename = "reflora_ocurrence_search")</code></pre></div>
     </div>
 
     <div id="arguments">
@@ -87,6 +88,17 @@ for all REFLORA-hosted herbaria.</p></dd>
 <dt id="arg-recordyear">recordYear<a class="anchor" aria-label="anchor" href="#arg-recordyear"></a></dt>
 <dd><p>A vector with the required record year or year range. For example,
 <code>"1992"</code> or <code>c("1992", "2024")</code></p></dd>
+
+
+<dt id="arg-reorder">reorder<a class="anchor" aria-label="anchor" href="#arg-reorder"></a></dt>
+<dd><p>Provide a vector with any of <code>c("herbarium", "taxa", "collector", "area", "year")</code>
+to reorder the retrieved records based on the specified columns. By default, the
+data will be redordered according to this vector, meaning the returned dataset
+will be specifcially reordered based on the columns <code>'herbarium'</code>, <code>'family'</code>,
+<code>'genus'</code>, <code>'specificEpithet'</code>, <code>'recordedBy'</code>, <code>'recordNumber'</code>,
+<code>'country'</code>, <code>'stateProvince'</code>, <code>'municipality'</code> and <code>'year'</code>.
+You can modify the order of the vector or provide a subset of these columns to
+customize the reordering of the data accordingly.</p></dd>
 
 
 <dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
