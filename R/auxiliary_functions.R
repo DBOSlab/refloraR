@@ -101,3 +101,66 @@
   return(list(version, name, email, rights_holder, herb_url))
 }
 
+
+#_______________________________________________________________________________
+### Function to reorder retrieved data based on specific columns ###
+
+.reorder_df <- function(df, reorder) {
+
+  if (!is.null(reorder)) {
+    columns_to_order <- reorder
+  } else {
+    columns_to_order <- c("herbarium", "taxa", "collector", "area", "year")
+  }
+
+  tf <- columns_to_order %in% "herbarium"
+  if (any(tf)) {
+    columns_to_order[tf] <- "collectionCode"
+  }
+  tf <- columns_to_order %in% "taxa"
+  if (any(tf)) {
+    columns_to_order <- .replace_cols(columns_to_order,
+                                      replace = c("family", "genus", "specificEpithet"),
+                                      columns_to_replace = "taxa")
+  }
+  tf <- columns_to_order %in% "collector"
+  if (any(tf)) {
+    columns_to_order <- .replace_cols(columns_to_order,
+                                      replace = c("recordedBy", "recordNumber"),
+                                      columns_to_replace = "collector")
+  }
+  tf <- columns_to_order %in% "area"
+  if (any(tf)) {
+    columns_to_order <- .replace_cols(columns_to_order,
+                                      replace = c("country", "stateProvince", "municipality"),
+                                      columns_to_replace = "area")
+  }
+
+  # Arrange the dataframe based on the vector of column names
+  df <- df %>%
+    dplyr::arrange(dplyr::across(tidyselect::all_of(columns_to_order)))
+
+  return(df)
+}
+
+.replace_cols <- function (columns_to_order,
+                           replace,
+                           columns_to_replace) {
+  index <- which(columns_to_order == columns_to_replace)
+  # Perform the replacement based on the index position
+  if (index == 1) {
+    # Special handling if 'herbarium' is the first element
+    columns_to_order <- c(replace, columns_to_order[(index+1):length(columns_to_order)])
+  } else if (index == length(columns_to_order)) {
+    # Special handling if the element to replace is the last element
+    columns_to_order <- c(columns_to_order[1:(index-1)], replace)
+  } else {
+    # Standard replacement for elements in the middle
+    columns_to_order <- c(columns_to_order[1:(index-1)], replace,
+                          columns_to_order[(index+1):length(columns_to_order)])
+  }
+
+  return(columns_to_order)
+}
+
+

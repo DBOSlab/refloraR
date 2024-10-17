@@ -11,6 +11,7 @@
 #'                    taxon = NULL,
 #'                    state = NULL,
 #'                    recordYear = NULL,
+#'                    reorder = c("herbarium", "taxa", "collector", "area", "year")
 #'                    path = NULL,
 #'                    updates = TRUE,
 #'                    verbose = TRUE,
@@ -28,6 +29,15 @@
 #'
 #' @param recordYear A vector with the required record year or year range. For example,
 #' \code{"1992"} or \code{c("1992", "2024")}
+#'
+#' @param reorder Provide a vector with any of \code{c("herbarium", "taxa", "collector", "area", "year")}
+#' to reorder the retrieved records based on the specified columns. By default, the
+#' data will be redordered according to this vector, meaning the returned dataset
+#' will be specifcially reordered based on the columns \code{'herbarium'}, \code{'family'},
+#' \code{'genus'}, \code{'specificEpithet'}, \code{'recordedBy'}, \code{'recordNumber'},
+#' \code{'country'}, \code{'stateProvince'}, \code{'municipality'} and \code{'year'}.
+#' You can modify the order of the vector or provide a subset of these columns to
+#' customize the reordering of the data accordingly.
 #'
 #' @param path Optional; a pathway to the computer's directory, where the REFLORA-downloaded
 #' dwca folders are. If you do not provide a path, the function will download the
@@ -81,6 +91,7 @@ reflora_occurrence <- function(herbarium = NULL,
                                taxon = NULL,
                                state = NULL,
                                recordYear = NULL,
+                               reorder = c("herbarium", "taxa", "collector", "area", "year"),
                                path = NULL,
                                updates = TRUE,
                                verbose = TRUE,
@@ -110,7 +121,7 @@ reflora_occurrence <- function(herbarium = NULL,
     dir.create(dir)
   }
 
-  if (!is.null(path)) {
+   if (!is.null(path)) {
     if (updates) {
       if (verbose) {
         message(paste0("Updating dwca files within '",
@@ -195,6 +206,11 @@ reflora_occurrence <- function(herbarium = NULL,
       occur_df <- occur_df[occur_df$year >= recordYear[1] & occur_df$year <= recordYear[2], ]
     }
   }
+
+
+  #_____________________________________________________________________________
+  # Reorder the data by the order of specific columns
+  occur_df <- .reorder_df(occur_df, reorder)
 
 
   # Save the search results if param save is TRUE
