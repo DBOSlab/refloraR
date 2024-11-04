@@ -23,7 +23,8 @@
 #' uppercase letters or leave it as \code{NULL} to summarize specimen records
 #' for all REFLORA-hosted herbaria.
 #'
-#' @param taxon A vector with the required taxon.
+#' @param taxon A vector with the required taxon. It can be one or a vector of
+#' multiple scientific names at family, genus or species level.
 #'
 #' @param state A vector with the required Brazilian state(s) (full name or acronym).
 #'
@@ -101,108 +102,108 @@ reflora_occurrence <- function(herbarium = NULL,
                                save = TRUE,
                                dir = "reflora_occurrence",
                                filename = "reflora_occurrence_search") {
-  
-  
+
+
   # herbarium check
   if (verbose & !is.null(herbarium)) {
     message("Checking whether the input herbarium code exist in the REFLORA...")
   }
   .arg_check_herbarium(herbarium)
-  
+
   # state check
   if(!is.null(state)){
     state <- .arg_check_state(state)
-  } 
-  
-  
+  }
+
+
   # recordYear check
   .arg_check_recordYear(recordYear)
-  
+
   # dir check
   dir <- .arg_check_dir(dir)
-  
+
   # Create a new directory to save the dataframe
   # If there is no directory create one in the working directory
   if (!dir.exists(dir)) {
     dir.create(dir)
   }
-  
+
   if (!is.null(path)) {
     if (updates) {
       if (verbose) {
         message(paste0("Updating dwca files within '",
                        path, "'"))
       }
-      
+
       # The reflora_download will get updated dwca files only if any of the current
       # versions differ from the REFLORA IPT
       reflora_download(herbarium = herbarium,
                        verbose = verbose,
                        dir = path)
     }
-    
+
     # Parse REFLORA dwca files
     dwca_files <- reflora_parse(path = path,
                                 herbarium = herbarium,
                                 verbose = verbose)
   } else {
-    
+
     # The reflora_download will get updated dwca files only if any of the current
     # versions differ from the REFLORA IPT
     reflora_download(herbarium = herbarium,
                      verbose = verbose,
                      dir = "reflora_download")
-    
+
     # Parse REFLORA dwca files
     dwca_files <- reflora_parse(path = "reflora_download",
                                 herbarium = herbarium,
                                 verbose = verbose)
   }
-  
-  
+
+
   # Extract each "occurrence.txt" data frame and merge them
   occur_df <- dplyr::bind_rows(lapply(dwca_files,
                                       function(x) x[["data"]][["occurrence.txt"]]))
-  
+
   #_____________________________________________________________________________
   # Filter by taxon only
-  
+
   if (!is.null(taxon)) {
-    
+
     tf_fam <- grepl("aceae$", taxon)
     if (any(tf_fam)) {
       occur_df <- occur_df %>%
         dplyr::filter(family %in% taxon)
     }
-    
+
     tf_gen <- grepl("^[^ ]+$", taxon) & !grepl("aceae$", taxon)
     if (any(tf_gen)) {
       occur_df <- occur_df %>%
         dplyr::filter(genus %in% taxon)
     }
-    
+
     tf_spp <- grepl("\\s", taxon)
     if (any(tf_spp)) {
       occur_df <- occur_df %>%
         dplyr::filter(grepl(paste0(taxon, collapse = "|"),
                             taxonName))
     }
-    
+
   }
-  
-  
+
+
   #_____________________________________________________________________________
   # Filter by state only
-  
+
   if (!is.null(state)) {
     occur_df <- occur_df %>%
       dplyr::filter(stateProvince %in% state)
   }
-  
-  
+
+
   #_____________________________________________________________________________
   # Filter by record year only
-  
+
   if (!is.null(recordYear)) {
     if (length(recordYear) == 1) {
       # If only one year is given, filter for that specific year
@@ -212,13 +213,13 @@ reflora_occurrence <- function(herbarium = NULL,
       occur_df <- occur_df[occur_df$year >= recordYear[1] & occur_df$year <= recordYear[2], ]
     }
   }
-  
-  
+
+
   #_____________________________________________________________________________
   # Reorder the data by the order of specific columns
   occur_df <- .reorder_df(occur_df, reorder)
-  
-  
+
+
   # Save the search results if param save is TRUE
   if (save) {
     .save_csv(df = occur_df,
@@ -226,6 +227,6 @@ reflora_occurrence <- function(herbarium = NULL,
               filename = filename,
               dir = dir)
   }
-  
+
   return(occur_df)
 }
