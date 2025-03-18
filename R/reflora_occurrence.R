@@ -81,7 +81,7 @@
 #'
 #' @importFrom stringr str_split
 #' @importFrom utils write.csv
-#' @importFrom dplyr bind_rows filter arrange across
+#' @importFrom dplyr bind_rows arrange across
 #' @importFrom tidyselect all_of
 #' @importFrom magrittr "%>%"
 #' @importFrom stringi stri_trans_general
@@ -114,7 +114,6 @@ reflora_occurrence <- function(herbarium = NULL,
   if (!is.null(state)) {
     state <- .arg_check_state(state)
   }
-
 
   # recordYear check
   .arg_check_recordYear(recordYear)
@@ -177,38 +176,36 @@ reflora_occurrence <- function(herbarium = NULL,
   # Filter by taxon only
 
   if (!is.null(taxon)) {
+    if (verbose) {
+      message("\nFiltering taxon names... ")
+    }
+
     tf_fam <- grepl("aceae$", taxon)
     if (any(tf_fam)) {
       taxon_fam <- taxon[tf_fam]
-      if (verbose) {
-        message(paste0("Filtering the family names... ", taxon_fam))
+      if (any(tf)) {
+        occur_df_fam <- occur_df[tf, ]
+        temp_occur_df <- occur_df_fam
       }
-      occur_df_fam <- occur_df %>%
-        dplyr::filter(family %in% taxon_fam)
-      temp_occur_df <- occur_df_fam
     }
 
     tf_gen <- grepl("^[^ ]+$", taxon) & !grepl("aceae$", taxon)
     if (any(tf_gen)) {
       taxon_gen <- taxon[tf_gen]
-      if (verbose) {
-        message(paste0("Filtering the generic names... ", taxon_gen))
+      if (any(tf)) {
+        occur_df_gen <- occur_df[tf, ]
+        temp_occur_df <- rbind(temp_occur_df, occur_df_gen)
       }
-      occur_df_gen <- occur_df %>%
-        dplyr::filter(genus %in% taxon_gen)
-      temp_occur_df <- rbind(temp_occur_df, occur_df_gen)
     }
 
     tf_spp <- grepl("\\s", taxon)
     if (any(tf_spp)) {
       taxon_spp <- taxon[tf_spp]
-      if (verbose) {
-        message(paste0("Filtering the species names... ", taxon_spp))
+      tf <- occur_df$taxonName %in% taxon_spp
+      if (any(tf)) {
+        occur_df_spp <- occur_df[tf, ]
+        temp_occur_df <- rbind(temp_occur_df, occur_df_spp)
       }
-      occur_df_spp <- occur_df %>%
-        dplyr::filter(grepl(paste0(taxon_spp, collapse = "|"),
-                            taxonName))
-      temp_occur_df <- rbind(temp_occur_df, occur_df_spp)
     }
 
     if (nrow(temp_occur_df) != 0){
@@ -222,8 +219,13 @@ reflora_occurrence <- function(herbarium = NULL,
   # Filter by state only
 
   if (!is.null(state)) {
-    occur_df <- occur_df %>%
-      dplyr::filter(stateProvince %in% state)
+    if (verbose) {
+      message("\nFiltering states... ")
+    }
+    tf <- occur_df$stateProvince %in% state
+    if (any(tf)) {
+      occur_df <- occur_df[tf, ]
+    }
   }
 
 
@@ -231,6 +233,9 @@ reflora_occurrence <- function(herbarium = NULL,
   # Filter by record year only
 
   if (!is.null(recordYear)) {
+    if (verbose) {
+      message("\nFiltering recordYear... ")
+    }
     if (length(recordYear) == 1) {
       # If only one year is given, filter for that specific year
       occur_df <- occur_df[occur_df$year == recordYear, ]
