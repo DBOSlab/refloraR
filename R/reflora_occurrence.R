@@ -111,7 +111,7 @@ reflora_occurrence <- function(herbarium = NULL,
   .arg_check_herbarium(herbarium)
 
   # state check
-  if(!is.null(state)){
+  if (!is.null(state)) {
     state <- .arg_check_state(state)
   }
 
@@ -165,6 +165,9 @@ reflora_occurrence <- function(herbarium = NULL,
   occur_df <- dplyr::bind_rows(lapply(dwca_files,
                                       function(x) x[["data"]][["occurrence.txt"]]))
 
+  temp_occur_df <- data.frame(matrix(ncol = length(names(occur_df)), nrow = 0))
+  colnames(temp_occur_df) <- names(occur_df)
+
   #_____________________________________________________________________________
   # Filter by taxon only
 
@@ -172,21 +175,31 @@ reflora_occurrence <- function(herbarium = NULL,
 
     tf_fam <- grepl("aceae$", taxon)
     if (any(tf_fam)) {
-      occur_df <- occur_df %>%
-        dplyr::filter(family %in% taxon)
+      taxon_fam <- taxon[tf_fam]
+      occur_df_fam <- occur_df %>%
+        dplyr::filter(family %in% taxon_fam)
+      temp_occur_df <- occur_df_fam
     }
 
     tf_gen <- grepl("^[^ ]+$", taxon) & !grepl("aceae$", taxon)
     if (any(tf_gen)) {
-      occur_df <- occur_df %>%
-        dplyr::filter(genus %in% taxon)
+      taxon_gen <- taxon[tf_gen]
+      occur_df_gen <- occur_df %>%
+        dplyr::filter(genus %in% taxon_gen)
+      temp_occur_df <- rbind(temp_occur_df, occur_df_gen)
     }
 
     tf_spp <- grepl("\\s", taxon)
     if (any(tf_spp)) {
-      occur_df <- occur_df %>%
-        dplyr::filter(grepl(paste0(taxon, collapse = "|"),
+      taxon_spp <- taxon[tf_spp]
+      occur_df_spp <- occur_df %>%
+        dplyr::filter(grepl(paste0(taxon_spp, collapse = "|"),
                             taxonName))
+      temp_occur_df <- rbind(temp_occur_df, occur_df_spp)
+    }
+
+    if (nrow(temp_occur_df) != 0){
+      occur_df <- temp_occur_df
     }
 
   }
