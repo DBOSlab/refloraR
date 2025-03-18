@@ -160,6 +160,11 @@ reflora_occurrence <- function(herbarium = NULL,
                                 verbose = verbose)
   }
 
+  # Apply function to convert 'recordNumber' to character in all dataframes inside `dwca_files`
+  dwca_files <- lapply(dwca_files, function(x) {
+    x[["data"]][["occurrence.txt"]][["recordNumber"]] <- as.character(x[["data"]][["occurrence.txt"]][["recordNumber"]])
+    return(x)
+  })
 
   # Extract each "occurrence.txt" data frame and merge them
   occur_df <- dplyr::bind_rows(lapply(dwca_files,
@@ -172,10 +177,12 @@ reflora_occurrence <- function(herbarium = NULL,
   # Filter by taxon only
 
   if (!is.null(taxon)) {
-
     tf_fam <- grepl("aceae$", taxon)
     if (any(tf_fam)) {
       taxon_fam <- taxon[tf_fam]
+      if (verbose) {
+        message(paste0("Filtering the family names... ", taxon_fam))
+      }
       occur_df_fam <- occur_df %>%
         dplyr::filter(family %in% taxon_fam)
       temp_occur_df <- occur_df_fam
@@ -184,6 +191,9 @@ reflora_occurrence <- function(herbarium = NULL,
     tf_gen <- grepl("^[^ ]+$", taxon) & !grepl("aceae$", taxon)
     if (any(tf_gen)) {
       taxon_gen <- taxon[tf_gen]
+      if (verbose) {
+        message(paste0("Filtering the generic names... ", taxon_gen))
+      }
       occur_df_gen <- occur_df %>%
         dplyr::filter(genus %in% taxon_gen)
       temp_occur_df <- rbind(temp_occur_df, occur_df_gen)
@@ -192,6 +202,9 @@ reflora_occurrence <- function(herbarium = NULL,
     tf_spp <- grepl("\\s", taxon)
     if (any(tf_spp)) {
       taxon_spp <- taxon[tf_spp]
+      if (verbose) {
+        message(paste0("Filtering the species names... ", taxon_spp))
+      }
       occur_df_spp <- occur_df %>%
         dplyr::filter(grepl(paste0(taxon_spp, collapse = "|"),
                             taxonName))
