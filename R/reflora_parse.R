@@ -1,6 +1,6 @@
 #' Parse Darwin Core Archive files
 #'
-#' @author Carlos Calderón and Domingos Cardoso
+#' @author Domingos Cardoso
 #'
 #' @description Read Darwin Core Archive (DwC-A) files from any downloaded dwca
 #' folder at \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
@@ -116,6 +116,9 @@ reflora_parse <- function(path = NULL,
   )
 
   for (i in seq_along(dwca_files)) {
+    fields <- fields[fields %in% names(dwca_files[[i]][["data"]][["occurrence.txt"]])]
+    pos <- match("scientificName", fields)
+    fields <- append(fields, "taxonName", after = pos)
 
     dwca_files[[i]][["data"]][["occurrence.txt"]] <- dwca_files[[i]][["data"]][["occurrence.txt"]] %>%
       dplyr::mutate(
@@ -131,8 +134,17 @@ reflora_parse <- function(path = NULL,
 
     dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName <-
       gsub("^NA$", NA, dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName)
-  }
 
+    dwca_files[[i]][["data"]][["occurrence.txt"]]$occurrenceID <-
+      as.character(dwca_files[[i]][["data"]][["occurrence.txt"]]$occurrenceID)
+    dwca_files[[i]][["data"]][["occurrence.txt"]]$recordNumber <-
+      as.character(dwca_files[[i]][["data"]][["occurrence.txt"]]$recordNumber)
+    dwca_files[[i]][["data"]][["occurrence.txt"]]$minimumElevationInMeters <-
+      as.character(dwca_files[[i]][["data"]][["occurrence.txt"]]$minimumElevationInMeters)
+    dwca_files[[i]][["data"]][["occurrence.txt"]]$maximumElevationInMeters <-
+      as.character(dwca_files[[i]][["data"]][["occurrence.txt"]]$maximumElevationInMeters)
+
+  }
 
   # Parsing csv files, if they exist
   tf <- lapply(dwca_filenames, function(x) grepl("[.]csv$", x))

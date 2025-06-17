@@ -2,72 +2,106 @@
 % Please edit documentation in R/reflora_indets.R
 \name{reflora_indets}
 \alias{reflora_indets}
-\title{Retrieve specific taxon from the downloaded REFLORA collections}
+\title{Retrieve indeterminate specimens from REFLORA collections}
 \usage{
-reflora_indets(taxon = NULL,
-                   herbarium = NULL,
-                   state = NULL,
-                   path = NULL,
-                   updates = TRUE,
-                   verbose = TRUE,
-                   save = TRUE,
-                   dir = "reflora_ocurrence",
-                   filename = "reflora_ocurrence_search")
+reflora_indets(level = NULL,
+               herbarium = NULL,
+               taxon = NULL,
+               state = NULL,
+               recordYear = NULL,
+               reorder = c("herbarium", "taxa", "collector", "area", "year"),
+               path = NULL,
+               updates = TRUE,
+               verbose = TRUE,
+               save = TRUE,
+               dir = "reflora_indets",
+               filename = "reflora_indets_search")
 }
 \arguments{
-\item{taxon}{A vector with the required taxon.}
+\item{level}{Character vector. Filter by taxonomic level. Accepted values:
+`"FAMILY"`, `"GENUS"`, or both. Defaults to `NULL` to include all
+indeterminate ranks.}
 
-\item{herbarium}{A vector of specific herbarium acronyms (collection code) in
-uppercase letters or leave it as \code{NULL} to summarize specimen records
-for all REFLORA-hosted herbaria.}
+\item{herbarium}{Character vector. Herbarium codes (e.g., `"RB"`, `"SP"`) in
+uppercase. Use `NULL` to include all herbaria.}
 
-\item{state}{A vector with the the required Brazilian states.}
+\item{taxon}{Character vector. Specific taxon names to filter by
+(e.g., `"Fabaceae"`).}
 
-\item{level}{A vector with the taxonomic level as \code{FAMILY} or \code{GENUS}
-or both.}
+\item{state}{Character vector. Brazilian state full name or abbreviations
+(e.g., `"BA"`, `"SP"`) to filter by locality.}
 
-\item{path}{Optional; a pathway to the computer's directory, where the REFLORA-downloaded
-dwca folders are. If you do not provide a path, the function will download the
-most updated version of the REFLORA dwca files.}
+\item{recordYear}{Character or numeric vector. A single year (e.g., `"2001"`)
+or a range (e.g., `c("2000", "2022")`).}
 
-\item{updates}{Logical, if \code{FALSE}, the search will not check for the
-most updated version of the REFLORA dwca files. This argument is often used if
-you have defined a specific path to previously downloaded REFLORA dwca files
-either manually or with function \code{reflora_download}.}
+\item{reorder}{Character vector. Reorder output by columns. Defaults to:
+`c("herbarium", "taxa", "collector", "area", "year")`.}
 
-\item{verbose}{Logical, if \code{FALSE}, a message showing steps when
-summarizing specimen records will not be printed in the console in full.}
+\item{path}{Character. Path to existing REFLORA dwca files. If `NULL`,
+downloads fresh data.}
 
-\item{save}{Logical, if \code{TRUE}, the search results will be saved on disk}
+\item{updates}{Logical. If `TRUE` (default), checks for updated DwC-A files
+from REFLORA.}
 
-\item{dir}{Pathway to the computer's directory, where the table-formatted
-summary will be saved. The default is to create a directory named
- \code{reflora_ocurrence}.}
+\item{verbose}{Logical. If `TRUE` (default), prints progress messages to the
+console.}
 
-\item{filename}{Name of the output file to be saved. The default is to create
-a file entitled \code{reflora_ocurrence_search.csv}.}
+\item{save}{Logical. If `TRUE` (default), saves the results to a CSV file.}
 
-\item{recordYear}{A vector with the required record year or year range. For example,
-\code{"1992"} or \code{c("1992", "2024")}}
+\item{dir}{Character. Directory path to save output files. Default:
+`"reflora_indets"`.}
+
+\item{filename}{Character. Name of the output file (without extension).
+Default: `"reflora_indets_search"`.}
 }
 \value{
-A dataframe with the information of the chosen taxon from the chosen
-REFLORA Herbaria.
+A `data.frame` containing filtered specimen records for the selected
+indeterminate specimens and criteria.
 }
 \description{
-Retrieve specific taxon from the Reflora virtual Herbarium at
+Retrieves occurrence records for indeterminate specimens (e.g., identified
+only to family or genus level) from the
 \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
 hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
+The function automatically downloads and parses Darwin Core Archive (DwC-A)
+files, applies optional filters by taxon, herbarium, state, and year, and
+exports the results if desired.
+}
+\details{
+This function supports downloading and processing Darwin Core Archive (DwC-A)
+files directly from the REFLORA repository. It allows for flexible filtering
+by taxon, herbarium, locality (Brazilian states), and collection year(s). The
+`level` parameter enables filtering for indeterminate records such as those
+identified only to FAMILY or GENUS rank.
+
+The function uses helper functions like `.arg_check_herbarium()` and
+`.filter_occur_df()` to validate inputs and refine the occurrence records. If
+`path` is not provided, the function will automatically manage downloading and
+storing fresh DwC-A archives.
+}
+\note{
+- Ensure your internet connection is active if downloading is required.
+- Some herbarium codes may not have updated records. Use `verbose = TRUE` to
+  monitor messages.
+- Filtering by `level` does not guarantee all indeterminates will be captured
+  if taxonRank fields are inconsistently labeled in REFLORA's source files.
+- For reproducible results, consider saving outputs (`save = TRUE`) and
+  documenting your input parameters.
 }
 \examples{
 \dontrun{
+# Retrieve indeterminate records for Fabaceae and Ochnaceae from all herbaria
+reflora_indets(taxon = c("Fabaceae", "Ochnaceae"),
+               level = "FAMILY",
+               save = TRUE,
+               dir = "reflora_indets",
+               filename = "fabaceae_ochnaceae_records")
 
-fam_taxa <- c("Fabaceae", "Ochnaceae")
-reflora_indets(taxon = fam_taxa,
-                   verbose = TRUE,
-                   save = TRUE,
-                   dir = "reflora_ocurrence",
-                   filename = "reflora_ocurrence_search")
+# Filter by specific herbarium and state
+reflora_indets(taxon = "Fabaceae",
+               herbarium = "RB",
+               state = c("BA", "MG"),
+               recordYear = c("1990", "2022"))
 }
 
 }
@@ -77,5 +111,5 @@ reflora_indets(taxon = fam_taxa,
 \code{\link{reflora_parse}}
 }
 \author{
-Carlos Calderón & Domingos Cardoso
+Domingos Cardoso
 }

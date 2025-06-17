@@ -1,10 +1,31 @@
-#' Retrieve specific taxon from the downloaded REFLORA collections
+#' Retrieve taxon records from REFLORA collections
 #'
-#' @author Carlos Calderón & Domingos Cardoso
+#' @author
+#' Carlos Calderón & Domingos Cardoso
 #'
-#' @description Retrieve specific taxon from the Reflora virtual Herbarium at
-#' \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
-#' hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
+#' @description
+#' Retrieve occurrence records for specific taxa from the
+#' \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium},
+#' hosted bythe \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
+#' This function handles automatic download, parsing, filtering, and optional
+#' saving of the occurrence data.
+#'
+#' @details
+#' This function processes Darwin Core Archive (DwC-A) files from REFLORA. You
+#' may supply a specific path to previously downloaded files using `path`, or let
+#' the function handle the download automatically. Filters can be applied by taxon
+#' name, herbarium code, state, and year. The `reorder` argument allows you to
+#' customize the structure of the returned data. Use `verbose = TRUE` to see
+#' status updates. Use `save = TRUE` to save results to disk as a CSV file in the
+#' specified directory.
+#'
+#' @note
+#' - Ensure internet access for downloading data if `path` is not provided.
+#' - State names may be full names or standard Brazilian two-letter codes.
+#' - Use `recordYear` as a character vector to avoid coercion issues.
+#' - This function does not apply filtering for indeterminate ranks
+#'   (use `reflora_indets()` for that).
+#'
 #'
 #' @usage
 #' reflora_occurrence(herbarium = NULL,
@@ -34,7 +55,7 @@
 #' @param reorder Provide a vector with any of \code{c("herbarium", "taxa", "collector", "area", "year")}
 #' to reorder the retrieved records based on the specified columns. By default, the
 #' data will be redordered according to this vector, meaning the returned dataset
-#' will be specifcially reordered based on the columns \code{'herbarium'}, \code{'family'},
+#' will be specifically reordered based on the columns \code{'herbarium'}, \code{'family'},
 #' \code{'genus'}, \code{'specificEpithet'}, \code{'recordedBy'}, \code{'recordNumber'},
 #' \code{'country'}, \code{'stateProvince'}, \code{'municipality'} and \code{'year'}.
 #' You can modify the order of the vector or provide a subset of these columns to
@@ -101,7 +122,6 @@ reflora_occurrence <- function(herbarium = NULL,
                                dir = "reflora_occurrence",
                                filename = "reflora_occurrence_search") {
 
-
   # herbarium check
   if (verbose & !is.null(herbarium)) {
     message("Checking whether the input herbarium code exist in the REFLORA...")
@@ -167,84 +187,11 @@ reflora_occurrence <- function(herbarium = NULL,
   occur_df <- dplyr::bind_rows(lapply(dwca_files,
                                       function(x) x[["data"]][["occurrence.txt"]]))
 
-  temp_occur_df <- data.frame(matrix(ncol = length(names(occur_df)), nrow = 0))
-  colnames(temp_occur_df) <- names(occur_df)
 
-  #_____________________________________________________________________________
-  # Filter by taxon only
-
-  if (!is.null(taxon)) {
-    if (verbose) {
-      message("\nFiltering taxon names... ")
-    }
-
-    tf_fam <- grepl("aceae$", taxon)
-    if (any(tf_fam)) {
-      taxon_fam <- taxon[tf_fam]
-      if (any(tf)) {
-        occur_df_fam <- occur_df[tf, ]
-        temp_occur_df <- occur_df_fam
-      }
-    }
-
-    tf_gen <- grepl("^[^ ]+$", taxon) & !grepl("aceae$", taxon)
-    if (any(tf_gen)) {
-      taxon_gen <- taxon[tf_gen]
-      if (any(tf)) {
-        occur_df_gen <- occur_df[tf, ]
-        temp_occur_df <- rbind(temp_occur_df, occur_df_gen)
-      }
-    }
-
-    tf_spp <- grepl("\\s", taxon)
-    if (any(tf_spp)) {
-      taxon_spp <- taxon[tf_spp]
-      tf <- occur_df$taxonName %in% taxon_spp
-      if (any(tf)) {
-        occur_df_spp <- occur_df[tf, ]
-        temp_occur_df <- rbind(temp_occur_df, occur_df_spp)
-      }
-    }
-
-    if (nrow(temp_occur_df) != 0){
-      occur_df <- temp_occur_df
-    }
-
-  }
+  # Filter occurrence data
+  occur_df <- .filter_occur_df(occur_df, taxon, state, recordYear, verbose)
 
 
-  #_____________________________________________________________________________
-  # Filter by state only
-
-  if (!is.null(state)) {
-    if (verbose) {
-      message("\nFiltering states... ")
-    }
-    tf <- occur_df$stateProvince %in% state
-    if (any(tf)) {
-      occur_df <- occur_df[tf, ]
-    }
-  }
-
-
-  #_____________________________________________________________________________
-  # Filter by record year only
-
-  if (!is.null(recordYear)) {
-    if (verbose) {
-      message("\nFiltering recordYear... ")
-    }
-    if (length(recordYear) == 1) {
-      # If only one year is given, filter for that specific year
-      occur_df <- occur_df[occur_df$year == recordYear, ]
-    } else if (length(recordYear) == 2) {
-      # If a range is given, filter for records within that range (inclusive)
-      occur_df <- occur_df[occur_df$year >= recordYear[1] & occur_df$year <= recordYear[2], ]
-    }
-  }
-
-
-  #_____________________________________________________________________________
   # Reorder the data by the order of specific columns
   occur_df <- .reorder_df(occur_df, reorder)
 
@@ -259,3 +206,6 @@ reflora_occurrence <- function(herbarium = NULL,
 
   return(occur_df)
 }
+
+
+

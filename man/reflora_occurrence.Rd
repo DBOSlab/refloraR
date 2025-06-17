@@ -2,7 +2,7 @@
 % Please edit documentation in R/reflora_occurrence.R
 \name{reflora_occurrence}
 \alias{reflora_occurrence}
-\title{Retrieve specific taxon from the downloaded REFLORA collections}
+\title{Retrieve taxon records from REFLORA collections}
 \usage{
 reflora_occurrence(herbarium = NULL,
                    taxon = NULL,
@@ -21,9 +21,10 @@ reflora_occurrence(herbarium = NULL,
 uppercase letters or leave it as \code{NULL} to summarize specimen records
 for all REFLORA-hosted herbaria.}
 
-\item{taxon}{A vector with the required taxon.}
+\item{taxon}{A vector with the required taxon. It can be one or a vector of
+multiple scientific names at family, genus or species level.}
 
-\item{state}{A vector with the the required Brazilian states (full name or acronym).}
+\item{state}{A vector with the required Brazilian state(s) (full name or acronym).}
 
 \item{recordYear}{A vector with the required record year or year range. For example,
 \code{"1992"} or \code{c("1992", "2024")}}
@@ -31,7 +32,7 @@ for all REFLORA-hosted herbaria.}
 \item{reorder}{Provide a vector with any of \code{c("herbarium", "taxa", "collector", "area", "year")}
 to reorder the retrieved records based on the specified columns. By default, the
 data will be redordered according to this vector, meaning the returned dataset
-will be specifcially reordered based on the columns \code{'herbarium'}, \code{'family'},
+will be specifically reordered based on the columns \code{'herbarium'}, \code{'family'},
 \code{'genus'}, \code{'specificEpithet'}, \code{'recordedBy'}, \code{'recordNumber'},
 \code{'country'}, \code{'stateProvince'}, \code{'municipality'} and \code{'year'}.
 You can modify the order of the vector or provide a subset of these columns to
@@ -63,9 +64,27 @@ A dataframe with the information of the chosen taxon from the chosen
 REFLORA Herbaria.
 }
 \description{
-Retrieve specific taxon from the Reflora virtual Herbarium at
-\href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
-hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
+Retrieve occurrence records for specific taxa from the
+\href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium},
+hosted bythe \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
+This function handles automatic download, parsing, filtering, and optional
+saving of the occurrence data.
+}
+\details{
+This function processes Darwin Core Archive (DwC-A) files from REFLORA. You
+may supply a specific path to previously downloaded files using `path`, or let
+the function handle the download automatically. Filters can be applied by taxon
+name, herbarium code, state, and year. The `reorder` argument allows you to
+customize the structure of the returned data. Use `verbose = TRUE` to see
+status updates. Use `save = TRUE` to save results to disk as a CSV file in the
+specified directory.
+}
+\note{
+- Ensure internet access for downloading data if `path` is not provided.
+- State names may be full names or standard Brazilian two-letter codes.
+- Use `recordYear` as a character vector to avoid coercion issues.
+- This function does not apply filtering for indeterminate ranks
+  (use `reflora_indets()` for that).
 }
 \examples{
 \dontrun{

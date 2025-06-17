@@ -96,6 +96,8 @@ reflora_fix <- function(df = NULL,
                         dir = "reflora_fix",
                         filename = "reflora_ocurrence_fixed") {
 
+  stop("Function still under construction")
+
   # dir check
   dir <- .arg_check_dir(dir)
 
@@ -124,7 +126,7 @@ reflora_fix <- function(df = NULL,
   # Fix decimalLatitude and decimalLongitude
   if (coordinates) {
 
-    # Underdevelopment with the use Bruno Ribeiro's package bdc
+    # Underdevelopment with the use of Bruno Ribeiro's package bdc
     # https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13868
     # https://brunobrr.github.io/bdc/articles/taxonomy.html
 

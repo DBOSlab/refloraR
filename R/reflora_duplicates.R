@@ -81,6 +81,9 @@ reflora_duplicates <- function(df = NULL,
                                dir = "reflora_duplicates",
                                filename = "reflora_ocurrence_flagged_duplicates") {
 
+
+  stop("Function still under construction")
+
   # dir check
   dir <- .arg_check_dir(dir)
 

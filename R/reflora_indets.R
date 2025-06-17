@@ -1,73 +1,110 @@
-#' Retrieve specific taxon from the downloaded REFLORA collections
+#' Retrieve indeterminate specimens from REFLORA collections
 #'
-#' @author Carlos Calderón & Domingos Cardoso
+#' @author
+#' Domingos Cardoso
 #'
-#' @description Retrieve specific taxon from the Reflora virtual Herbarium at
+#' @description
+#' Retrieves occurrence records for indeterminate specimens (e.g., identified
+#' only to family or genus level) from the
 #' \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
 #' hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
+#' The function automatically downloads and parses Darwin Core Archive (DwC-A)
+#' files, applies optional filters by taxon, herbarium, state, and year, and
+#' exports the results if desired.
+#'
+#' @details
+#' This function supports downloading and processing Darwin Core Archive (DwC-A)
+#' files directly from the REFLORA repository. It allows for flexible filtering
+#' by taxon, herbarium, locality (Brazilian states), and collection year(s). The
+#' `level` parameter enables filtering for indeterminate records such as those
+#' identified only to FAMILY or GENUS rank.
+#'
+#' The function uses helper functions like `.arg_check_herbarium()` and
+#' `.filter_occur_df()` to validate inputs and refine the occurrence records. If
+#' `path` is not provided, the function will automatically manage downloading and
+#' storing fresh DwC-A archives.
+#'
+#' @note
+#' - Ensure your internet connection is active if downloading is required.
+#' - Some herbarium codes may not have updated records. Use `verbose = TRUE` to
+#'   monitor messages.
+#' - Filtering by `level` does not guarantee all indeterminates will be captured
+#'   if taxonRank fields are inconsistently labeled in REFLORA's source files.
+#' - For reproducible results, consider saving outputs (`save = TRUE`) and
+#'   documenting your input parameters.
+
 #'
 #' @usage
-#' reflora_indets(taxon = NULL,
-#'                    herbarium = NULL,
-#'                    state = NULL,
-#'                    path = NULL,
-#'                    updates = TRUE,
-#'                    verbose = TRUE,
-#'                    save = TRUE,
-#'                    dir = "reflora_ocurrence",
-#'                    filename = "reflora_ocurrence_search")
+#' reflora_indets(level = NULL,
+#'                herbarium = NULL,
+#'                taxon = NULL,
+#'                state = NULL,
+#'                recordYear = NULL,
+#'                reorder = c("herbarium", "taxa", "collector", "area", "year"),
+#'                path = NULL,
+#'                updates = TRUE,
+#'                verbose = TRUE,
+#'                save = TRUE,
+#'                dir = "reflora_indets",
+#'                filename = "reflora_indets_search")
 #'
-#' @param taxon A vector with the required taxon.
+#' @param level Character vector. Filter by taxonomic level. Accepted values:
+#' `"FAMILY"`, `"GENUS"`, or both. Defaults to `NULL` to include all
+#' indeterminate ranks.
 #'
-#' @param herbarium A vector of specific herbarium acronyms (collection code) in
-#' uppercase letters or leave it as \code{NULL} to summarize specimen records
-#' for all REFLORA-hosted herbaria.
+#' @param herbarium Character vector. Herbarium codes (e.g., `"RB"`, `"SP"`) in
+#' uppercase. Use `NULL` to include all herbaria.
 #'
-#' @param state A vector with the the required Brazilian states.
+#' @param taxon Character vector. Specific taxon names to filter by
+#' (e.g., `"Fabaceae"`).
 #'
-#' @param level A vector with the taxonomic level as \code{FAMILY} or \code{GENUS}
-#' or both.
+#' @param state Character vector. Brazilian state full name or abbreviations
+#' (e.g., `"BA"`, `"SP"`) to filter by locality.
 #'
-#' @param recordYear A vector with the required record year or year range. For example,
-#' \code{"1992"} or \code{c("1992", "2024")}
+#' @param recordYear Character or numeric vector. A single year (e.g., `"2001"`)
+#' or a range (e.g., `c("2000", "2022")`).
 #'
-#' @param path Optional; a pathway to the computer's directory, where the REFLORA-downloaded
-#' dwca folders are. If you do not provide a path, the function will download the
-#' most updated version of the REFLORA dwca files.
+#' @param reorder Character vector. Reorder output by columns. Defaults to:
+#' `c("herbarium", "taxa", "collector", "area", "year")`.
 #'
-#' @param updates Logical, if \code{FALSE}, the search will not check for the
-#' most updated version of the REFLORA dwca files. This argument is often used if
-#' you have defined a specific path to previously downloaded REFLORA dwca files
-#' either manually or with function \code{reflora_download}.
+#' @param path Character. Path to existing REFLORA dwca files. If `NULL`,
+#' downloads fresh data.
 #'
-#' @param verbose Logical, if \code{FALSE}, a message showing steps when
-#' summarizing specimen records will not be printed in the console in full.
+#' @param updates Logical. If `TRUE` (default), checks for updated DwC-A files
+#' from REFLORA.
 #'
-#' @param save Logical, if \code{TRUE}, the search results will be saved on disk
+#' @param verbose Logical. If `TRUE` (default), prints progress messages to the
+#' console.
 #'
-#' @param dir Pathway to the computer's directory, where the table-formatted
-#' summary will be saved. The default is to create a directory named
-#'  \code{reflora_ocurrence}.
+#' @param save Logical. If `TRUE` (default), saves the results to a CSV file.
 #'
-#' @param filename Name of the output file to be saved. The default is to create
-#' a file entitled \code{reflora_ocurrence_search.csv}.
+#' @param dir Character. Directory path to save output files. Default:
+#' `"reflora_indets"`.
 #'
-#' @return A dataframe with the information of the chosen taxon from the chosen
-#' REFLORA Herbaria.
+#' @param filename Character. Name of the output file (without extension).
+#' Default: `"reflora_indets_search"`.
+#'
+#' @return A `data.frame` containing filtered specimen records for the selected
+#' indeterminate specimens and criteria.
 #'
 #' @seealso \code{\link{reflora_download}}
 #' @seealso \code{\link{reflora_parse}}
 #'
 #' @examples
 #' \dontrun{
+#' # Retrieve indeterminate records for Fabaceae and Ochnaceae from all herbaria
+#' reflora_indets(taxon = c("Fabaceae", "Ochnaceae"),
+#'                level = "FAMILY",
+#'                save = TRUE,
+#'                dir = "reflora_indets",
+#'                filename = "fabaceae_ochnaceae_records")
 #'
-#' fam_taxa <- c("Fabaceae", "Ochnaceae")
-#' reflora_indets(taxon = fam_taxa,
-#'                    verbose = TRUE,
-#'                    save = TRUE,
-#'                    dir = "reflora_ocurrence",
-#'                    filename = "reflora_ocurrence_search")
-#'}
+#' # Filter by specific herbarium and state
+#' reflora_indets(taxon = "Fabaceae",
+#'                herbarium = "RB",
+#'                state = c("BA", "MG"),
+#'                recordYear = c("1990", "2022"))
+#' }
 #'
 #' @importFrom stringr str_split
 #' @importFrom utils write.csv
@@ -75,17 +112,18 @@
 #' @importFrom magrittr "%>%"
 #'
 
-reflora_indets <- function(taxon = NULL,
+reflora_indets <- function(level = NULL,
                            herbarium = NULL,
+                           taxon = NULL,
                            state = NULL,
-                           level = NULL,
+                           recordYear = NULL,
+                           reorder = c("herbarium", "taxa", "collector", "area", "year"),
                            path = NULL,
                            updates = TRUE,
                            verbose = TRUE,
                            save = TRUE,
-                           dir = "reflora_occurrence",
-                           filename = "reflora_occurrence_search") {
-
+                           dir = "reflora_indets",
+                           filename = "reflora_indets_search") {
 
   # herbarium check
   if (verbose & !is.null(herbarium)) {
@@ -142,34 +180,37 @@ reflora_indets <- function(taxon = NULL,
   occur_df <- dplyr::bind_rows(lapply(dwca_files,
                                       function(x) x[["data"]][["occurrence.txt"]]))
 
-  #_____________________________________________________________________________
-  # Filter by taxon only FILTRAR OS NAs
-
-  if (!is.null(taxon)) {
-
-    tf_fam <- grepl("aceae$", taxon)
-    if (any(tf_fam)) {
-      occur_df <- occur_df %>%
-        dplyr::filter(family %in% taxon)
+  if (is.null(level)) {
+    # Keep only higher-rank indeterminate taxa
+    indets <- c("family", "genus", "FAMILY", "GENERO", "FAMILIA", "SUB_FAMILIA",
+                "TRIBO", "DIVISAO", "ORDEM", "CLASSE")
+    tf <- occur_df$taxonRank %in% indets
+    if (any(tf)) {
+      occur_df <- occur_df[tf, ]
     }
-
-    tf_gen <- grepl("^[^ ]+$", taxon) & !grepl("aceae$", taxon)
-    if (any(tf_gen)) {
-      occur_df <- occur_df %>%
-        dplyr::filter(genus %in% taxon)
-    }
-
   }
 
-
-  #_____________________________________________________________________________
-  # Filter by state only
-
-  if (!is.null(state)) {
-    doccur_df <- occur_df %>%
-      dplyr::filter(stateProvince %in% state)
+  if (level == "FAMILY") {
+    indets <- c("family", "FAMILY", "FAMILIA")
+    tf <- occur_df$taxonRank %in% indets
+    if (any(tf)) {
+      occur_df <- occur_df[tf, ]
+    }
   }
 
+  if (level == "GENUS") {
+    indets <- c("genus", "GENERO")
+    tf <- occur_df$taxonRank %in% indets
+    if (any(tf)) {
+      occur_df <- occur_df[tf, ]
+    }
+  }
+
+  # Filter occurrence data
+  occur_df <- .filter_occur_df(occur_df, taxon, state, recordYear, verbose)
+
+  # Reorder the data by the order of specific columns
+  occur_df <- .reorder_df(occur_df, reorder)
 
   # Save the search results if param save is TRUE
   if (save) {

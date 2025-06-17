@@ -43,5 +43,5 @@ dwca <- reflora_parse(path = "reflora_download",
 \code{\link{reflora_download}}
 }
 \author{
-Carlos Calderón and Domingos Cardoso
+Domingos Cardoso
 }

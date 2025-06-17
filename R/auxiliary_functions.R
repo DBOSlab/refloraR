@@ -164,3 +164,86 @@
 }
 
 
+#_______________________________________________________________________________
+### Function to filter occurrence data ###
+
+.filter_occur_df <- function(occur_df, taxon, state, recordYear, verbose) {
+
+  temp_occur_df <- data.frame(matrix(ncol = length(names(occur_df)), nrow = 0))
+  colnames(temp_occur_df) <- names(occur_df)
+
+  #_____________________________________________________________________________
+  # Filter by taxon only
+
+  if (!is.null(taxon)) {
+    if (verbose) {
+      message("\nFiltering taxon names... ")
+    }
+
+    tf_fam <- grepl("aceae$", taxon)
+    if (any(tf_fam)) {
+      taxon_fam <- taxon[tf_fam]
+      if (any(tf)) {
+        occur_df_fam <- occur_df[tf, ]
+        temp_occur_df <- occur_df_fam
+      }
+    }
+
+    tf_gen <- grepl("^[^ ]+$", taxon) & !grepl("aceae$", taxon)
+    if (any(tf_gen)) {
+      taxon_gen <- taxon[tf_gen]
+      if (any(tf)) {
+        occur_df_gen <- occur_df[tf, ]
+        temp_occur_df <- rbind(temp_occur_df, occur_df_gen)
+      }
+    }
+
+    tf_spp <- grepl("\\s", taxon)
+    if (any(tf_spp)) {
+      taxon_spp <- taxon[tf_spp]
+      tf <- occur_df$taxonName %in% taxon_spp
+      if (any(tf)) {
+        occur_df_spp <- occur_df[tf, ]
+        temp_occur_df <- rbind(temp_occur_df, occur_df_spp)
+      }
+    }
+
+    if (nrow(temp_occur_df) != 0){
+      occur_df <- temp_occur_df
+    }
+
+  }
+
+  #_____________________________________________________________________________
+  # Filter by state only
+
+  if (!is.null(state)) {
+    if (verbose) {
+      message("\nFiltering states... ")
+    }
+    tf <- occur_df$stateProvince %in% state
+    if (any(tf)) {
+      occur_df <- occur_df[tf, ]
+    }
+  }
+
+  #_____________________________________________________________________________
+  # Filter by record year only
+
+  if (!is.null(recordYear)) {
+    if (verbose) {
+      message("\nFiltering recordYear... ")
+    }
+    if (length(recordYear) == 1) {
+      # If only one year is given, filter for that specific year
+      occur_df <- occur_df[occur_df$year == recordYear, ]
+    } else if (length(recordYear) == 2) {
+      # If a range is given, filter for records within that range (inclusive)
+      occur_df <- occur_df[occur_df$year >= recordYear[1] & occur_df$year <= recordYear[2], ]
+    }
+  }
+
+  return(occur_df)
+
+}
+
