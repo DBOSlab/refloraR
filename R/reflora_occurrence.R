@@ -89,8 +89,6 @@
 #' @export
 #'
 
-
-
 reflora_occurrence <- function(herbarium = NULL,
                                taxon = NULL,
                                state = NULL,

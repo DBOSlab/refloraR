@@ -43,6 +43,8 @@
 #' @importFrom tidyr replace_na
 #' @importFrom magrittr "%>%"
 #'
+#' @export
+#'
 
 reflora_parse <- function(path = NULL,
                           herbarium = NULL,
