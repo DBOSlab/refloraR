@@ -72,12 +72,10 @@ This function supports downloading and processing Darwin Core Archive (DwC-A)
 files directly from the REFLORA repository. It allows for flexible filtering
 by taxon, herbarium, locality (Brazilian states), and collection year(s). The
 `level` parameter enables filtering for indeterminate records such as those
-identified only to FAMILY or GENUS rank.
-
-The function uses helper functions like `.arg_check_herbarium()` and
-`.filter_occur_df()` to validate inputs and refine the occurrence records. If
-`path` is not provided, the function will automatically manage downloading and
-storing fresh DwC-A archives.
+identified only to FAMILY or GENUS rank. The function uses helper functions
+like `.arg_check_herbarium()` and `.filter_occur_df()` to validate inputs and
+refine the occurrence records. If `path` is not provided, the function will
+automatically manage downloading and storing fresh DwC-A archives.
 }
 \note{
 - Ensure your internet connection is active if downloading is required.
