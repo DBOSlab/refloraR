@@ -8,6 +8,7 @@ reflora_records(herbarium = NULL,
                 taxon = NULL,
                 state = NULL,
                 recordYear = NULL,
+                indets = TRUE,
                 reorder = c("herbarium", "taxa", "collector", "area", "year")
                 path = NULL,
                 updates = TRUE,
@@ -28,6 +29,10 @@ multiple scientific names at family, genus or species level.}
 
 \item{recordYear}{A vector with the required record year or year range. For example,
 \code{"1992"} or \code{c("1992", "2024")}}
+
+\item{indets}{Logical, if \code{FALSE}, If \code{FALSE}, removes all
+indeterminate specimens that are not identified to the species level
+(i.e., records identified only to family or genus).}
 
 \item{reorder}{Provide a vector with any of \code{c("herbarium", "taxa", "collector", "area", "year")}
 to reorder the retrieved records based on the specified columns. By default, the

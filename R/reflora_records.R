@@ -32,6 +32,7 @@
 #'                 taxon = NULL,
 #'                 state = NULL,
 #'                 recordYear = NULL,
+#'                 indets = TRUE,
 #'                 reorder = c("herbarium", "taxa", "collector", "area", "year")
 #'                 path = NULL,
 #'                 updates = TRUE,
@@ -51,6 +52,10 @@
 #'
 #' @param recordYear A vector with the required record year or year range. For example,
 #' \code{"1992"} or \code{c("1992", "2024")}
+#'
+#' @param indets Logical, if \code{FALSE}, If \code{FALSE}, removes all
+#' indeterminate specimens that are not identified to the species level
+#' (i.e., records identified only to family or genus).
 #'
 #' @param reorder Provide a vector with any of \code{c("herbarium", "taxa", "collector", "area", "year")}
 #' to reorder the retrieved records based on the specified columns. By default, the
@@ -114,6 +119,7 @@ reflora_records <- function(herbarium = NULL,
                             taxon = NULL,
                             state = NULL,
                             recordYear = NULL,
+                            indets = TRUE,
                             reorder = c("herbarium", "taxa", "collector", "area", "year"),
                             path = NULL,
                             updates = TRUE,
@@ -188,6 +194,16 @@ reflora_records <- function(herbarium = NULL,
 
   # Filter occurrence data
   occur_df <- .filter_occur_df(occur_df, taxon, state, recordYear, verbose)
+
+  # Remove indeterminate specimens
+  if (indets == FALSE) {
+    indets <- c("family", "genus", "FAMILY", "GENERO", "FAMILIA", "SUB_FAMILIA",
+                "TRIBO", "DIVISAO", "ORDEM", "CLASSE")
+    tf <- !occur_df$taxonRank %in% indets
+    if (any(tf)) {
+      occur_df <- occur_df[tf, ]
+    }
+  }
 
   # Reorder the data by the order of specific columns
   occur_df <- .reorder_df(occur_df, reorder)
