@@ -186,10 +186,8 @@ reflora_indets <- function(level = NULL,
                                 verbose = verbose)
   }
 
-
   # Extract each "occurrence.txt" data frame and merge them
-  occur_df <- dplyr::bind_rows(lapply(dwca_files,
-                                      function(x) x[["data"]][["occurrence.txt"]]))
+  occur_df <- .merge_occur_txt(dwca_files)
 
   if (is.null(level)) {
     # Keep only higher-rank indeterminate taxa

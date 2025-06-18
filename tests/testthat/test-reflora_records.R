@@ -1,5 +1,5 @@
-test_that("reflora_occurrence basic usage returns a data.frame", {
-  result <- reflora_occurrence(
+test_that("reflora_records basic usage returns a data.frame", {
+  result <- reflora_records(
     herbarium = "RB",
     taxon = "Fabaceae",
     save = FALSE,
@@ -10,9 +10,9 @@ test_that("reflora_occurrence basic usage returns a data.frame", {
   expect_true(nrow(result) >= 0)
 })
 
-test_that("reflora_occurrence handles empty taxon search", {
+test_that("reflora_records handles empty taxon search", {
   expect_error(
-    reflora_occurrence(
+    reflora_records(
     herbarium = "RB",
     taxon = "Fakeplantus invalidus",
     save = FALSE,
@@ -20,8 +20,8 @@ test_that("reflora_occurrence handles empty taxon search", {
   )
 })
 
-test_that("reflora_occurrence applies state and year filters", {
-  result <- reflora_occurrence(
+test_that("reflora_records applies state and year filters", {
+  result <- reflora_records(
     herbarium = "RB",
     taxon = "Fabaceae",
     state = c("Bahia", "Minas Gerais"),
@@ -34,8 +34,8 @@ test_that("reflora_occurrence applies state and year filters", {
   expect_true(all(as.numeric(result$year) >= 2000 & as.numeric(result$year) <= 2024))
 })
 
-test_that("reflora_occurrence reorders columns properly", {
-  result <- reflora_occurrence(
+test_that("reflora_records reorders columns properly", {
+  result <- reflora_records(
     herbarium = "RB",
     taxon = "Fabaceae",
     reorder = c("year", "herbarium"),
@@ -47,11 +47,11 @@ test_that("reflora_occurrence reorders columns properly", {
   expect_true("institutionCode" %in% names(result))
 })
 
-test_that("reflora_occurrence saves file when save = TRUE", {
+test_that("reflora_records saves file when save = TRUE", {
   temp_dir <- tempdir()
   test_file <- "test_output"
 
-  result <- reflora_occurrence(
+  result <- reflora_records(
     herbarium = "RB",
     taxon = "Fabaceae",
     dir = temp_dir,

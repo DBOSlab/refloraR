@@ -64,7 +64,7 @@ reflora_duplicates(df = occur_df,
                    verbose = TRUE,
                    save = TRUE,
                    dir = "reflora_duplicates",
-                   filename = "reflora_ocurrence_flagged_duplicates")
+                   filename = "reflora_flagged_duplicates")
 }
 
 }

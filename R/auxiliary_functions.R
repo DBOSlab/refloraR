@@ -165,6 +165,33 @@
 
 
 #_______________________________________________________________________________
+### Extract each "occurrence.txt" data frame and merge them ###
+
+.merge_occur_txt <- function(dwca_files) {
+  occur_df <- dplyr::bind_rows(lapply(dwca_files, function(x) {
+
+    df <- x[["data"]][["occurrence.txt"]]
+
+    df$recordNumber <- suppressWarnings(as.character(df$recordNumber))
+    df$decimalLongitude <- suppressWarnings(as.numeric(df$decimalLongitude))
+    df$decimalLatitude <- suppressWarnings(as.numeric(df$decimalLatitude))
+
+    df$occurrenceID <- as.character(df$occurrenceID)
+    df$recordNumber <- as.character(df$recordNumber)
+    df$minimumElevationInMeters <- as.character(df$minimumElevationInMeters)
+    df$maximumElevationInMeters <- as.character(df$maximumElevationInMeters)
+    df$eventDate <- as.character(df$eventDate)
+    df$year <- as.character(df$year)
+    df$month <- as.character(df$month)
+    df$day <- as.character(df$day)
+
+    return(df)
+  }))
+  return(occur_df)
+}
+
+
+#_______________________________________________________________________________
 ### Function to filter occurrence data ###
 
 .filter_occur_df <- function(occur_df, taxon, state, recordYear, verbose) {

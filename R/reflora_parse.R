@@ -134,16 +134,6 @@ reflora_parse <- function(path = NULL,
 
     dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName <-
       gsub("^NA$", NA, dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName)
-
-    dwca_files[[i]][["data"]][["occurrence.txt"]]$occurrenceID <-
-      as.character(dwca_files[[i]][["data"]][["occurrence.txt"]]$occurrenceID)
-    dwca_files[[i]][["data"]][["occurrence.txt"]]$recordNumber <-
-      as.character(dwca_files[[i]][["data"]][["occurrence.txt"]]$recordNumber)
-    dwca_files[[i]][["data"]][["occurrence.txt"]]$minimumElevationInMeters <-
-      as.character(dwca_files[[i]][["data"]][["occurrence.txt"]]$minimumElevationInMeters)
-    dwca_files[[i]][["data"]][["occurrence.txt"]]$maximumElevationInMeters <-
-      as.character(dwca_files[[i]][["data"]][["occurrence.txt"]]$maximumElevationInMeters)
-
   }
 
   # Parsing csv files, if they exist

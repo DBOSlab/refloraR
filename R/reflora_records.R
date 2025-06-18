@@ -28,17 +28,17 @@
 #'
 #'
 #' @usage
-#' reflora_occurrence(herbarium = NULL,
-#'                    taxon = NULL,
-#'                    state = NULL,
-#'                    recordYear = NULL,
-#'                    reorder = c("herbarium", "taxa", "collector", "area", "year")
-#'                    path = NULL,
-#'                    updates = TRUE,
-#'                    verbose = TRUE,
-#'                    save = TRUE,
-#'                    dir = "reflora_ocurrence",
-#'                    filename = "reflora_ocurrence_search")
+#' reflora_records(herbarium = NULL,
+#'                 taxon = NULL,
+#'                 state = NULL,
+#'                 recordYear = NULL,
+#'                 reorder = c("herbarium", "taxa", "collector", "area", "year")
+#'                 path = NULL,
+#'                 updates = TRUE,
+#'                 verbose = TRUE,
+#'                 save = TRUE,
+#'                 dir = "reflora_records",
+#'                 filename = "reflora_records_search")
 #'
 #' @param herbarium A vector of specific herbarium acronyms (collection code) in
 #' uppercase letters or leave it as \code{NULL} to summarize specimen records
@@ -77,10 +77,10 @@
 #'
 #' @param dir Pathway to the computer's directory, where the table-formatted
 #' summary will be saved. The default is to create a directory named
-#'  \code{reflora_ocurrence}.
+#'  \code{reflora_records}.
 #'
 #' @param filename Name of the output file to be saved. The default is to create
-#' a file entitled \code{reflora_ocurrence_search.csv}.
+#' a file entitled \code{reflora_records_search.csv}.
 #'
 #' @return A dataframe with the information of the chosen taxon from the chosen
 #' REFLORA Herbaria.
@@ -92,12 +92,12 @@
 #' \dontrun{
 #'
 #' fam_taxa <- c("Fabaceae", "Ochnaceae")
-#' reflora_occurrence(herbarium = c("ALCB", "HUEFS", "K", "RB"),
-#'                    taxon = fam_taxa,
-#'                    verbose = TRUE,
-#'                    save = TRUE,
-#'                    dir = "reflora_ocurrence",
-#'                    filename = "reflora_ocurrence_search")
+#' reflora_records(herbarium = c("ALCB", "HUEFS", "K", "RB"),
+#'                 taxon = fam_taxa,
+#'                 verbose = TRUE,
+#'                 save = TRUE,
+#'                 dir = "reflora_records",
+#'                 filename = "reflora_records_search")
 #'}
 #'
 #' @importFrom stringr str_split
@@ -110,17 +110,17 @@
 #' @export
 #'
 
-reflora_occurrence <- function(herbarium = NULL,
-                               taxon = NULL,
-                               state = NULL,
-                               recordYear = NULL,
-                               reorder = c("herbarium", "taxa", "collector", "area", "year"),
-                               path = NULL,
-                               updates = TRUE,
-                               verbose = TRUE,
-                               save = TRUE,
-                               dir = "reflora_occurrence",
-                               filename = "reflora_occurrence_search") {
+reflora_records <- function(herbarium = NULL,
+                            taxon = NULL,
+                            state = NULL,
+                            recordYear = NULL,
+                            reorder = c("herbarium", "taxa", "collector", "area", "year"),
+                            path = NULL,
+                            updates = TRUE,
+                            verbose = TRUE,
+                            save = TRUE,
+                            dir = "reflora_records",
+                            filename = "reflora_records_search") {
 
   # herbarium check
   if (verbose & !is.null(herbarium)) {
@@ -183,24 +183,14 @@ reflora_occurrence <- function(herbarium = NULL,
                                 verbose = verbose)
   }
 
-  # Apply function to convert 'recordNumber' to character in all dataframes inside `dwca_files`
-  dwca_files <- lapply(dwca_files, function(x) {
-    x[["data"]][["occurrence.txt"]][["recordNumber"]] <- as.character(x[["data"]][["occurrence.txt"]][["recordNumber"]])
-    return(x)
-  })
-
   # Extract each "occurrence.txt" data frame and merge them
-  occur_df <- dplyr::bind_rows(lapply(dwca_files,
-                                      function(x) x[["data"]][["occurrence.txt"]]))
-
+  occur_df <- .merge_occur_txt(dwca_files)
 
   # Filter occurrence data
   occur_df <- .filter_occur_df(occur_df, taxon, state, recordYear, verbose)
 
-
   # Reorder the data by the order of specific columns
   occur_df <- .reorder_df(occur_df, reorder)
-
 
   # Save the search results if param save is TRUE
   if (save) {
