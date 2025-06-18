@@ -85,5 +85,5 @@ reflora_fix(df = occur_df,
 \code{\link{reflora_ocurrence}}
 }
 \author{
-Domingos Cardoso & Carlos Calderón
+Domingos Cardoso
 }

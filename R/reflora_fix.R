@@ -1,6 +1,6 @@
 #' Fix specific columns from the downloaded REFLORA occurrence data
 #'
-#' @author Domingos Cardoso & Carlos Calderón
+#' @author Domingos Cardoso
 #'
 #' @description Retrieve specific taxon from the Reflora virtual Herbarium at
 #' \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
