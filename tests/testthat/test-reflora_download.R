@@ -1,4 +1,6 @@
 test_that("reflora_download works for a search with a vector of herbarium acronyms", {
+  skip_on_cran()
+  skip_if_offline()
 
   reflora_download(herbarium = c("ALCB", "HUEFS"),
                    verbose = FALSE,
