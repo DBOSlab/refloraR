@@ -188,21 +188,20 @@ reflora_indets <- function(level = NULL,
     if (any(tf)) {
       occur_df <- occur_df[tf, ]
     }
-  }
-
-  if (level == "FAMILY") {
-    indets <- c("family", "FAMILY", "FAMILIA")
-    tf <- occur_df$taxonRank %in% indets
-    if (any(tf)) {
-      occur_df <- occur_df[tf, ]
+  } else {
+    if (level == "FAMILY") {
+      indets <- c("family", "FAMILY", "FAMILIA")
+      tf <- occur_df$taxonRank %in% indets
+      if (any(tf)) {
+        occur_df <- occur_df[tf, ]
+      }
     }
-  }
-
-  if (level == "GENUS") {
-    indets <- c("genus", "GENERO")
-    tf <- occur_df$taxonRank %in% indets
-    if (any(tf)) {
-      occur_df <- occur_df[tf, ]
+    if (level == "GENUS") {
+      indets <- c("genus", "GENERO")
+      tf <- occur_df$taxonRank %in% indets
+      if (any(tf)) {
+        occur_df <- occur_df[tf, ]
+      }
     }
   }
 

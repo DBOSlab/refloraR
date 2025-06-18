@@ -183,6 +183,7 @@
     tf_fam <- grepl("aceae$", taxon)
     if (any(tf_fam)) {
       taxon_fam <- taxon[tf_fam]
+      tf <- occur_df$family %in% taxon_fam
       if (any(tf)) {
         occur_df_fam <- occur_df[tf, ]
         temp_occur_df <- occur_df_fam
@@ -192,6 +193,7 @@
     tf_gen <- grepl("^[^ ]+$", taxon) & !grepl("aceae$", taxon)
     if (any(tf_gen)) {
       taxon_gen <- taxon[tf_gen]
+      tf <- occur_df$genus %in% taxon_gen
       if (any(tf)) {
         occur_df_gen <- occur_df[tf, ]
         temp_occur_df <- rbind(temp_occur_df, occur_df_gen)
