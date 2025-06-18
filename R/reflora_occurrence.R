@@ -124,16 +124,22 @@ reflora_occurrence <- function(herbarium = NULL,
 
   # herbarium check
   if (verbose & !is.null(herbarium)) {
-    message("Checking whether the input herbarium code exist in the REFLORA...")
+    message("Checking whether the input herbarium code exists in the REFLORA...")
   }
   .arg_check_herbarium(herbarium)
 
   # state check
+  if (verbose & !is.null(state)) {
+    message("Checking whether the input state list exists in the REFLORA...")
+  }
   if (!is.null(state)) {
     state <- .arg_check_state(state)
   }
 
   # recordYear check
+  if (verbose & !is.null(recordYear)) {
+    message("Checking whether the input recordYear range exists in the REFLORA...")
+  }
   .arg_check_recordYear(recordYear)
 
   # dir check
@@ -206,6 +212,3 @@ reflora_occurrence <- function(herbarium = NULL,
 
   return(occur_df)
 }
-
-
-

@@ -19,11 +19,11 @@ MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 An R package for exploring plant specimen collections from [REFLORA
 Virtual Herbarium](https://ipt.jbrj.gov.br/reflora) hosted by [Rio de
 Janeiro Botanical Garden](https://www.gov.br/jbrj). The package
-interacts with the REFLORA Integrated Publishing Toolkit (IPT) by
-readily downloading full specimen records for any herbarium in Darwin
-Core Format. Also, the package has specific functions to summarize
-information and filter specific information by taxonomic or geographical
-search.
+interfaces with the REFLORA Integrated Publishing Toolkit (IPT) to
+seamlessly download complete specimen records from any herbarium in
+Darwin Core format. It also provides dedicated functions to summarize
+and filter these records based on taxonomic criteria or geographic
+regions.
 
 ## Installation
 

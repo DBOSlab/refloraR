@@ -180,6 +180,8 @@
       message("\nFiltering taxon names... ")
     }
 
+    .check_taxon_match(occur_df, taxon, verbose)
+
     tf_fam <- grepl("aceae$", taxon)
     if (any(tf_fam)) {
       taxon_fam <- taxon[tf_fam]
@@ -223,6 +225,9 @@
     if (verbose) {
       message("\nFiltering states... ")
     }
+
+    .check_state_match(occur_df, state, verbose)
+
     tf <- occur_df$stateProvince %in% state
     if (any(tf)) {
       occur_df <- occur_df[tf, ]
@@ -236,16 +241,82 @@
     if (verbose) {
       message("\nFiltering recordYear... ")
     }
+
+    .check_year_match(occur_df, recordYear, verbose)
+
     if (length(recordYear) == 1) {
       # If only one year is given, filter for that specific year
       occur_df <- occur_df[occur_df$year == recordYear, ]
     } else if (length(recordYear) == 2) {
-      # If a range is given, filter for records within that range (inclusive)
-      occur_df <- occur_df[occur_df$year >= recordYear[1] & occur_df$year <= recordYear[2], ]
+      # If a range is given, filter for records within that range
+      occur_df <- occur_df[!is.na(occur_df$year) &
+                             occur_df$year >= as.numeric(recordYear[1]) &
+                             occur_df$year <= as.numeric(recordYear[2]), ]
     }
   }
-
   return(occur_df)
-
 }
+
+.check_taxon_match <- function(occur_df, taxon, verbose) {
+
+  all_names <- unique(c(occur_df$family, occur_df$genus, occur_df$taxonName))
+  matched_taxa <- taxon[taxon %in% all_names]
+  unmatched_taxa <- setdiff(taxon, matched_taxa)
+
+  if (verbose) {
+    if (length(unmatched_taxa) > 0) {
+      message("The following taxa were not found in any column: ", paste(unmatched_taxa, collapse = ", "))
+    }
+  }
+  matches <- occur_df$family %in% matched_taxa |
+    occur_df$genus %in% matched_taxa |
+    occur_df$taxonName %in% matched_taxa
+  matches <- any(matches)
+
+  if (!matches) {
+    stop(paste0(
+      "Your input 'taxon' list must contain at least one name existing within the REFLORA collections.\n",
+      "Check whether the input taxon list has any typo: ",
+      paste(unmatched_taxa, collapse = ", ")
+    ))
+  }
+}
+
+.check_state_match <- function(occur_df, state, verbose) {
+
+  matched_state <- state[state %in% unique(occur_df$stateProvince)]
+  unmatched_state <- setdiff(state, matched_state)
+
+  if (verbose && length(unmatched_state) > 0) {
+    message("The following states were not found: ", paste(unmatched_state, collapse = ", "))
+  }
+
+  if (length(matched_state) == 0) {
+    stop(paste0(
+      "Your input 'state' list must contain at least one name existing within the REFLORA collections.\n",
+      "Check whether the input state list has any typo: ",
+      paste(unmatched_state, collapse = ", ")
+    ))
+  }
+}
+
+.check_year_match <- function(occur_df, recordYear, verbose) {
+
+  matched_year <- recordYear[recordYear %in% unique(occur_df$year)]
+  unmatched_year <- setdiff(recordYear, matched_year)
+
+  if (verbose && length(unmatched_year) > 0) {
+    message("The following recordYear were not found: ", paste(unmatched_year, collapse = ", "))
+  }
+
+  if (length(matched_year) == 0) {
+    stop(paste0(
+      "Your input 'recordYear' list must contain at least one year existing within the REFLORA collections.\n",
+      "Check whether the input recordYear list has any typo: ",
+      paste(unmatched_year, collapse = ", ")
+    ))
+  }
+}
+
+
 

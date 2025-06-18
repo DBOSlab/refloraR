@@ -62,7 +62,7 @@
 #'                    verbose = TRUE,
 #'                    save = TRUE,
 #'                    dir = "reflora_duplicates",
-#'                    filename = "reflora_ocurrence_flagged_duplicates")
+#'                    filename = "reflora_flagged_duplicates")
 #'}
 #'
 #' @importFrom stringr str_split
@@ -79,7 +79,7 @@ reflora_duplicates <- function(df = NULL,
                                keep_acronyms = TRUE,
                                save = TRUE,
                                dir = "reflora_duplicates",
-                               filename = "reflora_ocurrence_flagged_duplicates") {
+                               filename = "reflora_flagged_duplicates") {
 
 
   stop("Function still under construction")

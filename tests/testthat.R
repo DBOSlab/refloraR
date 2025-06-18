@@ -9,4 +9,4 @@
 library(testthat)
 library(refloraR)
 
-test_check("refloraR")
+testthat::test_check("refloraR")
