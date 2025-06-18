@@ -1,7 +1,4 @@
 test_that("reflora_summary works for full search (herbarium = NULL) or with a vector of herbarium acronyms", {
-  skip_on_cran()
-  skip_if_offline()
-
   res_ex <- reflora_summary(verbose = FALSE,
                             save = FALSE,
                             dir = "reflora_summary")
@@ -30,9 +27,6 @@ test_that("reflora_summary works for full search (herbarium = NULL) or with a ve
 })
 
 test_that("reflora_summary saves file when save = TRUE", {
-  skip_on_cran()
-  skip_if_offline()
-
   temp_dir <- tempdir()
   res <- reflora_summary(herbarium = c("RB", "HUEFS", "K"),
                          verbose = FALSE,
@@ -45,9 +39,6 @@ test_that("reflora_summary saves file when save = TRUE", {
 })
 
 test_that("reflora_download works for a search with a vector of herbarium acronyms", {
-  skip_on_cran()
-  skip_if_offline()
-
   temp_dir <- file.path(tempdir(), "reflora_download_test")
   if (dir.exists(temp_dir)) unlink(temp_dir, recursive = TRUE)
 
@@ -78,9 +69,6 @@ test_that("reflora_download works for a search with a vector of herbarium acrony
 })
 
 test_that("reflora_download handles NULL herbarium input", {
-  skip_on_cran()
-  skip_if_offline()
-
   temp_dir <- file.path(tempdir(), "reflora_download_all")
   if (dir.exists(temp_dir)) unlink(temp_dir, recursive = TRUE)
 
@@ -94,9 +82,6 @@ test_that("reflora_download handles NULL herbarium input", {
 })
 
 test_that("reflora_download returns silently with existing dwca folder", {
-  skip_on_cran()
-  skip_if_offline()
-
   temp_dir <- file.path(tempdir(), "reflora_download_cached")
   if (dir.exists(temp_dir)) unlink(temp_dir, recursive = TRUE)
   dir.create(temp_dir)
@@ -114,9 +99,6 @@ test_that("reflora_download returns silently with existing dwca folder", {
 })
 
 test_that("reflora_download throws error for invalid herbarium code", {
-  skip_on_cran()
-  skip_if_offline()
-
   expect_error(
     reflora_summary(herbarium = "INVALIDCODE",
                     verbose = FALSE,

@@ -1,7 +1,4 @@
 test_that("reflora_indets returns a data.frame and filters by level FAMILY", {
-  skip_on_cran()
-  skip_if_offline()
-
   df <- reflora_indets(
     level = "FAMILY",
     taxon = "Fabaceae",
@@ -15,9 +12,6 @@ test_that("reflora_indets returns a data.frame and filters by level FAMILY", {
 })
 
 test_that("reflora_indets filters by level GENUS", {
-  skip_on_cran()
-  skip_if_offline()
-
   df <- reflora_indets(
     level = "GENUS",
     taxon = "Fabaceae",
@@ -31,9 +25,6 @@ test_that("reflora_indets filters by level GENUS", {
 })
 
 test_that("reflora_indets filters by year range and state", {
-  skip_on_cran()
-  skip_if_offline()
-
   df <- reflora_indets(
     level = "FAMILY",
     taxon = "Fabaceae",
@@ -50,9 +41,6 @@ test_that("reflora_indets filters by year range and state", {
 })
 
 test_that("reflora_indets saves output when save = TRUE", {
-  skip_on_cran()
-  skip_if_offline()
-
   tmpdir <- tempdir()
   outfile <- "test_indets"
 
@@ -72,9 +60,6 @@ test_that("reflora_indets saves output when save = TRUE", {
 })
 
 test_that("reflora_indets returns more rows when level is NULL (all indets)", {
-  skip_on_cran()
-  skip_if_offline()
-
   all_levels <- reflora_indets(
     level = NULL,
     taxon = "Fabaceae",

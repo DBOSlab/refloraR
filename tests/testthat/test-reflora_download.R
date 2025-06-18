@@ -1,7 +1,4 @@
 test_that("reflora_download works for a search with a vector of herbarium acronyms", {
-  skip_on_cran()
-  skip_if_offline()
-
   reflora_download(herbarium = c("ALCB", "HUEFS"),
                    verbose = FALSE,
                    dir = "reflora_download")
@@ -18,9 +15,6 @@ test_that("reflora_download works for a search with a vector of herbarium acrony
 })
 
 test_that("reflora_download works for a search with a vector of herbarium acronyms", {
-  skip_on_cran()
-  skip_if_offline()
-
   temp_dir <- file.path(tempdir(), "reflora_download_test")
   if (dir.exists(temp_dir)) unlink(temp_dir, recursive = TRUE)
 

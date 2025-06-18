@@ -1,7 +1,4 @@
 test_that("reflora_occurrence basic usage returns a data.frame", {
-  skip_on_cran()
-  skip_if_offline()
-
   result <- reflora_occurrence(
     herbarium = "RB",
     taxon = "Fabaceae",
@@ -14,9 +11,6 @@ test_that("reflora_occurrence basic usage returns a data.frame", {
 })
 
 test_that("reflora_occurrence handles empty taxon search", {
-  skip_on_cran()
-  skip_if_offline()
-
   expect_error(
     reflora_occurrence(
     herbarium = "RB",
@@ -27,9 +21,6 @@ test_that("reflora_occurrence handles empty taxon search", {
 })
 
 test_that("reflora_occurrence applies state and year filters", {
-  skip_on_cran()
-  skip_if_offline()
-
   result <- reflora_occurrence(
     herbarium = "RB",
     taxon = "Fabaceae",
@@ -44,9 +35,6 @@ test_that("reflora_occurrence applies state and year filters", {
 })
 
 test_that("reflora_occurrence reorders columns properly", {
-  skip_on_cran()
-  skip_if_offline()
-
   result <- reflora_occurrence(
     herbarium = "RB",
     taxon = "Fabaceae",
@@ -60,9 +48,6 @@ test_that("reflora_occurrence reorders columns properly", {
 })
 
 test_that("reflora_occurrence saves file when save = TRUE", {
-  skip_on_cran()
-  skip_if_offline()
-
   temp_dir <- tempdir()
   test_file <- "test_output"
 
@@ -83,9 +68,6 @@ test_that("reflora_occurrence saves file when save = TRUE", {
 })
 
 test_that(".check_taxon_match handles valid and invalid taxa", {
-  skip_on_cran()
-  skip_if_offline()
-
   df <- data.frame(
     family = c("Fabaceae", "Rosaceae"),
     genus = c("Luetzelburgia", "Rosa"),
@@ -109,9 +91,6 @@ test_that(".check_taxon_match handles valid and invalid taxa", {
 })
 
 test_that(".check_year_match handles valid and invalid years", {
-  skip_on_cran()
-  skip_if_offline()
-
   df <- data.frame(
     year = c(1999, 2005, 2020),
     stringsAsFactors = FALSE
@@ -133,9 +112,6 @@ test_that(".check_year_match handles valid and invalid years", {
 })
 
 test_that(".check_state_match handles valid and invalid states", {
-  skip_on_cran()
-  skip_if_offline()
-
   df <- data.frame(
     stateProvince = c("Bahia", "Minas Gerais", "São Paulo"),
     stringsAsFactors = FALSE
