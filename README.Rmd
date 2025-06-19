@@ -89,8 +89,7 @@ reflora_download(herbarium = c("ALCB", "HUEFS", "RB", "US", "K"),
 \
 
 ## Documentation
-A detailed description of the ***refloraR***'s full functionality is available in 
-different [articles](https://dboslab.github.io/refloraR-website/).\
+Full function documentation and articles are available at the ***refloraR*** [website](https://dboslab.github.io/refloraR-website/).\
 \
 
 ## Citation

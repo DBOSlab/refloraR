@@ -146,15 +146,6 @@ test_that("reflora_indets creates directory if missing", {
 })
 
 
-test_that("reflora_indets works with no filters (all default args)", {
-  df <- reflora_indets(
-    save = FALSE,
-    verbose = FALSE
-  )
-  expect_s3_class(df, "data.frame")
-})
-
-
 test_that("reflora_indets handles non-matching level filter", {
   expect_error(
     reflora_indets(
@@ -180,3 +171,11 @@ test_that("reflora_indets returns empty for unknown taxon", {
   )
 })
 
+
+test_that("reflora_indets works with no filters (all default args)", {
+  df <- reflora_indets(
+    save = FALSE,
+    verbose = FALSE
+  )
+  expect_s3_class(df, "data.frame")
+})
