@@ -84,9 +84,10 @@ reflora_download <- function(herbarium = NULL,
     dwca_folder = paste0("dwca-", herb_URLs[i], "-v", vdest)
 
     ex_dwca_folder = paste0("dwca-", herb_URLs[i], "-v", vdest, "_", vlast)
-    ffb_database = paste0(dir, "/", gsub("-", "_", ex_dwca_folder))
+    reflora_database = paste0(dir, "/", gsub("-", "_", ex_dwca_folder))
 
-    if (!dir.exists(ffb_database)) {
+    if (!dir.exists(reflora_database) |
+        !any(list.files(reflora_database) %in% "occurrence.txt")) {
 
       tf <- grepl(paste0("dwca_", herb_URLs[i]), list.files(dir))
       if (any(tf)) {

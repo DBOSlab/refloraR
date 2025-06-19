@@ -129,24 +129,28 @@ reflora_records <- function(herbarium = NULL,
                             filename = "reflora_records_search") {
 
   # herbarium check
-  if (verbose & !is.null(herbarium)) {
-    message("Checking whether the input herbarium code exists in the REFLORA...")
+  if (!is.null(herbarium)) {
+    if (verbose) {
+      message("Checking whether the input herbarium code exist in the REFLORA...")
+    }
+    .arg_check_herbarium(herbarium)
   }
-  .arg_check_herbarium(herbarium)
 
   # state check
-  if (verbose & !is.null(state)) {
-    message("Checking whether the input state list include valid Brazilian state...")
-  }
   if (!is.null(state)) {
+    if (verbose) {
+      message("Checking whether the input state list include valid Brazilian state...")
+    }
     state <- .arg_check_state(state)
   }
 
   # recordYear check
-  if (verbose & !is.null(recordYear)) {
-    message("Checking whether the input recordYear range exists in the REFLORA...")
+  if (!is.null(recordYear)) {
+    if (verbose) {
+      message("Checking whether the input recordYear range exists in the REFLORA...")
+    }
+    .arg_check_recordYear(recordYear)
   }
-  .arg_check_recordYear(recordYear)
 
   # dir check
   dir <- .arg_check_dir(dir)

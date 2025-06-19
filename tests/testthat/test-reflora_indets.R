@@ -155,27 +155,28 @@ test_that("reflora_indets works with no filters (all default args)", {
 })
 
 
-# create expected error
-# test_that("reflora_indets returns empty for unknown taxon", {
-#   df <- reflora_indets(
-#     level = "FAMILY",
-#     taxon = "Fakeplantus",
-#     herbarium = "RB",
-#     verbose = FALSE,
-#     save = FALSE
-#   )
-#   expect_true(nrow(df) == 0)
-# })
-#
-# # create expected error
-# test_that("reflora_indets handles non-matching level filter", {
-#   df <- reflora_indets(
-#     level = "SPECIES", # invalid for this function
-#     taxon = "Fabaceae",
-#     herbarium = "RB",
-#     verbose = FALSE,
-#     save = FALSE
-#   )
-#   expect_true(nrow(df) == 0)
-# })
+test_that("reflora_indets handles non-matching level filter", {
+  expect_error(
+    reflora_indets(
+      level = "SPECIES", # invalid for this function
+      taxon = "Fabaceae",
+      herbarium = "RB",
+      verbose = FALSE,
+      save = FALSE
+    )
+  )
+})
+
+
+test_that("reflora_indets returns empty for unknown taxon", {
+  expect_error(
+    reflora_indets(
+      level = "FAMILY",
+      taxon = "Fakeplantus",
+      herbarium = "ALCB",
+      verbose = FALSE,
+      save = FALSE
+    )
+  )
+})
 

@@ -125,25 +125,37 @@ reflora_indets <- function(level = NULL,
                            dir = "reflora_indets",
                            filename = "reflora_indets_search") {
 
-  # herbarium check
-  if (verbose & !is.null(herbarium)) {
-    message("Checking whether the input herbarium code exists in the REFLORA...")
+  # level check
+  if (!is.null(level)) {
+    if (verbose) {
+      message("Checking whether the input level is correct...")
+    }
+    level <- .arg_check_level(level)
   }
-  .arg_check_herbarium(herbarium)
+
+  # herbarium check
+  if (!is.null(herbarium)) {
+    if (verbose) {
+      message("Checking whether the input herbarium code exists in the REFLORA...")
+    }
+    .arg_check_herbarium(herbarium)
+  }
 
   # state check
-  if (verbose & !is.null(state)) {
-    message("Checking whether the input state list exists in the REFLORA...")
-  }
   if (!is.null(state)) {
+    if (verbose) {
+      message("Checking whether the input state list exists in the REFLORA...")
+    }
     state <- .arg_check_state(state)
   }
 
   # recordYear check
-  if (verbose & !is.null(recordYear)) {
-    message("Checking whether the input recordYear range exists in the REFLORA...")
+  if (!is.null(recordYear)) {
+    if (verbose) {
+      message("Checking whether the input recordYear range exists in the REFLORA...")
+    }
+    .arg_check_recordYear(recordYear)
   }
-  .arg_check_recordYear(recordYear)
 
   # dir check
   dir <- .arg_check_dir(dir)

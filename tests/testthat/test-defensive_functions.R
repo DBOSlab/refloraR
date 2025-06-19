@@ -74,23 +74,3 @@ test_that(".arg_check_state handles case-insensitive acronyms", {
   expect_equal(result, c("Rio de Janeiro", "Minas Gerais", "São Paulo"))
 })
 
-
-test_that(".format_acronyms formats acronym list correctly", {
-  expect_equal(.format_acronyms("RB"), "'RB'")
-  expect_equal(.format_acronyms(c("RB", "ALCB")), "'RB' and 'ALCB'")
-  expect_equal(.format_acronyms(c("RB", "ALCB", "K")), "'RB', 'ALCB' and 'K'")
-})
-
-
-# test_that(".arg_check_herbarium accepts and rejects herbarium acronyms", {
-#   mock_get_info <- function(...) list(NULL, NULL, c("RB", "ALCB"))
-#
-#   mockr::with_mock(
-#     .get_ipt_info = mock_get_info,
-#     {
-#       expect_silent(.arg_check_herbarium(c("RB", "ALCB")))
-#       expect_error(.arg_check_herbarium(c("FAKE")), "not found")
-#     }
-#   )
-# })
-#Make sure mockr is in your Suggests and loaded via library(mockr) in test files.

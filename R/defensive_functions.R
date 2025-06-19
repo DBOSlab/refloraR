@@ -142,7 +142,8 @@
   if (length(invalid) > 0) {
     stop(
       sprintf(
-        "The following herbarium acronym(s) are not recognized by REFLORA: %s\n\nUse `reflora_summary()` to view available collections.",
+        "The following herbarium acronym(s) are not recognized by REFLORA: %s
+        \nUse `reflora_summary()` to view available collections.",
         paste0(shQuote(invalid), collapse = ", ")
       ),
       call. = FALSE
@@ -152,15 +153,27 @@
   invisible(TRUE)
 }
 
-.format_acronyms <- function(acronyms) {
-  n <- length(acronyms)
-  if (n == 1) {
-    return(paste0("'", acronyms[1], "'"))
-  } else if (n == 2) {
-    return(paste0("'", acronyms[1], "' and '", acronyms[2], "'"))
-  } else {
-    # For more than 2 acronyms, handle commas and 'and' appropriately
-    return(paste0("'", paste(acronyms[-n], collapse = "', '"), "' and '", acronyms[n], "'"))
+
+#_______________________________________________________________________________
+# Check the level input
+
+.arg_check_level <- function(level) {
+  allowed_levels <- c("FAMILY", "GENUS")
+  level_clean <- toupper(trimws(level))
+
+  invalid <- setdiff(level_clean, allowed_levels)
+
+  if (length(invalid) > 0) {
+    stop(
+      sprintf(
+        "The following value(s) in `level` are invalid: %s\nAccepted values are: %s",
+        paste0(shQuote(invalid), collapse = ", "),
+        paste0(shQuote(allowed_levels), collapse = ", ")
+      ),
+      call. = FALSE
+    )
   }
+
+  return(level_clean)
 }
 
