@@ -90,48 +90,39 @@
 #_______________________________________________________________________________
 # Check the state input
 .arg_check_state <- function(x) {
-  # Named list of Brazilian states with their acronyms
-  valid_states <- c("Acre" = "AC", "Alagoas" = "AL", "Amapá" = "AP", "Amazonas" = "AM",
-                    "Bahia" = "BA", "Ceará" = "CE", "Distrito Federal" = "DF",
-                    "Espírito Santo" = "ES", "Goiás" = "GO", "Maranhão" = "MA",
+
+  valid_states <- c("Acre" = "AC", "Alagoas" = "AL", "Amap\u00e1" = "AP", "Amazonas" = "AM",
+                    "Bahia" = "BA", "Cear\u00e1" = "CE", "Distrito Federal" = "DF",
+                    "Esp\u00edrito Santo" = "ES", "Goi\u00e1s" = "GO", "Maranh\u00e3o" = "MA",
                     "Mato Grosso" = "MT", "Mato Grosso do Sul" = "MS", "Minas Gerais" = "MG",
-                    "Pará" = "PA", "Paraíba" = "PB", "Paraná" = "PR", "Pernambuco" = "PE",
-                    "Piauí" = "PI", "Rio de Janeiro" = "RJ", "Rio Grande do Norte" = "RN",
-                    "Rio Grande do Sul" = "RS", "Rondônia" = "RO", "Roraima" = "RR",
-                    "Santa Catarina" = "SC", "São Paulo" = "SP", "Sergipe" = "SE",
+                    "Par\u00e1" = "PA", "Para\u00edba" = "PB", "Paran\u00e1" = "PR", "Pernambuco" = "PE",
+                    "Piau\u00ed" = "PI", "Rio de Janeiro" = "RJ", "Rio Grande do Norte" = "RN",
+                    "Rio Grande do Sul" = "RS", "Rond\u00f4nia" = "RO", "Roraima" = "RR",
+                    "Santa Catarina" = "SC", "S\u00e3o Paulo" = "SP", "Sergipe" = "SE",
                     "Tocantins" = "TO")
 
-  # Create a lookup table with both full names and acronyms for easy access
   valid_states_full <- names(valid_states)
   valid_states_acronyms <- unname(valid_states)
 
-  # Remove diacritics from both the states list and the input
   states_no_diacritics <- stringi::stri_trans_general(x, "Latin-ASCII")
   valid_states_full_no_diacritics <- stringi::stri_trans_general(valid_states_full, "Latin-ASCII")
   valid_states_acronyms_no_diacritics <- stringi::stri_trans_general(valid_states_acronyms, "Latin-ASCII")
 
-  # Initialize a vector to store the corrected names
   corrected_states <- character(length(x))
 
   for (i in seq_along(x)) {
-    # Check if the state matches a full name without diacritics
     match_full <- match(states_no_diacritics[i], valid_states_full_no_diacritics)
-    # Check if the state matches an acronym without diacritics
     match_acronym <- match(states_no_diacritics[i], valid_states_acronyms_no_diacritics)
 
     if (!is.na(match_full)) {
-      # If it matches a full name, return the full name
       corrected_states[i] <- valid_states_full[match_full]
     } else if (!is.na(match_acronym)) {
-      # If it matches an acronym, return the corresponding full name
       corrected_states[i] <- names(valid_states)[match_acronym]
     } else {
-      # If it doesn't match anything, mark it as invalid
-      stop(paste("The following Brazilian state is not valid:", x[i]))
+      corrected_states[i] <- x[i]  # return as-is
     }
   }
 
-  # Return the corrected state names
   return(corrected_states)
 }
 

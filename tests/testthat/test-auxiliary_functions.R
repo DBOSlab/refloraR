@@ -11,7 +11,10 @@ test_that(".save_csv() writes a file correctly", {
   written_df <- read.csv(output_path)
   expect_equal(ncol(written_df), 2)
   expect_equal(nrow(written_df), 3)
+
+  unlink(output_path)
 })
+
 
 test_that(".replace_cols() replaces target column with group", {
   result <- .replace_cols(c("herbarium", "collector"), replace = c("collectionCode"), columns_to_replace = "herbarium")
@@ -56,3 +59,4 @@ test_that(".filter_occur_df() handles taxon + year filtering", {
   expect_equal(nrow(result), 1)
   expect_equal(result$family, "Fabaceae")
 })
+

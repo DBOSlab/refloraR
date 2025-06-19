@@ -108,11 +108,11 @@ reflora_download(herbarium = c("ALCB", "HUEFS", "RB", "US", "K"),
 
 A detailed description of the ***refloraR***’s full functionality is
 available in different
-[articles](https://dboslab.github.io/refloraR/).  
+[articles](https://dboslab.github.io/refloraR-website/).  
   
 
 ## Citation
 
-Cardoso, D. & Caldéron, C. (2024). *refloraR*: An R package for
+Cardoso, D. & Caldéron, C. (2025). *refloraR*: An R package for
 exploring plant specimen collections from REFLORA Virtual Herbarium.
 <https://github.com/dboslab/refloraR>

@@ -136,7 +136,7 @@ reflora_records <- function(herbarium = NULL,
 
   # state check
   if (verbose & !is.null(state)) {
-    message("Checking whether the input state list exists in the REFLORA...")
+    message("Checking whether the input state list include valid Brazilian state...")
   }
   if (!is.null(state)) {
     state <- .arg_check_state(state)

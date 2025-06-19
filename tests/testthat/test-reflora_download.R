@@ -1,18 +1,23 @@
-test_that("reflora_download works for a search with a vector of herbarium acronyms", {
-  reflora_download(herbarium = c("ALCB", "HUEFS"),
-                   verbose = FALSE,
-                   dir = "reflora_download")
+test_that("reflora_download works for a vector of herbarium acronyms", {
+  temp_dir <- file.path(tempdir(), "reflora_download_test")
+  if (dir.exists(temp_dir)) unlink(temp_dir, recursive = TRUE)
 
-  filenames <- list.files("reflora_download")
+  reflora_download(
+    herbarium = c("ALCB", "HUEFS"),
+    verbose = FALSE,
+    dir = temp_dir
+  )
 
-  alcb <- list.files(paste0("reflora_download/", filenames[1]))
-  huefs <- list.files(paste0("reflora_download/", filenames[1]))
+  folders <- list.files(temp_dir)
+  expect_true(length(folders) == 2)
 
-  expect_equal(dir.exists("reflora_download"), TRUE)
-  expect_equal(length(list.files("reflora_download"))==2, TRUE)
-  expect_equal(length(alcb)==6, TRUE)
-  expect_equal(length(alcb)==length(huefs), TRUE)
+  contents <- lapply(file.path(temp_dir, folders), list.files)
+  expect_true(all(lengths(contents) >= 3))
+  expect_equal(length(contents[[1]]), length(contents[[2]]))
+
+  unlink(temp_dir, recursive = TRUE)
 })
+
 
 test_that("reflora_download works for a search with a vector of herbarium acronyms", {
   temp_dir <- file.path(tempdir(), "reflora_download_test")

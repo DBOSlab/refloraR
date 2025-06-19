@@ -25,6 +25,7 @@ test_that("reflora_summary works for full search (herbarium = NULL) or with a ve
   expect_gt(nrow(res_ex), nrow(res_ex_some))
 })
 
+
 test_that("reflora_summary saves file when save = TRUE", {
   temp_dir <- tempdir()
   res <- reflora_summary(herbarium = c("RB"),
@@ -36,6 +37,7 @@ test_that("reflora_summary saves file when save = TRUE", {
   expect_true(file.exists(output_path))
   unlink(output_path)
 })
+
 
 test_that("reflora_summary fails with invalid herbarium code", {
   expect_error(
@@ -58,13 +60,17 @@ test_that("reflora_summary works with trailing slash in dir", {
   unlink(temp_dir, recursive = TRUE)
 })
 
+
 test_that("reflora_summary prints expected verbose messages", {
   local_edition(3)  # Required for proper testthat behavior under covr
   expect_message(
-    reflora_summary(herbarium = "RB", verbose = TRUE, save = FALSE),
+    reflora_summary(herbarium = "RB",
+                    verbose = TRUE,
+                    save = FALSE),
     regexp = "Checking whether the input herbarium code exist in the REFLORA..."
   )
 })
+
 
 test_that("reflora_summary returns NA if contact email is missing", {
   df <- reflora_summary(herbarium = "RB",
@@ -72,6 +78,7 @@ test_that("reflora_summary returns NA if contact email is missing", {
                         save = FALSE)
   expect_true(is.na(df$hasEmail[1]) || is.character(df$hasEmail[1]))
 })
+
 
 test_that("reflora_summary returns Records column as numeric", {
   df <- reflora_summary(herbarium = "RB",
