@@ -5,6 +5,7 @@
 \title{Retrieve taxon records from REFLORA collections}
 \usage{
 reflora_records(herbarium = NULL,
+                repatriated = TRUE,
                 taxon = NULL,
                 state = NULL,
                 recordYear = NULL,
@@ -21,6 +22,10 @@ reflora_records(herbarium = NULL,
 \item{herbarium}{A vector of specific herbarium acronyms (collection code) in
 uppercase letters or leave it as \code{NULL} to summarize specimen records
 for all REFLORA-hosted herbaria.}
+
+\item{repatriated}{Logical. If \code{FALSE}, skips downloading records from
+REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
+Use \code{reflora_summary()} to check which collections are repatriated.}
 
 \item{taxon}{A vector with the required taxon. It can be one or a vector of
 multiple scientific names at family, genus or species level.}

@@ -18,6 +18,10 @@
 #' uppercase letters or leave it as \code{NULL} to parse specimen records for all
 #' herbarim dcwa folders in the defined path directory.
 #'
+#' @param repatriated Logical. If \code{FALSE}, skips downloading records from
+#' REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
+#' Use \code{reflora_summary()} to check which collections are repatriated.
+#'
 #' @param verbose Logical, if \code{FALSE}, a message showing steps when
 #' summarizing specimen records will not be printed in the console in full.
 #'
@@ -48,8 +52,8 @@
 
 reflora_parse <- function(path = NULL,
                           herbarium = NULL,
+                          repatriated = TRUE,
                           verbose = TRUE) {
-
 
   dwca_folders <- list.files(path)
   dwca_filenames <- lapply(paste0(path, "/", dwca_folders), list.files)
@@ -59,6 +63,24 @@ reflora_parse <- function(path = NULL,
                                                       "(?<=dwca[-_])[^-_]+"))
     dwca_folders <- dwca_folders[current_herbarium %in% herbarium]
     dwca_filenames <- dwca_filenames[current_herbarium %in% herbarium]
+  }
+
+  if (is.null(herbarium) && repatriated == FALSE) {
+    temp <- reflora_summary(herbarium = NULL,
+                            verbose = FALSE,
+                            save = FALSE)
+    if (verbose) {
+      message(sprintf(
+        "Skipping repatriated collections: %s",
+        paste0(shQuote(temp$collectionCode[temp$Repatriated]),
+               collapse = ", ")
+      ))
+    }
+    non_repatriated <- temp$collectionCode[!temp$Repatriated]
+    current_herbarium <- toupper(stringr::str_extract(dwca_folders,
+                                                      "(?<=dwca[-_])[^-_]+"))
+    dwca_folders <- dwca_folders[current_herbarium %in% non_repatriated]
+    dwca_filenames <- dwca_filenames[current_herbarium %in% non_repatriated]
   }
 
   # path check

@@ -67,8 +67,6 @@ reflora_summary <- function(herbarium = NULL,
   herb_URLs = ipt_info[[2]]
   herb_code = ipt_info[[3]]
 
-  repatriated <- c("US", "NY", "MO", "GH", "S", "P", "K", "W")
-
   summary_df <- data.frame(collectionCode = herb_code,
                            rightsHolder = NA,
                            Repatriated = NA,
@@ -95,7 +93,7 @@ reflora_summary <- function(herbarium = NULL,
     summary_df$contactPoint[tf] <- herb_info[[2]][1]
     summary_df$hasEmail[tf] <- herb_info[[3]][1]
 
-    summary_df$Repatriated[tf] <- herb_code[i] %in% repatriated
+    summary_df$Repatriated[tf] <- herb_info[[6]][1]
     summary_df$Version[tf] <- herb_info[[1]][1]
     summary_df$Published.on[tf] <- herb_info[[1]][2]
     summary_df$Records[tf] <- herb_info[[1]][3]

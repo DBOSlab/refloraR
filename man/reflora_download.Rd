@@ -5,12 +5,17 @@
 \title{Download plant specimen records from REFLORA Virtual Herbarium}
 \usage{
 reflora_download(herbarium = NULL,
+                 repatriated = TRUE,
                  verbose = TRUE,
                  dir = "reflora_download")
 }
 \arguments{
 \item{herbarium}{A vector of specific herbarium acronyms (collection code) in
 uppercase letters or leave it as NULL to download records for all REFLORA herbaria.}
+
+\item{repatriated}{Logical. If \code{FALSE}, skips downloading records from
+REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
+Use \code{reflora_summary()} to check which collections are repatriated.}
 
 \item{verbose}{Logical, if \code{FALSE}, a message showing steps when downloading
 herbarium specimen records will not be printed in the console in full.}

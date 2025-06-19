@@ -16,6 +16,10 @@ dwca folders are.}
 uppercase letters or leave it as \code{NULL} to parse specimen records for all
 herbarim dcwa folders in the defined path directory.}
 
+\item{repatriated}{Logical. If \code{FALSE}, skips downloading records from
+REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
+Use \code{reflora_summary()} to check which collections are repatriated.}
+
 \item{verbose}{Logical, if \code{FALSE}, a message showing steps when
 summarizing specimen records will not be printed in the console in full.}
 }

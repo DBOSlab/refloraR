@@ -35,6 +35,7 @@
 #' @usage
 #' reflora_indets(level = NULL,
 #'                herbarium = NULL,
+#'                repatriated = TRUE,
 #'                taxon = NULL,
 #'                state = NULL,
 #'                recordYear = NULL,
@@ -53,6 +54,10 @@
 #' @param herbarium Character vector. Herbarium codes (e.g., `"RB"`, `"SP"`) in
 #' uppercase. Use `NULL` to include all herbaria.
 #'
+#' @param repatriated Logical. If \code{FALSE}, skips downloading records from
+#' REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
+#' Use \code{reflora_summary()} to check which collections are repatriated.
+#
 #' @param taxon Character vector. Specific taxon names to filter by
 #' (e.g., `"Fabaceae"`).
 #'
@@ -114,6 +119,7 @@
 
 reflora_indets <- function(level = NULL,
                            herbarium = NULL,
+                           repatriated = TRUE,
                            taxon = NULL,
                            state = NULL,
                            recordYear = NULL,
@@ -176,6 +182,7 @@ reflora_indets <- function(level = NULL,
       # The reflora_download will get updated dwca files only if any of the current
       # versions differ from the REFLORA IPT
       reflora_download(herbarium = herbarium,
+                       repatriated = repatriated,
                        verbose = verbose,
                        dir = path)
     }
@@ -183,18 +190,21 @@ reflora_indets <- function(level = NULL,
     # Parse REFLORA dwca files
     dwca_files <- reflora_parse(path = path,
                                 herbarium = herbarium,
+                                repatriated = repatriated,
                                 verbose = verbose)
   } else {
 
     # The reflora_download will get updated dwca files only if any of the current
     # versions differ from the REFLORA IPT
     reflora_download(herbarium = herbarium,
+                     repatriated = repatriated,
                      verbose = verbose,
                      dir = "reflora_download")
 
     # Parse REFLORA dwca files
     dwca_files <- reflora_parse(path = "reflora_download",
                                 herbarium = herbarium,
+                                repatriated = repatriated,
                                 verbose = verbose)
   }
 

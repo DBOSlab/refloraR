@@ -6,6 +6,7 @@
 \usage{
 reflora_indets(level = NULL,
                herbarium = NULL,
+               repatriated = TRUE,
                taxon = NULL,
                state = NULL,
                recordYear = NULL,
@@ -24,6 +25,10 @@ indeterminate ranks.}
 
 \item{herbarium}{Character vector. Herbarium codes (e.g., `"RB"`, `"SP"`) in
 uppercase. Use `NULL` to include all herbaria.}
+
+\item{repatriated}{Logical. If \code{FALSE}, skips downloading records from
+REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
+Use \code{reflora_summary()} to check which collections are repatriated.}
 
 \item{taxon}{Character vector. Specific taxon names to filter by
 (e.g., `"Fabaceae"`).}

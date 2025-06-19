@@ -91,6 +91,7 @@
   email <- regmatches(contact, gregexpr(email_pattern, contact, perl = TRUE))[[1]]
   email <- gsub('<mailto:|>', "", email)  # Remove the '<mailto:' part
 
+  repatriated <- grepl("-\\sAmostras\\sBrasileiras", ipt_metadata[[i]][2])
   rights_holder <- gsub("^dct:title\\s\"|\\s-\\sHerb\u00E1rio Virtual.*",
                         "", ipt_metadata[[i]][2])
   rights_holder <- gsub("-\\sAmostras\\sBrasileiras.*",
@@ -98,7 +99,7 @@
   rights_holder <- gsub(".*\\s-\\s|^\\s|\\s$|.*(H|h)erbarium-\\s|.*Herb\u00E1rio\\s(da|do)\\s|[.]\\sHerb\u00E1rio\\sVirtual\\s.*",
                         "", rights_holder)
 
-  return(list(version, name, email, rights_holder, herb_url))
+  return(list(version, name, email, rights_holder, herb_url, repatriated))
 }
 
 
@@ -344,6 +345,4 @@
     ))
   }
 }
-
-
 

@@ -8,11 +8,16 @@
 #'
 #' @usage
 #' reflora_download(herbarium = NULL,
+#'                  repatriated = TRUE,
 #'                  verbose = TRUE,
 #'                  dir = "reflora_download")
 #'
 #' @param herbarium A vector of specific herbarium acronyms (collection code) in
 #' uppercase letters or leave it as NULL to download records for all REFLORA herbaria.
+#'
+#' @param repatriated Logical. If \code{FALSE}, skips downloading records from
+#' REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
+#' Use \code{reflora_summary()} to check which collections are repatriated.
 #'
 #' @param verbose Logical, if \code{FALSE}, a message showing steps when downloading
 #' herbarium specimen records will not be printed in the console in full.
@@ -41,14 +46,17 @@
 #'
 
 reflora_download <- function(herbarium = NULL,
+                             repatriated = TRUE,
                              verbose = TRUE,
                              dir = "reflora_download") {
 
   # herbarium check
-  if (verbose & !is.null(herbarium)) {
-    message("Checking whether the input herbarium code exists in the REFLORA...")
+  if (!is.null(herbarium)) {
+    if (verbose) {
+      message("Checking whether the input herbarium code exists in the REFLORA...")
+    }
+    .arg_check_herbarium(herbarium)
   }
-  .arg_check_herbarium(herbarium)
 
   # dir check
   dir <- .arg_check_dir(dir)
@@ -71,12 +79,19 @@ reflora_download <- function(herbarium = NULL,
 
     summary_df <- data.frame(collectionCode = herb_code[i],
                              rightsHolder = herb_info[[4]][1],
+                             Repatriated = herb_info[[6]][1],
                              contactPoint = herb_info[[2]][1],
                              hasEmail = herb_info[[3]][1],
                              Version = herb_info[[1]][1],
                              Published.on = herb_info[[1]][2],
                              Records = herb_info[[1]][3],
                              Reflora_URL = herb_info[[5]])
+
+    # Do not download repatriated collections if repatriated = FALSE
+    if (!repatriated && isTRUE(summary_df$Repatriated)) {
+      if (verbose) message(paste0("Skipping repatriated collection: ", summary_df$collectionCode))
+      next
+    }
 
     vdest = gsub("[.].*", "", summary_df$Version)
     vlast = gsub(".*[.]", "", summary_df$Version)
