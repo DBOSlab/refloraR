@@ -1,6 +1,6 @@
 # Small functions to evaluate user input for the main functions and
 # return meaningful errors.
-# Author: Domingos Cardoso & Carlos Calderón
+# Author: Domingos Cardoso & Carlos Calderon
 
 #_______________________________________________________________________________
 # Check if the dir input is "character" type and if it has a "/" in the end
@@ -139,22 +139,26 @@
 #_______________________________________________________________________________
 # Check the herbarium input
 .arg_check_herbarium <- function(x) {
+  if (is.null(x) || length(x) == 0) return(invisible(TRUE))
 
-  # Get raw metadata from REFLORA repository
+  # Get valid herbarium acronyms from REFLORA metadata
   ipt_info <- .get_ipt_info(herbarium = NULL)
-
-  # Correct herbarium acronyms
   correct_acronyms <- ipt_info[[3]]
 
-  # Identify any acronyms in the input that are not valid
-  invalid_acronyms <- x[!x %in% correct_acronyms]
+  # Check if input acronyms are valid
+  invalid <- x[!x %in% correct_acronyms]
 
-  if (length(invalid_acronyms) > 0) {
-
-    stop(paste("Acronyms", .format_acronyms(invalid_acronyms),
-                " not found in the REFLORA Virtual Herbarium.\n\n"),
-         "Use the function 'reflora_summary' to check which are the collections currently available in the REFLORA.")
+  if (length(invalid) > 0) {
+    stop(
+      sprintf(
+        "The following herbarium acronym(s) are not recognized by REFLORA: %s\n\nUse `reflora_summary()` to view available collections.",
+        paste0(shQuote(invalid), collapse = ", ")
+      ),
+      call. = FALSE
+    )
   }
+
+  invisible(TRUE)
 }
 
 .format_acronyms <- function(acronyms) {

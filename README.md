@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# refloraR <img src="figures/refloraR_hex_sticker.png" align="right" alt="" width="120" />
+# refloraR <img src="inst/figures/refloraR_hex_sticker.png" align="right" alt="" width="120" />
 
 <!-- badges: start -->
 

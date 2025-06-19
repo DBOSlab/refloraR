@@ -144,8 +144,6 @@ test_that("reflora_records removes indeterminate specimens with indets = FALSE",
                                            "TRIBO", "DIVISAO", "ORDEM", "CLASSE")))
 })
 
-result$taxonRank
-
 test_that("reflora_records triggers auto download when path is NULL", {
   result <- reflora_records(
     herbarium = "RB",
@@ -183,16 +181,16 @@ test_that("reflora_records creates new dir if not present", {
   )
 
   expect_true(dir.exists(tmp_dir))
+  unlink(tmp_dir, recursive = TRUE)
 })
 
 test_that("reflora_records returns empty data.frame if no match after filters", {
-  result <- reflora_records(
-    herbarium = "RB",
-    taxon = "Fabaceae",
-    state = "ZZ",  # invalid state
-    save = FALSE,
-    verbose = FALSE
+  expect_error(
+    reflora_records(
+      herbarium = "RB",
+      taxon = "Fabaceae",
+      state = "ZZ",  # invalid state
+      save = FALSE,
+      verbose = FALSE)
   )
-
-  expect_true(nrow(result) == 0 || is.null(result))  # defensive
 })

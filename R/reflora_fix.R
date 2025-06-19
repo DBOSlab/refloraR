@@ -15,7 +15,7 @@
 #'             verbose = TRUE,
 #'             save = TRUE,
 #'             dir = "reflora_fix",
-#'             filename = "reflora_ocurrence_fixed")
+#'             filename = "reflora_records_fixed")
 #'
 #' @param df A vector of specific herbarium acronyms (collection code) in
 #' uppercase letters or leave it as \code{NULL} to summarize specimen records
@@ -24,22 +24,22 @@
 #' @param scientificName Logical, if \code{FALSE}, the search will not check for the
 #' most updated version of the REFLORA dwca files. This argument is often used if
 #' you have defined a specific path to previously downloaded REFLORA dwca files
-#' either manually or with function \code{reflora_occurrence}.
+#' either manually or with function \code{reflora_records}.
 #'
 #' @param recordBy Logical, if \code{FALSE}, the search will not check for the
 #' most updated version of the REFLORA dwca files. This argument is often used if
 #' you have defined a specific path to previously downloaded REFLORA dwca files
-#' either manually or with function \code{reflora_occurrence}.
+#' either manually or with function \code{reflora_records}.
 #'
 #' @param coordinates Logical, if \code{FALSE}, the search will not check for the
 #' most updated version of the REFLORA dwca files. This argument is often used if
 #' you have defined a specific path to previously downloaded REFLORA dwca files
-#' either manually or with function \code{reflora_occurrence}.
+#' either manually or with function \code{reflora_records}.
 #'
 #' @param country Logical, if \code{FALSE}, the search will not check for the
 #' most updated version of the REFLORA dwca files. This argument is often used if
 #' you have defined a specific path to previously downloaded REFLORA dwca files
-#' either manually or with function \code{reflora_occurrence}.
+#' either manually or with function \code{reflora_records}.
 #'
 #' @param verbose Logical, if \code{FALSE}, a message showing steps when
 #' summarizing specimen records will not be printed in the console in full.
@@ -48,24 +48,24 @@
 #'
 #' @param dir Pathway to the computer's directory, where the table-formatted
 #' summary will be saved. The default is to create a directory named
-#'  \code{reflora_ocurrence}.
+#'  \code{reflora_records}.
 #'
 #' @param filename Name of the output file to be saved. The default is to create
-#' a file entitled \code{reflora_ocurrence_fixed.csv}.
+#' a file entitled \code{reflora_records_fixed.csv}.
 #'
 #' @return A dataframe with the information of the chosen taxon from the chosen
 #' REFLORA Herbaria.
 #'
-#' @seealso \code{\link{reflora_ocurrence}}
+#' @seealso \code{\link{reflora_records}}
 #'
 #' @examples
 #' \dontrun{
 #'
 #' fam_taxa <- c("Fabaceae", "Ochnaceae")
-#' occur_df <- reflora_occurrence(herbarium = c("ALCB", "HUEFS", "K", "RB"),
-#'                                taxon = fam_taxa,
-#'                                verbose = TRUE,
-#'                                save = FALSE)
+#' occur_df <- reflora_records(herbarium = c("ALCB", "HUEFS", "K", "RB"),
+#'                             taxon = fam_taxa,
+#'                             verbose = TRUE,
+#'                             save = FALSE)
 #'
 #' reflora_fix(df = occur_df,
 #'             scientificName = TRUE,
@@ -75,7 +75,7 @@
 #'             verbose = TRUE,
 #'             save = TRUE,
 #'             dir = "reflora_fix",
-#'             filename = "reflora_ocurrence_fixed")
+#'             filename = "reflora_records_fixed")
 #'}
 #'
 #' @importFrom stringr str_split
@@ -94,7 +94,7 @@ reflora_fix <- function(df = NULL,
                         verbose = TRUE,
                         save = TRUE,
                         dir = "reflora_fix",
-                        filename = "reflora_ocurrence_fixed") {
+                        filename = "reflora_records_fixed") {
 
   stop("Function still under construction")
 

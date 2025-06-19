@@ -31,7 +31,7 @@
 #'
 #' reflora_download(herbarium = c("ALCB", "HUEFS", "K", "RB"),
 #'                  verbose = TRUE,
-#'                  dir = "downloaded_reflora")
+#'                  dir = "reflora_download")
 #'}
 #'
 #' @importFrom stringr str_split

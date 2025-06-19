@@ -14,7 +14,7 @@
 #'                    verbose = TRUE,
 #'                    save = TRUE,
 #'                    dir = "reflora_duplicates",
-#'                    filename = "reflora_ocurrence_flagged_duplicates")
+#'                    filename = "reflora_flagged_duplicates")
 #'
 #' @param df A vector of specific herbarium acronyms (collection code) in
 #' uppercase letters or leave it as \code{NULL} to summarize specimen records
@@ -36,7 +36,7 @@
 #'
 #' @param dir Pathway to the computer's directory, where the table-formatted
 #' summary will be saved. The default is to create a directory named
-#'  \code{reflora_ocurrence}.
+#'  \code{reflora_records}.
 #'
 #' @param filename Name of the output file to be saved. The default is to create
 #' a file entitled \code{reflora_ocurrence_fixed.csv}.
@@ -44,16 +44,16 @@
 #' @return A dataframe with the information of the chosen taxon from the chosen
 #' REFLORA Herbaria.
 #'
-#' @seealso \code{\link{reflora_ocurrence}}
+#' @seealso \code{\link{reflora_records}}
 #'
 #' @examples
 #' \dontrun{
 #'
 #' fam_taxa <- c("Fabaceae", "Ochnaceae")
-#' occur_df <- reflora_occurrence(herbarium = c("ALCB", "HUEFS", "K", "RB"),
-#'                                taxon = fam_taxa,
-#'                                verbose = TRUE,
-#'                                save = FALSE)
+#' occur_df <- reflora_records(herbarium = c("ALCB", "HUEFS", "K", "RB"),
+#'                             taxon = fam_taxa,
+#'                             verbose = TRUE,
+#'                             save = FALSE)
 #'
 #' reflora_duplicates(df = occur_df,
 #'                    duplicates = TRUE,
@@ -77,6 +77,7 @@ reflora_duplicates <- function(df = NULL,
                                duplicates = TRUE,
                                remove = FALSE,
                                keep_acronyms = TRUE,
+                               verbose = TRUE,
                                save = TRUE,
                                dir = "reflora_duplicates",
                                filename = "reflora_flagged_duplicates") {

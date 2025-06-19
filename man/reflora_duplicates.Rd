@@ -11,7 +11,7 @@ reflora_duplicates(df = NULL,
                    verbose = TRUE,
                    save = TRUE,
                    dir = "reflora_duplicates",
-                   filename = "reflora_ocurrence_flagged_duplicates")
+                   filename = "reflora_flagged_duplicates")
 }
 \arguments{
 \item{df}{A vector of specific herbarium acronyms (collection code) in
@@ -27,17 +27,17 @@ summarizing specimen records will not be printed in the console in full.}
 \item{keep_acronyms}{Logical, if \code{FALSE}, a message showing steps when
 summarizing specimen records will not be printed in the console in full.}
 
+\item{verbose}{Logical, if \code{FALSE}, a message showing steps when
+summarizing specimen records will not be printed in the console in full.}
+
 \item{save}{Logical, if \code{TRUE}, the search results will be saved on disk}
 
 \item{dir}{Pathway to the computer's directory, where the table-formatted
 summary will be saved. The default is to create a directory named
- \code{reflora_ocurrence}.}
+ \code{reflora_records}.}
 
 \item{filename}{Name of the output file to be saved. The default is to create
 a file entitled \code{reflora_ocurrence_fixed.csv}.}
-
-\item{verbose}{Logical, if \code{FALSE}, a message showing steps when
-summarizing specimen records will not be printed in the console in full.}
 }
 \value{
 A dataframe with the information of the chosen taxon from the chosen
@@ -52,10 +52,10 @@ hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
 \dontrun{
 
 fam_taxa <- c("Fabaceae", "Ochnaceae")
-occur_df <- reflora_occurrence(herbarium = c("ALCB", "HUEFS", "K", "RB"),
-                               taxon = fam_taxa,
-                               verbose = TRUE,
-                               save = FALSE)
+occur_df <- reflora_records(herbarium = c("ALCB", "HUEFS", "K", "RB"),
+                            taxon = fam_taxa,
+                            verbose = TRUE,
+                            save = FALSE)
 
 reflora_duplicates(df = occur_df,
                    duplicates = TRUE,
@@ -69,7 +69,7 @@ reflora_duplicates(df = occur_df,
 
 }
 \seealso{
-\code{\link{reflora_ocurrence}}
+\code{\link{reflora_records}}
 }
 \author{
 Domingos Cardoso

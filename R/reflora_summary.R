@@ -51,10 +51,12 @@ reflora_summary <- function(herbarium = NULL,
                             dir = "reflora_summary") {
 
   # herbarium check
-  if (verbose & !is.null(herbarium)) {
-    message("Checking whether the input herbarium code exist in the REFLORA...")
+  if (!is.null(herbarium)) {
+    if (verbose) {
+      message("Checking whether the input herbarium code exist in the REFLORA...")
+    }
+    .arg_check_herbarium(herbarium)
   }
-  .arg_check_herbarium(herbarium)
 
   # dir check
   dir <- .arg_check_dir(dir)

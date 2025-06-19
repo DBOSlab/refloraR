@@ -33,7 +33,7 @@
 #'                 state = NULL,
 #'                 recordYear = NULL,
 #'                 indets = TRUE,
-#'                 reorder = c("herbarium", "taxa", "collector", "area", "year")
+#'                 reorder = c("herbarium", "taxa", "collector", "area", "year"),
 #'                 path = NULL,
 #'                 updates = TRUE,
 #'                 verbose = TRUE,
