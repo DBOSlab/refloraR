@@ -1,6 +1,6 @@
 test_that("reflora_parse excludes repatriated herbaria when repatriated = FALSE", {
   test_path <- file.path(tempdir(), "reflora_repatriated_test")
-  if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
+  if (dir.exists(test_path)) unlink(test_path, recursive = TRUE)
 
   # Simulate download of both repatriated and non-repatriated herbaria
   reflora_download(herbarium = c("RB", "K"),
@@ -19,13 +19,13 @@ test_that("reflora_parse excludes repatriated herbaria when repatriated = FALSE"
   expect_false(any(grepl("dwca_k_reflora", collections)))
   expect_true(any(grepl("dwca_rb_", collections)))
 
-  unlink(tmp_dir, recursive = TRUE)
+  unlink(test_path, recursive = TRUE)
 })
 
 
 test_that("reflora_parse includes repatriated herbaria when repatriated = TRUE", {
   test_path <- file.path(tempdir(), "reflora_repatriated_test")
-  if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
+  if (dir.exists(test_path)) unlink(test_path, recursive = TRUE)
 
   reflora_download(herbarium = c("RB", "K"),
                    dir = test_path,
@@ -41,13 +41,13 @@ test_that("reflora_parse includes repatriated herbaria when repatriated = TRUE",
   expect_true(any(grepl("dwca_k_reflora", collections)))
   expect_true(any(grepl("dwca_rb_", collections)))
 
-  unlink(tmp_dir, recursive = TRUE)
+  unlink(test_path, recursive = TRUE)
 })
 
 
 test_that("reflora_parse emits message when skipping repatriated collections", {
   test_path <- file.path(tempdir(), "reflora_repatriated_test")
-  if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
+  if (dir.exists(test_path)) unlink(test_path, recursive = TRUE)
 
   reflora_download(herbarium = c("RB", "K"), dir = test_path, verbose = FALSE)
 
@@ -58,5 +58,5 @@ test_that("reflora_parse emits message when skipping repatriated collections", {
                   verbose = TRUE),
     "Skipping repatriated collections:"
   )
-  unlink(tmp_dir, recursive = TRUE)
+  unlink(test_path, recursive = TRUE)
 })
