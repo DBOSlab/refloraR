@@ -1,32 +1,6 @@
 # Auxiliary functions to support main functions
 # Author: Domingos Cardoso
 
-#_______________________________________________________________________________
-### Function to save csv files ###
-
-.save_csv <- function(df,
-                      verbose = TRUE,
-                      filename = NULL,
-                      dir = dir) {
-
-  # Save the data frame if param save is TRUE
-  # Create a new directory to save the results with current date
-  # If there is no directory... make one!
-
-  if (!dir.exists(dir)) {
-    dir.create(dir)
-  }
-
-  filename <- paste0(filename, ".csv")
-  # Create and save the spreadsheet in .csv format
-  if (verbose) {
-    message(paste0("Writing spreadsheet '",
-                   filename, "' within '",
-                   dir, "' folder on disk."))
-  }
-  utils::write.csv(df, file = paste0(dir, "/", filename), row.names = FALSE)
-}
-
 
 #_______________________________________________________________________________
 ### Function to get raw metadata from REFLORA repository ###
@@ -346,3 +320,66 @@
   }
 }
 
+
+#_______________________________________________________________________________
+### Function to save csv files ###
+
+.save_csv <- function(df,
+                      verbose = TRUE,
+                      filename = NULL,
+                      dir = dir) {
+
+  # Save the data frame if param save is TRUE
+  # Create a new directory to save the results with current date
+  # If there is no directory... make one!
+
+  if (!dir.exists(dir)) {
+    dir.create(dir)
+  }
+
+  filename <- paste0(filename, ".csv")
+  # Create and save the spreadsheet in .csv format
+  if (verbose) {
+    message(paste0("Writing spreadsheet '",
+                   filename, "' within '",
+                   dir, "' folder on disk."))
+  }
+  utils::write.csv(df, file = paste0(dir, "/", filename), row.names = FALSE)
+}
+
+
+#_______________________________________________________________________________
+### Function to save log.txt file ###
+
+.save_log <- function(df,
+                      herbarium = NULL,
+                      filename = NULL,
+                      dir = dir) {
+
+  log_line <- sprintf("[%s] Downloaded: %s | Records saved to: %s/%s.csv\n",
+                      format(Sys.time(), "%Y-%m-%d %H:%M:%S"),
+                      ifelse(is.null(herbarium), "ALL", paste(herbarium, collapse = ", ")),
+                      dir,
+                      filename)
+
+  # Add summary statistics
+  count_total <- nrow(df)
+  by_herbarium <- capture.output(print(table(df$collectionCode)))
+  by_family <- capture.output(print(table(df$family)))
+  by_genus <- capture.output(print(table(df$genus)))
+  by_country <- capture.output(print(table(df$country)))
+  by_state <- capture.output(print(table(df$stateProvince)))
+
+  stats_summary <- c(
+    sprintf("Total records: %d", count_total),
+    "\nRecords per herbarium:", by_herbarium,
+    "\nRecords per family:", by_family,
+    "\nRecords per genus:", by_genus,
+    "\nRecords per country:", by_country,
+    "\nRecords per stateProvince:", by_state,
+    "--------------------------------------------------\n"
+  )
+
+  write(c(log_line, stats_summary), file = file.path(dir, "log.txt"), append = TRUE)
+
+}

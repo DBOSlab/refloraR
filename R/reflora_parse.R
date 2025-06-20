@@ -9,6 +9,7 @@
 #' @usage
 #' reflora_parse(path = NULL,
 #'               herbarium = NULL,
+#'               repatriated = TRUE,
 #'               verbose = TRUE)
 #'
 #' @param path Pathway to the computer's directory, where the REFLORA-downloaded

@@ -28,8 +28,8 @@
   Results:  
   ❯ 0 errors ✔  
   ❯ 0 warnings ✔  
-  ❯ 1 note ⚠️ — [non-ASCII character in `.arg_check_state()` function now handled with UTF-8 escapes]
-
+  ❯ 0 notes ✔ 
+  
 ### Additional Information
 
 * This package contributes to biodiversity and herbarium data digitization by facilitating access to a key Brazilian resource.

@@ -18,8 +18,8 @@ test_that("reflora_download downloads multiple herbaria correctly", {
 })
 
 
-test_that("reflora_download creates _Reflora_version.csv per herbarium", {
-  temp_dir <- file.path(tempdir(), "reflora_version_test")
+test_that("reflora_download creates _Reflora.csv per herbarium", {
+  temp_dir <- file.path(tempdir(), "reflora_csv_test")
   if (dir.exists(temp_dir)) unlink(temp_dir, recursive = TRUE)
 
   reflora_download(herbarium = c("ALCB", "HUEFS"),
@@ -27,7 +27,7 @@ test_that("reflora_download creates _Reflora_version.csv per herbarium", {
                    dir = temp_dir)
 
   downloaded_dirs <- list.files(temp_dir, full.names = TRUE)
-  all_csvs <- unlist(lapply(downloaded_dirs, function(x) list.files(x, pattern = "_Reflora_version.csv", full.names = TRUE)))
+  all_csvs <- unlist(lapply(downloaded_dirs, function(x) list.files(x, pattern = "_Reflora.csv", full.names = TRUE)))
 
   expect_equal(length(all_csvs), 2)
   expect_true(all(file.exists(all_csvs)))

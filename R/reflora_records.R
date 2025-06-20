@@ -92,8 +92,12 @@
 #' @param filename Name of the output file to be saved. The default is to create
 #' a file entitled \code{reflora_records_search.csv}.
 #'
-#' @return A dataframe with the information of the chosen taxon from the chosen
-#' REFLORA herbaria.
+#' @return A `data.frame` containing occurrence records for the selected taxon
+#' and criteria from the chosen REFLORA herbaria. If `save = TRUE`, the function
+#' will write the results to a CSV file inside the `dir` directory, and also
+#' generate or append a `log.txt` file that summarizes the download session
+#' including total records and breakdowns by herbarium, family, genus, country,
+#' and state.
 #'
 #' @seealso \code{\link{reflora_download}}
 #' @seealso \code{\link{reflora_parse}}
@@ -164,6 +168,9 @@ reflora_records <- function(herbarium = NULL,
   # Create a new directory to save the dataframe
   # If there is no directory create one in the working directory
   if (!dir.exists(dir)) {
+    if (verbose) {
+      message(paste0("Creating directory '", dir, "' in working directory..."))
+    }
     dir.create(dir)
   }
 
@@ -226,6 +233,10 @@ reflora_records <- function(herbarium = NULL,
   if (save) {
     .save_csv(df = occur_df,
               verbose = verbose,
+              filename = filename,
+              dir = dir)
+    .save_log(df = occur_df,
+              herbarium = herbarium,
               filename = filename,
               dir = dir)
   }

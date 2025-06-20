@@ -6,6 +6,7 @@
 \usage{
 reflora_parse(path = NULL,
               herbarium = NULL,
+              repatriated = TRUE,
               verbose = TRUE)
 }
 \arguments{

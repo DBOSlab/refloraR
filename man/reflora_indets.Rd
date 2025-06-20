@@ -61,7 +61,11 @@ Default: `"reflora_indets_search"`.}
 }
 \value{
 A `data.frame` containing filtered specimen records for the selected
-indeterminate specimens and criteria.
+indeterminate specimens and criteria. If `save = TRUE`, a CSV file with the
+results will be written to the specified `dir`, and a `log.txt` file will be
+created or appended in the same directory summarizing the download session and
+key statistics (total records, breakdowns by herbarium, family, genus, country,
+and state).
 }
 \description{
 Retrieves occurrence records for indeterminate specimens (e.g., identified
@@ -83,13 +87,22 @@ refine the occurrence records. If `path` is not provided, the function will
 automatically manage downloading and storing fresh DwC-A archives.
 }
 \note{
-- Ensure your internet connection is active if downloading is required.
-- Some herbarium codes may not have updated records. Use `verbose = TRUE` to
-  monitor messages.
-- Filtering by `level` does not guarantee all indeterminates will be captured
-  if taxonRank fields are inconsistently labeled in REFLORA's source files.
-- For reproducible results, consider saving outputs (`save = TRUE`) and
-  documenting your input parameters.
+- This function automatically downloads and parses Darwin Core Archive (DwC-A)
+  files for the specified herbarium collections using \code{reflora_download()}
+  internally.
+- If \code{path = NULL}, DwC-A files will be downloaded into a folder named
+  \code{reflora_download} within your working directory.
+- If \code{save = TRUE}, the filtered output will be saved as a CSV file inside
+  the folder specified by \code{dir}. This folder will be created if it does
+  not already exist.
+- Ensure an active internet connection if downloading is required.
+- Some herbarium codes may not have updated records. Use \code{verbose = TRUE}
+  to monitor messages during execution.
+- Filtering by \code{level} does not guarantee full coverage of indeterminate
+  records due to possible inconsistencies in \code{taxonRank} values in REFLORA
+  source data.
+- For reproducibility, consider recording your input parameters and saving all
+  outputs.
 }
 \examples{
 \dontrun{

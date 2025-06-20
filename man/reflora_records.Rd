@@ -70,8 +70,12 @@ summary will be saved. The default is to create a directory named
 a file entitled \code{reflora_records_search.csv}.}
 }
 \value{
-A dataframe with the information of the chosen taxon from the chosen
-REFLORA herbaria.
+A `data.frame` containing occurrence records for the selected taxon
+and criteria from the chosen REFLORA herbaria. If `save = TRUE`, the function
+will write the results to a CSV file inside the `dir` directory, and also
+generate or append a `log.txt` file that summarizes the download session
+including total records and breakdowns by herbarium, family, genus, country,
+and state.
 }
 \description{
 Retrieve occurrence records for specific taxa from the

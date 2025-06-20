@@ -1,8 +1,10 @@
 #' Download plant specimen records from REFLORA Virtual Herbarium
 #'
-#' @author Domingos Cardoso
+#' @author
+#' Domingos Cardoso
 #'
-#' @description Download plant specimen records in Darwin Core Format from any
+#' @description
+#' Download plant specimen records in Darwin Core Format from any
 #' herbarium collection at \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
 #' hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
 #'
@@ -61,9 +63,12 @@ reflora_download <- function(herbarium = NULL,
   # dir check
   dir <- .arg_check_dir(dir)
 
-  # Create a new directory to save the results.
-  # If there is no directory... make one!
+  # Create a new directory to save the dataframe
+  # If there is no directory create one in the working directory
   if (!dir.exists(dir)) {
+    if (verbose) {
+      message(paste0("Creating directory '", dir, "' in working directory..."))
+    }
     dir.create(dir)
   }
 

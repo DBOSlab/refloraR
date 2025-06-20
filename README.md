@@ -16,14 +16,13 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/refloraR)](https://cran
 MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 <!-- badges: end -->
 
-An R package for exploring plant specimen collections from [REFLORA
-Virtual Herbarium](https://ipt.jbrj.gov.br/reflora) hosted by [Rio de
-Janeiro Botanical Garden](https://www.gov.br/jbrj). The package
-interfaces with the REFLORA Integrated Publishing Toolkit (IPT) to
-seamlessly download complete specimen records from any herbarium in
-Darwin Core format. It also provides dedicated functions to summarize
-and filter these records based on taxonomic criteria or geographic
-regions.
+***refloraR*** is an R package for accessing and analyzing plant
+specimen data from the [REFLORA Virtual
+Herbarium](https://reflora.jbrj.gov.br/reflora/herbarioVirtual/), hosted
+by the [Rio de Janeiro Botanical Garden](https://www.gov.br/jbrj). It
+provides tools for downloading, summarizing, and filtering herbarium
+records in Darwin Core Archive (DwC-A) format via the [REFLORA
+IPT](https://ipt.jbrj.gov.br/reflora).
 
 ## Installation
 
@@ -82,7 +81,7 @@ summary_some_df <- reflora_summary(herbarium = c("ALCB", "RB", "HUEFS", "US", "K
 #### *2. `reflora_download`: Downloading REFLORA specimen records*
 
 The following code can be used to download original specimen records in
-Darwin Core Format and associated metada for all REFLORA collections.  
+DwC-A format and associated metada for all REFLORA collections.  
 
 ``` r
 library(refloraR)
