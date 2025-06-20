@@ -30,8 +30,8 @@ Folder with DwC-A files for an specific or all REFLORA-associated herbaria.
 }
 \description{
 Download plant specimen records in Darwin Core Format from any
-herbarium collection at \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
-hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
+herbarium collection at \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
+hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 }
 \examples{
 \dontrun{

@@ -29,8 +29,8 @@ A list of dwca files, including data and associated metada.
 }
 \description{
 Read Darwin Core Archive (DwC-A) files from any downloaded dwca
-folder at \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
-hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
+folder at \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
+hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 }
 \examples{
 \dontrun{

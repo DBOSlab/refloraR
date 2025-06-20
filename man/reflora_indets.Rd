@@ -70,8 +70,8 @@ and state).
 \description{
 Retrieves occurrence records for indeterminate specimens (e.g., identified
 only to family or genus level) from the
-\href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
-hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
+\href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
+hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 The function automatically downloads and parses Darwin Core Archive (DwC-A)
 files, applies optional filters by taxon, herbarium, state, and year, and
 exports the results if desired.

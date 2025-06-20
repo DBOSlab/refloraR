@@ -41,9 +41,5 @@ URL:
     https://dboslab.github.io/refloraR-website/,
     https://github.com/dboslab/refloraR
 BugReports: https://github.com/DBOSlab/refloraR/issues
-VignetteBuilder: quarto
 RoxygenNote: 7.3.2
 Config/testthat/edition: 3
-Keywords: Biodiversity, Taxonomy, Herbarium, Botany, Occurrence data, Brazil
-Funding: This work was supported by the REFLORA programme and the
-    Rio de Janeiro Botanical Garden (JBRJ), with institutional support from CNPq.

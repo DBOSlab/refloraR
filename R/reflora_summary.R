@@ -3,8 +3,8 @@
 #' @author Domingos Cardoso
 #'
 #' @description Summarize current available plant specimen records at
-#' \href{https://ipt.jbrj.gov.br/reflora}{REFLORA Virtual Herbarium}
-#' hosted by the \href{https://www.gov.br/jbrj}{Rio de Janeiro Botanical Garden}.
+#' \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
+#' hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 #'
 #' @usage
 #' reflora_summary(herbarium = NULL,

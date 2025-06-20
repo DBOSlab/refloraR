@@ -19,10 +19,10 @@ MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ***refloraR*** is an R package for accessing and analyzing plant
 specimen data from the [REFLORA Virtual
 Herbarium](https://reflora.jbrj.gov.br/reflora/herbarioVirtual/), hosted
-by the [Rio de Janeiro Botanical Garden](https://www.gov.br/jbrj). It
-provides tools for downloading, summarizing, and filtering herbarium
+by the [Rio de Janeiro Botanical Garden](https://www.gov.br/jbrj/pt-br).
+It provides tools for downloading, summarizing, and filtering herbarium
 records in Darwin Core Archive (DwC-A) format via the [REFLORA
-IPT](https://ipt.jbrj.gov.br/reflora).
+IPT](https://ipt.jbrj.gov.br/reflora/).
 
 ## Installation
 
