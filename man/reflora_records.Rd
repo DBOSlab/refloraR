@@ -71,7 +71,7 @@ a file entitled \code{reflora_records_search.csv}.}
 }
 \value{
 A dataframe with the information of the chosen taxon from the chosen
-REFLORA Herbaria.
+REFLORA herbaria.
 }
 \description{
 Retrieve occurrence records for specific taxa from the

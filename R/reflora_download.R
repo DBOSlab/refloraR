@@ -130,7 +130,7 @@ reflora_download <- function(herbarium = NULL,
       utils::unzip(destdirfile, exdir = ex_dwca_folder)
       unlink(destdirfile)
 
-      utils::write.csv(summary_df, paste0(ex_dwca_folder, "/", herb_code[i], "_Reflora_version.csv"),
+      utils::write.csv(summary_df, paste0(ex_dwca_folder, "/", herb_code[i], "_Reflora.csv"),
                        row.names = FALSE)
 
       if (verbose) {

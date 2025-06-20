@@ -93,7 +93,7 @@
 #' a file entitled \code{reflora_records_search.csv}.
 #'
 #' @return A dataframe with the information of the chosen taxon from the chosen
-#' REFLORA Herbaria.
+#' REFLORA herbaria.
 #'
 #' @seealso \code{\link{reflora_download}}
 #' @seealso \code{\link{reflora_parse}}

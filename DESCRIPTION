@@ -1,20 +1,27 @@
 Package: refloraR
 Type: Package
-Title: An R package for exploring plant specimen collections from REFLORA Virtual Herbarium
+Title: Tools to Explore Plant Specimen Collections from REFLORA Virtual Herbarium
 Version: 1.0.0
 Authors@R:
-    c(person(given = "Domingos",
+    c(
+      person(given = "Domingos",
              family = "Cardoso",
              role = c("aut", "cre", "cph"),
-             email = "cardosobot@gmail.com",
+             email = "domingoscardoso@jbrj.gov.br",
              comment = c(ORCID = "0000-0001-7072-2656")),
       person(given = "Carlos",
              family = "Calderón",
              role = c("aut", "cph"),
-             email = "caldecid@gmail.com ",
-             comment = c(ORCID = "0000-0002-3897-4615")))
-Maintainer: Domingos Cardoso <cardosobot@gmail.com>
-Description: Explore plant specimen collections from REFLORA Virtual Herbarium.
+             email = "caldecid@gmail.com",
+             comment = c(ORCID = "0000-0002-3897-4615"))
+    )
+Maintainer: Domingos Cardoso <domingoscardoso@jbrj.gov.br>
+Description: Provides tools to access and analyze plant specimen records from
+    REFLORA Virtual Herbarium, a botanical data repository maintained by the
+    Rio de Janeiro Botanical Garden. Users can retrieve, filter, and summarize
+    specimen data using taxonomic, geographic, or temporal criteria. The
+    package supports downloading structured Darwin Core (DwC-A) archives and
+    integrates with tidyverse workflows for downstream analysis and visualization.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -30,10 +37,13 @@ Imports:
 Suggests:
     quarto,
     testthat (>= 3.0.0)
-URL: 
+URL:
     https://dboslab.github.io/refloraR-website/,
     https://github.com/dboslab/refloraR
 BugReports: https://github.com/DBOSlab/refloraR/issues
 VignetteBuilder: quarto
 RoxygenNote: 7.3.2
 Config/testthat/edition: 3
+Keywords: Biodiversity, Taxonomy, Herbarium, Botany, Occurrence data, Brazil
+Funding: This work was supported by the REFLORA programme and the
+    Rio de Janeiro Botanical Garden (JBRJ), with institutional support from CNPq.

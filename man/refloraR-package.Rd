@@ -4,9 +4,9 @@
 \name{refloraR-package}
 \alias{refloraR}
 \alias{refloraR-package}
-\title{refloraR: An R package for exploring plant specimen collections from REFLORA Virtual Herbarium}
+\title{refloraR: Tools to Explore Plant Specimen Collections from REFLORA Virtual Herbarium}
 \description{
-Explore plant specimen collections from REFLORA Virtual Herbarium.
+Provides tools to access and analyze plant specimen records from REFLORA Virtual Herbarium, a botanical data repository maintained by the Rio de Janeiro Botanical Garden. Users can retrieve, filter, and summarize specimen data using taxonomic, geographic, or temporal criteria. The package supports downloading structured Darwin Core (DwC-A) archives and integrates with tidyverse workflows for downstream analysis and visualization.
 }
 \seealso{
 Useful links:
@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Domingos Cardoso \email{cardosobot@gmail.com} (\href{https://orcid.org/0000-0001-7072-2656}{ORCID}) [copyright holder]
+\strong{Maintainer}: Domingos Cardoso \email{domingoscardoso@jbrj.gov.br} (\href{https://orcid.org/0000-0001-7072-2656}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{
