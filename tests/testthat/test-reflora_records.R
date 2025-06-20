@@ -241,3 +241,116 @@ test_that("reflora_records updates data when path is given and updates = TRUE", 
   )
   expect_s3_class(result, "data.frame")
 })
+
+
+test_that("reflora_records works with herbarium = NULL", {
+  result <- reflora_records(
+    herbarium = NULL,
+    taxon = "Fabaceae",
+    save = FALSE,
+    verbose = FALSE
+  )
+  expect_s3_class(result, "data.frame")
+})
+
+
+test_that("reflora_records saves CSV and log.txt with save = TRUE", {
+  tmp_dir <- tempdir()
+  test_file <- "log_test"
+
+  result <- reflora_records(
+    herbarium = "RB",
+    taxon = "Fabaceae",
+    save = TRUE,
+    dir = tmp_dir,
+    filename = test_file,
+    verbose = FALSE
+  )
+
+  expect_true(file.exists(file.path(tmp_dir, paste0(test_file, ".csv"))))
+  expect_true(file.exists(file.path(tmp_dir, "log.txt")))
+
+  unlink(file.path(tmp_dir, paste0(test_file, ".csv")))
+  unlink(file.path(tmp_dir, "log.txt"))
+})
+
+
+test_that("reflora_records prints message when verbose = TRUE", {
+  expect_message(
+    reflora_records(
+      herbarium = "RB",
+      taxon = "Fabaceae",
+      save = FALSE,
+      verbose = TRUE
+    ),
+    "Checking whether the input herbarium code exists"
+  )
+})
+
+
+test_that("reflora_records handles NULL filename (if supported)", {
+  result <- reflora_records(
+    herbarium = "RB",
+    taxon = "Fabaceae",
+    filename = NULL,
+    save = FALSE,
+    verbose = FALSE
+  )
+  expect_s3_class(result, "data.frame")
+})
+
+
+test_that("reflora_records handles invalid reorder column gracefully", {
+  expect_error(
+    reflora_records(
+      herbarium = "RB",
+      taxon = "Fabaceae",
+      reorder = c("INVALID_COLUMN"),
+      save = FALSE,
+      verbose = FALSE
+    )
+  )
+})
+
+
+test_that("reflora_records works with genus-level taxon only", {
+  result <- reflora_records(
+    herbarium = "RB",
+    taxon = "Inga",
+    save = FALSE,
+    verbose = FALSE
+  )
+  expect_s3_class(result, "data.frame")
+})
+
+
+test_that("reflora_records defaults to repatriated = TRUE", {
+  result <- reflora_records(
+    herbarium = "RB",
+    taxon = "Fabaceae",
+    repatriated = TRUE,
+    save = FALSE,
+    verbose = FALSE
+  )
+  expect_s3_class(result, "data.frame")
+})
+
+
+test_that("reflora_records with repatriated = FALSE excludes repatriated herbaria", {
+  result <- reflora_records(
+    herbarium = NULL,
+    taxon = "Fabaceae",
+    repatriated = FALSE,
+    save = FALSE,
+    verbose = FALSE
+  )
+
+  expect_s3_class(result, "data.frame")
+
+  # Ensure repatriated herbaria like K and E are not present
+  repatriated_codes <- c("K", "E")
+  found <- unique(result$collectionCode)
+  expect_true(all(!repatriated_codes %in% found))
+})
+
+

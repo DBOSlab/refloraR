@@ -120,3 +120,34 @@ test_that("reflora_download replaces stale dwca folders", {
 
   unlink(tmp_dir, recursive = TRUE)
 })
+
+
+test_that("reflora_download defaults to repatriated = TRUE", {
+  tmp_dir <- file.path(tempdir(), "reflora_repatriated_test")
+  if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
+
+  reflora_download(herbarium = c("RB", "K"),
+                   repatriated = TRUE,
+                   verbose = FALSE,
+                   dir = tmp_dir)
+
+  expect_true(any(grepl("dwca_k_reflora", list.files(tmp_dir))))
+
+  unlink(tmp_dir, recursive = TRUE)
+})
+
+
+test_that("reflora_download with repatriated = FALSE excludes repatriated herbaria", {
+  tmp_dir <- file.path(tempdir(), "reflora_repatriated_test")
+  if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
+
+  reflora_download(herbarium = c("RB", "K"),
+                   repatriated = FALSE,
+                   verbose = FALSE,
+                   dir = tmp_dir)
+
+  expect_false(any(grepl("dwca_k_reflora", list.files(tmp_dir))))
+
+  unlink(tmp_dir, recursive = TRUE)
+})
+

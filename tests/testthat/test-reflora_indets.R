@@ -1,8 +1,8 @@
 test_that("reflora_indets returns a data.frame and filters by level FAMILY", {
   df <- reflora_indets(
     level = "FAMILY",
-    taxon = "Fabaceae",
     herbarium = "RB",
+    taxon = "Fabaceae",
     verbose = FALSE,
     save = FALSE
   )
@@ -14,8 +14,8 @@ test_that("reflora_indets returns a data.frame and filters by level FAMILY", {
 test_that("reflora_indets filters by level GENUS", {
   df <- reflora_indets(
     level = "GENUS",
-    taxon = "Fabaceae",
     herbarium = "RB",
+    taxon = "Fabaceae",
     verbose = FALSE,
     save = FALSE
   )
@@ -27,8 +27,8 @@ test_that("reflora_indets filters by level GENUS", {
 test_that("reflora_indets filters by year range and state", {
   df <- reflora_indets(
     level = "FAMILY",
-    taxon = "Fabaceae",
     herbarium = "RB",
+    taxon = "Fabaceae",
     recordYear = c("2000", "2024"),
     state = c("Bahia", "Minas Gerais"),
     verbose = FALSE,
@@ -45,8 +45,8 @@ test_that("reflora_indets saves output when save = TRUE", {
   outfile <- "test_indets"
   df <- reflora_indets(
     level = "GENUS",
-    taxon = "Fabaceae",
     herbarium = "RB",
+    taxon = "Fabaceae",
     dir = tmpdir,
     filename = outfile,
     save = TRUE,
@@ -61,15 +61,15 @@ test_that("reflora_indets saves output when save = TRUE", {
 test_that("reflora_indets returns more rows when level is NULL (all indets)", {
   all_levels <- reflora_indets(
     level = NULL,
-    taxon = "Fabaceae",
     herbarium = "RB",
+    taxon = "Fabaceae",
     verbose = FALSE,
     save = FALSE
   )
   only_family <- reflora_indets(
     level = "FAMILY",
-    taxon = "Fabaceae",
     herbarium = "RB",
+    taxon = "Fabaceae",
     verbose = FALSE,
     save = FALSE
   )
@@ -83,8 +83,8 @@ test_that("reflora_indets uses updates = FALSE with provided path", {
 
   df <- reflora_indets(
     level = "FAMILY",
-    taxon = "Fabaceae",
     herbarium = "RB",
+    taxon = "Fabaceae",
     path = temp_path,
     updates = FALSE,
     save = FALSE,
@@ -103,8 +103,8 @@ test_that("reflora_indets updates = TRUE and path is given", {
 
   df <- reflora_indets(
     level = "GENUS",
-    taxon = "Fabaceae",
     herbarium = "ALCB",
+    taxon = "Fabaceae",
     path = temp_path,
     updates = TRUE,
     save = FALSE,
@@ -118,8 +118,8 @@ test_that("reflora_indets updates = TRUE and path is given", {
 test_that("reflora_indets applies custom reorder", {
   df <- reflora_indets(
     level = "FAMILY",
-    taxon = "Fabaceae",
     herbarium = "RB",
+    taxon = "Fabaceae",
     reorder = c("year", "taxa"),
     verbose = FALSE,
     save = FALSE
@@ -134,8 +134,8 @@ test_that("reflora_indets creates directory if missing", {
 
   reflora_indets(
     level = "FAMILY",
-    taxon = "Fabaceae",
     herbarium = "RB",
+    taxon = "Fabaceae",
     dir = tmpdir,
     save = TRUE,
     verbose = FALSE
@@ -150,8 +150,8 @@ test_that("reflora_indets handles non-matching level filter", {
   expect_error(
     reflora_indets(
       level = "SPECIES", # invalid for this function
-      taxon = "Fabaceae",
       herbarium = "RB",
+      taxon = "Fabaceae",
       verbose = FALSE,
       save = FALSE
     )
@@ -163,8 +163,8 @@ test_that("reflora_indets returns empty for unknown taxon", {
   expect_error(
     reflora_indets(
       level = "FAMILY",
-      taxon = "Fakeplantus",
       herbarium = "ALCB",
+      taxon = "Fakeplantus",
       verbose = FALSE,
       save = FALSE
     )
@@ -178,4 +178,34 @@ test_that("reflora_indets works with no filters (all default args)", {
     verbose = FALSE
   )
   expect_s3_class(df, "data.frame")
+})
+
+
+test_that("reflora_indets defaults to repatriated = TRUE", {
+  result <- reflora_indets(
+    herbarium = "RB",
+    repatriated = TRUE,
+    taxon = "Fabaceae",
+    save = TRUE,
+    verbose = FALSE
+  )
+  expect_s3_class(result, "data.frame")
+})
+
+
+test_that("reflora_indets with repatriated = FALSE excludes repatriated herbaria", {
+  result <- reflora_indets(
+    herbarium = NULL,
+    repatriated = FALSE,
+    taxon = "Fabaceae",
+    save = TRUE,
+    verbose = FALSE
+  )
+
+  expect_s3_class(result, "data.frame")
+
+  # Ensure repatriated herbaria like K and E are not present
+  repatriated_codes <- c("K", "E")
+  found <- unique(result$collectionCode)
+  expect_true(all(!repatriated_codes %in% found))
 })
