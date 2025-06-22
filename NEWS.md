@@ -13,7 +13,7 @@ The first official release of the `refloraR` R package, designed to streamline a
 - Optional filters by `taxon`, `herbarium`, `state`, `recordYear`, and `level`.
 - Supports integration with tidyverse workflows for downstream analyses.
 - Repatriated collection filtering (`repatriated = TRUE` by default).
-- Test coverage >85%, continuous integration via GitHub Actions.
+- Test coverage >95%, continuous integration via GitHub Actions.
 
 ### Infrastructure
 

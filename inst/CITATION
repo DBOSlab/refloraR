@@ -4,7 +4,7 @@ citHeader("To cite the refloraR package in publications, use:")
 
 bibentry(
   bibtype = "Manual",
-  title = "refloraR: Tools to Explore Plant Specimen Collections from REFLORA Virtual Herbarium",
+  title = "refloraR: An R Package for Exploring Plant Specimen Collections from REFLORA Virtual Herbarium",
   author = c(
     person(given = "Domingos", family = "Cardoso",
            role = c("aut", "cre"),
@@ -20,4 +20,4 @@ bibentry(
   url = "https://github.com/DBOSlab/refloraR"
 )
 
-citFooter("This work was supported by the REFLORA programme and the Rio de Janeiro Botanical Garden (JBRJ), with institutional support from CNPq.")
+citFooter("This work was supported by CNPq and FINEP, with institutional support the Rio de Janeiro Botanical Garden (JBRJ).")

@@ -1,6 +1,6 @@
 Package: refloraR
 Type: Package
-Title: Tools to Explore Plant Specimen Collections from REFLORA Virtual Herbarium
+Title: An R Package for Exploring Plant Specimen Collections from REFLORA Virtual Herbarium
 Version: 1.0.0
 Authors@R:
     c(

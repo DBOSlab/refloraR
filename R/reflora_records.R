@@ -6,7 +6,7 @@
 #' @description
 #' Retrieve occurrence records for specific taxa from the
 #' \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium},
-#' hosted bythe \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
+#' hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 #' This function handles automatic download, parsing, filtering, and optional
 #' saving of the occurrence data.
 #'
