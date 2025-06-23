@@ -115,7 +115,7 @@
 #'}
 #'
 #' @importFrom stringr str_split
-#' @importFrom utils write.csv
+#' @importFrom utils write.csv capture.output
 #' @importFrom dplyr bind_rows arrange across
 #' @importFrom tidyselect all_of
 #' @importFrom magrittr "%>%"

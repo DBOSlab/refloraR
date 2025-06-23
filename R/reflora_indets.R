@@ -122,7 +122,7 @@
 #' }
 #'
 #' @importFrom stringr str_split
-#' @importFrom utils write.csv
+#' @importFrom utils write.csv capture.output
 #' @importFrom dplyr bind_rows filter
 #' @importFrom magrittr "%>%"
 #'

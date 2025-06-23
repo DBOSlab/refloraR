@@ -364,11 +364,11 @@
 
   # Add summary statistics
   count_total <- nrow(df)
-  by_herbarium <- capture.output(print(table(df$collectionCode)))
-  by_family <- capture.output(print(table(df$family)))
-  by_genus <- capture.output(print(table(df$genus)))
-  by_country <- capture.output(print(table(df$country)))
-  by_state <- capture.output(print(table(df$stateProvince)))
+  by_herbarium <- utils::capture.output(print(table(df$collectionCode)))
+  by_family <- utils::capture.output(print(table(df$family)))
+  by_genus <- utils::capture.output(print(table(df$genus)))
+  by_country <- utils::capture.output(print(table(df$country)))
+  by_state <- utils::capture.output(print(table(df$stateProvince)))
 
   stats_summary <- c(
     sprintf("Total records: %d", count_total),
