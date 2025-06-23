@@ -26,9 +26,10 @@
 
   ipt_metadata <- lapply(ipt_metadata, function(x) strsplit(x, "\\s[|]\\s")[[1]])
 
+  herb_code <- gsub("NYH", "NY", herb_code)
+
   if (!is.null(herbarium)) {
     ipt_metadata <- ipt_metadata[herb_code %in% herbarium]
-    #URLs <- URLs[herb_code %in% herbarium]
     herb_URLs <- herb_URLs[herb_code %in% herbarium]
     herb_code <- herb_code[herb_code %in% herbarium]
   }
@@ -383,3 +384,4 @@
   write(c(log_line, stats_summary), file = file.path(dir, "log.txt"), append = TRUE)
 
 }
+
