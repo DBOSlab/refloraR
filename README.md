@@ -16,8 +16,8 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/refloraR)](https://cran
 MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 <!-- badges: end -->
 
-***refloraR*** is an R package for accessing and analyzing plant
-specimen data from the [REFLORA Virtual
+`refloraR` is an R package for accessing and analyzing plant specimen
+data from the [REFLORA Virtual
 Herbarium](https://reflora.jbrj.gov.br/reflora/herbarioVirtual/), hosted
 by the [Rio de Janeiro Botanical Garden](https://www.gov.br/jbrj/pt-br).
 It provides tools for downloading, summarizing, and filtering herbarium
@@ -26,7 +26,7 @@ IPT](https://ipt.jbrj.gov.br/reflora/).
 
 ## Installation
 
-You can install the development version of ***refloraR*** from
+You can install the development version of `refloraR` from
 [GitHub](https://github.com/DBOSlab/refloraR) with:
 
 ``` r
@@ -105,12 +105,12 @@ reflora_download(herbarium = c("ALCB", "HUEFS", "RB", "US", "K"),
 
 ## Documentation
 
-Full function documentation and articles are available at the
-***refloraR*** [website](https://dboslab.github.io/refloraR-website/).  
+Full function documentation and articles are available at the `refloraR`
+[website](https://dboslab.github.io/refloraR-website/).  
   
 
 ## Citation
 
-Cardoso, D. & Calderón, C. (2025). *refloraR*: An R Package for
-Exploring Plant Specimen Collections from REFLORA Virtual Herbarium.
+Cardoso, D. & Calderón, C. 2025. *refloraR*: An R Package for Exploring
+Plant Specimen Collections from REFLORA Virtual Herbarium.
 <https://github.com/dboslab/refloraR>
