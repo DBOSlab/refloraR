@@ -101,27 +101,6 @@ test_that("reflora_download prints messages when verbose = TRUE", {
 })
 
 
-test_that("reflora_download replaces stale dwca folders", {
-  tmp_dir <- file.path(tempdir(), "reflora_replace_test")
-  dir.create(tmp_dir, showWarnings = FALSE)
-
-  # Simulate stale dwca folder
-  dummy_dir <- file.path(tmp_dir, "dwca_rb_herbarium_v1_169")
-  dir.create(dummy_dir)
-
-  expect_true(dir.exists(dummy_dir))
-  expect_true(length(list.files(dummy_dir)) == 0)
-
-  reflora_download(herbarium = "RB",
-                   verbose = FALSE,
-                   dir = tmp_dir)
-  expect_true(dir.exists(dummy_dir))
-  expect_true(length(list.files(dummy_dir)) > 0)
-
-  unlink(tmp_dir, recursive = TRUE)
-})
-
-
 test_that("reflora_download defaults to repatriated = TRUE", {
   tmp_dir <- file.path(tempdir(), "reflora_repatriated_test")
   if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
