@@ -1,32 +1,32 @@
-test_that("reflora_indets returns a data.frame and filters by level FAMILY", {
+test_that("reflora_indets returns a data.frame and filters by level 'family'", {
   df <- reflora_indets(
-    level = "FAMILY",
+    level = "family",
     herbarium = "RB",
     taxon = "Fabaceae",
     verbose = FALSE,
     save = FALSE
   )
   expect_s3_class(df, "data.frame")
-  expect_true(all(df$taxonRank %in% c("family", "FAMILY", "FAMILIA")))
+  expect_true(all(df$taxonRank %in% "family"))
 })
 
 
-test_that("reflora_indets filters by level GENUS", {
+test_that("reflora_indets filters by level 'genus'", {
   df <- reflora_indets(
-    level = "GENUS",
+    level = "genus",
     herbarium = "RB",
     taxon = "Fabaceae",
     verbose = FALSE,
     save = FALSE
   )
   expect_s3_class(df, "data.frame")
-  expect_true(all(df$taxonRank %in% c("genus", "GENERO")))
+  expect_true(all(df$taxonRank %in% c("genus")))
 })
 
 
 test_that("reflora_indets filters by year range and state", {
   df <- reflora_indets(
-    level = "FAMILY",
+    level = "family",
     herbarium = "RB",
     taxon = "Fabaceae",
     recordYear = c("2000", "2024"),
@@ -44,7 +44,7 @@ test_that("reflora_indets saves output when save = TRUE", {
   tmpdir <- tempdir()
   outfile <- "test_indets"
   df <- reflora_indets(
-    level = "GENUS",
+    level = "genus",
     herbarium = "RB",
     taxon = "Fabaceae",
     dir = tmpdir,
@@ -67,7 +67,7 @@ test_that("reflora_indets returns more rows when level is NULL (all indets)", {
     save = FALSE
   )
   only_family <- reflora_indets(
-    level = "FAMILY",
+    level = "family",
     herbarium = "RB",
     taxon = "Fabaceae",
     verbose = FALSE,
@@ -82,7 +82,7 @@ test_that("reflora_indets uses updates = FALSE with provided path", {
   reflora_download(herbarium = "RB", dir = temp_path, verbose = FALSE)
 
   df <- reflora_indets(
-    level = "FAMILY",
+    level = "family",
     herbarium = "RB",
     taxon = "Fabaceae",
     path = temp_path,
@@ -102,7 +102,7 @@ test_that("reflora_indets updates = TRUE and path is given", {
                    verbose = FALSE)
 
   df <- reflora_indets(
-    level = "GENUS",
+    level = "genus",
     herbarium = "ALCB",
     taxon = "Fabaceae",
     path = temp_path,
@@ -117,7 +117,7 @@ test_that("reflora_indets updates = TRUE and path is given", {
 
 test_that("reflora_indets applies custom reorder", {
   df <- reflora_indets(
-    level = "FAMILY",
+    level = "family",
     herbarium = "RB",
     taxon = "Fabaceae",
     reorder = c("year", "taxa"),
@@ -133,7 +133,7 @@ test_that("reflora_indets creates directory if missing", {
   if (dir.exists(tmpdir)) unlink(tmpdir, recursive = TRUE)
 
   reflora_indets(
-    level = "FAMILY",
+    level = "family",
     herbarium = "RB",
     taxon = "Fabaceae",
     dir = tmpdir,
@@ -149,7 +149,7 @@ test_that("reflora_indets creates directory if missing", {
 test_that("reflora_indets handles non-matching level filter", {
   expect_error(
     reflora_indets(
-      level = "SPECIES", # invalid for this function
+      level = "species", # invalid for this function
       herbarium = "RB",
       taxon = "Fabaceae",
       verbose = FALSE,
@@ -162,7 +162,7 @@ test_that("reflora_indets handles non-matching level filter", {
 test_that("reflora_indets returns empty for unknown taxon", {
   expect_error(
     reflora_indets(
-      level = "FAMILY",
+      level = "family",
       herbarium = "ALCB",
       taxon = "Fakeplantus",
       verbose = FALSE,

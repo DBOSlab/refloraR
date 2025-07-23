@@ -20,15 +20,15 @@ reflora_indets(level = NULL,
 }
 \arguments{
 \item{level}{Character vector. Filter by taxonomic level. Accepted values:
-`"FAMILY"`, `"GENUS"`, or both. Defaults to `NULL` to include all
+`"family"`, `"genus"`, or both. Defaults to `NULL` to include all
 indeterminate ranks.}
 
 \item{herbarium}{Character vector. Herbarium codes (e.g., `"RB"`, `"SP"`) in
 uppercase. Use `NULL` to include all herbaria.}
 
-\item{repatriated}{Logical. If \code{FALSE}, skips downloading records from
-REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
-Use \code{reflora_summary()} to check which collections are repatriated.}
+\item{repatriated}{Logical. If `FALSE`, skips downloading records from
+REFLORA-associated herbaria that have been repatriated. Default is `TRUE`.
+Use `reflora_summary()` to check which collections are repatriated.}
 
 \item{taxon}{Character vector. Specific taxon names to filter by
 (e.g., `"Fabaceae"`).}
@@ -80,11 +80,11 @@ exports the results if desired.
 This function supports downloading and processing Darwin Core Archive (DwC-A)
 files directly from the REFLORA repository. It allows for flexible filtering
 by taxon, herbarium, locality (Brazilian states), and collection year(s). The
-`level` parameter enables filtering for indeterminate records such as those
-identified only to FAMILY or GENUS rank. The function uses helper functions
-like `.arg_check_herbarium()` and `.filter_occur_df()` to validate inputs and
-refine the occurrence records. If `path` is not provided, the function will
-automatically manage downloading and storing fresh DwC-A archives.
+\code{level} parameter enables filtering for indeterminate records such as those
+identified only to \code{'family'} or \code{'genus'} rank. The function uses
+helper functions like \code{.arg_check_herbarium()} and \code{.filter_occur_df()}
+to validate inputs and refine the occurrence records. If \code{path} is not
+provided, the function will automatically manage downloading and storing fresh DwC-A archives.
 }
 \note{
 - This function automatically downloads and parses Darwin Core Archive (DwC-A)
@@ -108,7 +108,7 @@ automatically manage downloading and storing fresh DwC-A archives.
 \dontrun{
 # Retrieve indeterminate records for Fabaceae and Ochnaceae from all herbaria
 reflora_indets(taxon = c("Fabaceae", "Ochnaceae"),
-               level = "FAMILY",
+               level = "family",
                save = TRUE,
                dir = "reflora_indets",
                filename = "fabaceae_ochnaceae_records")

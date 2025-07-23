@@ -16,11 +16,11 @@
 #' This function supports downloading and processing Darwin Core Archive (DwC-A)
 #' files directly from the REFLORA repository. It allows for flexible filtering
 #' by taxon, herbarium, locality (Brazilian states), and collection year(s). The
-#' `level` parameter enables filtering for indeterminate records such as those
-#' identified only to FAMILY or GENUS rank. The function uses helper functions
-#' like `.arg_check_herbarium()` and `.filter_occur_df()` to validate inputs and
-#' refine the occurrence records. If `path` is not provided, the function will
-#' automatically manage downloading and storing fresh DwC-A archives.
+#' \code{level} parameter enables filtering for indeterminate records such as those
+#' identified only to \code{'family'} or \code{'genus'} rank. The function uses
+#' helper functions like \code{.arg_check_herbarium()} and \code{.filter_occur_df()}
+#' to validate inputs and refine the occurrence records. If \code{path} is not
+#' provided, the function will automatically manage downloading and storing fresh DwC-A archives.
 #'
 #' @note
 #' - This function automatically downloads and parses Darwin Core Archive (DwC-A)
@@ -56,15 +56,15 @@
 #'                filename = "reflora_indets_search")
 #'
 #' @param level Character vector. Filter by taxonomic level. Accepted values:
-#' `"FAMILY"`, `"GENUS"`, or both. Defaults to `NULL` to include all
+#' `"family"`, `"genus"`, or both. Defaults to `NULL` to include all
 #' indeterminate ranks.
 #'
 #' @param herbarium Character vector. Herbarium codes (e.g., `"RB"`, `"SP"`) in
 #' uppercase. Use `NULL` to include all herbaria.
 #'
-#' @param repatriated Logical. If \code{FALSE}, skips downloading records from
-#' REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
-#' Use \code{reflora_summary()} to check which collections are repatriated.
+#' @param repatriated Logical. If `FALSE`, skips downloading records from
+#' REFLORA-associated herbaria that have been repatriated. Default is `TRUE`.
+#' Use `reflora_summary()` to check which collections are repatriated.
 #
 #' @param taxon Character vector. Specific taxon names to filter by
 #' (e.g., `"Fabaceae"`).
@@ -109,7 +109,7 @@
 #' \dontrun{
 #' # Retrieve indeterminate records for Fabaceae and Ochnaceae from all herbaria
 #' reflora_indets(taxon = c("Fabaceae", "Ochnaceae"),
-#'                level = "FAMILY",
+#'                level = "family",
 #'                save = TRUE,
 #'                dir = "reflora_indets",
 #'                filename = "fabaceae_ochnaceae_records")
@@ -228,23 +228,20 @@ reflora_indets <- function(level = NULL,
 
   if (is.null(level)) {
     # Keep only higher-rank indeterminate taxa
-    indets <- c("family", "genus", "FAMILY", "GENERO", "FAMILIA", "SUB_FAMILIA",
-                "TRIBO", "DIVISAO", "ORDEM", "CLASSE")
+    indets <- c("family", "genus", "subfamily", "tribe", "division", "order", "class")
     tf <- occur_df$taxonRank %in% indets
     if (any(tf)) {
       occur_df <- occur_df[tf, ]
     }
   } else {
-    if (level == "FAMILY") {
-      indets <- c("family", "FAMILY", "FAMILIA")
-      tf <- occur_df$taxonRank %in% indets
+    if (level == "family") {
+      tf <- occur_df$taxonRank %in% "family"
       if (any(tf)) {
         occur_df <- occur_df[tf, ]
       }
     }
-    if (level == "GENUS") {
-      indets <- c("genus", "GENERO")
-      tf <- occur_df$taxonRank %in% indets
+    if (level == "genus") {
+      tf <- occur_df$taxonRank %in% "genus"
       if (any(tf)) {
         occur_df <- occur_df[tf, ]
       }
@@ -256,6 +253,9 @@ reflora_indets <- function(level = NULL,
 
   # Reorder the data by the order of specific columns
   occur_df <- .reorder_df(occur_df, reorder)
+
+  # Remove columns that are completely NA
+  occur_df <- occur_df[, colSums(!is.na(occur_df)) > 0]
 
   # Save the search results if param save is TRUE
   if (save) {

@@ -44,7 +44,7 @@
 #' @importFrom finch dwca_read
 #' @importFrom utils read.csv
 #' @importFrom stringr str_extract str_to_title
-#' @importFrom dplyr mutate select
+#' @importFrom dplyr mutate select mutate recode
 #' @importFrom tidyr replace_na
 #' @importFrom magrittr "%>%"
 #'
@@ -157,6 +157,10 @@ reflora_parse <- function(path = NULL,
 
     dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName <-
       gsub("^NA$", NA, dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName)
+
+    temp <- dwca_files[[i]][["data"]][["occurrence.txt"]]
+    temp <- .std_inside_columns(temp, verbose = verbose)
+    dwca_files[[i]][["data"]][["occurrence.txt"]] <- temp
   }
 
   # Parsing csv files, if they exist
@@ -198,5 +202,4 @@ reflora_parse <- function(path = NULL,
   }
 
   return(dwca_files)
-
 }
