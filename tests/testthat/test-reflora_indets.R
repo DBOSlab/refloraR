@@ -79,7 +79,7 @@ test_that("reflora_indets returns more rows when level is NULL (all indets)", {
 
 test_that("reflora_indets uses updates = FALSE with provided path", {
   temp_path <- tempdir()
-  reflora_download(herbarium = "RB", dir = temp_path, verbose = FALSE)
+  reflora_download(herbarium = "ALCB", dir = temp_path, verbose = FALSE)
 
   df <- reflora_indets(
     level = "FAMILY",
