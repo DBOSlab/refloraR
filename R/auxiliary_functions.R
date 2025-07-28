@@ -154,7 +154,7 @@
   taxonrank_form <- c("f.", "form", "Forma", "forma", "FORM", "FORMA")
   taxonrank_var <- c("var.", "VAR.", "Variedade", "variedade", "VARIEDADE", "VARIETY", "variety")
   taxonrank_subsp <- c("subsp.", "ssp.", "subespecie", "Subespecie", "subespécie", "Subespécie", "SUBSP.", "SUBSP", "SUB_ESPECIE", "Infr.", "infr.", "infraspecific", "subspecies", "Subspecies", "SUBSPECIES")
-  taxonrank_species <- c("sp", "sp.", "especie", "ESPECIE", "Espécie", "espécie", "ESPÊCIE", "species", "Species", "specie", "SPECIES", "SPECIE")
+  taxonrank_species <- c("sp", "sp.", "especie", "ESPECIE", "Especie", "Espécie", "espécie", "ESPÊCIE", "species", "Species", "specie", "SPECIES", "SPECIE")
   taxonrank_genus <- c("genero", "Genero", "GENERO", "Gênero", "gênero", "GÊNERO", "gen.", "genus", "Genus", "GENUS")
   taxonrank_tribe <- c("tribo", "TRIBO", "tribe", "Tribe", "TRIBE")
   taxonrank_subfam <- c("sub_familia", "SUB_FAMILIA", "subfamily", "Subfamily", "SUBFAMILY")
@@ -443,14 +443,18 @@
   df$taxonName <- NA_character_
 
   is_family <- df$taxonRank == "FAMILY" & !is.na(df$family)
-  df$taxonName[is_family] <- df$family[is_family]
+  if (any(is_family)) {
+    df$taxonName[is_family] <- df$family[is_family]
+  }
 
   is_taxon <- !is_family
-  df$taxonName[is_taxon] <- paste(
-    df$genus[is_taxon],
-    ifelse(!is.na(df$specificEpithet[is_taxon]), df$specificEpithet[is_taxon], ""),
-    ifelse(!is.na(df$infraspecificEpithet[is_taxon]), df$infraspecificEpithet[is_taxon], "")
-  ) |> trimws()
+  if (any(is_taxon)) {
+    df$taxonName[is_taxon] <- paste(
+      df$genus[is_taxon],
+      ifelse(!is.na(df$specificEpithet[is_taxon]), df$specificEpithet[is_taxon], ""),
+      ifelse(!is.na(df$infraspecificEpithet[is_taxon]), df$infraspecificEpithet[is_taxon], "")
+    ) |> trimws()
+  }
 
   return(df)
 }

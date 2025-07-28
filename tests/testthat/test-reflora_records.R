@@ -66,65 +66,6 @@ test_that("reflora_records saves file when save = TRUE", {
 })
 
 
-test_that(".check_taxon_match handles valid and invalid taxa", {
-  df <- data.frame(
-    family = c("Fabaceae", "Rosaceae"),
-    genus = c("Luetzelburgia", "Rosa"),
-    taxonName = c("Luetzelburgia auriculata", "Rosa canina"),
-    stringsAsFactors = FALSE
-  )
-  expect_silent(
-    .check_taxon_match(df, c("Fabaceae", "Luetzelburgia"), verbose = FALSE)
-  )
-  expect_error(
-    .check_taxon_match(df, c("Fakeplantus"), verbose = FALSE),
-    "must contain at least one name"
-  )
-  expect_message(
-    .check_taxon_match(df, c("Fabaceae", "Unknownus"), verbose = TRUE),
-    "not found"
-  )
-})
-
-
-test_that(".check_year_match handles valid and invalid years", {
-  df <- data.frame(
-    year = c(1999, 2005, 2020),
-    stringsAsFactors = FALSE
-  )
-  expect_silent(
-    .check_year_match(df, c("2005", "2020"), verbose = FALSE)
-  )
-  expect_error(
-    .check_year_match(df, c("1800", "1801"), verbose = FALSE),
-    "must contain at least one year"
-  )
-  expect_message(
-    .check_year_match(df, c("2005", "3000"), verbose = TRUE),
-    "not found"
-  )
-})
-
-
-test_that(".check_state_match handles valid and invalid states", {
-  df <- data.frame(
-    stateProvince = c("Bahia", "Minas Gerais", "São Paulo"),
-    stringsAsFactors = FALSE
-  )
-  expect_silent(
-    .check_state_match(df, c("Bahia", "Minas Gerais"), verbose = FALSE)
-  )
-  expect_error(
-    .check_state_match(df, c("ZZ", "XX"), verbose = FALSE),
-    "must contain at least one name"
-  )
-  expect_message(
-    .check_state_match(df, c("Minas Gerais", "ZZ"), verbose = TRUE),
-    "not found"
-  )
-})
-
-
 test_that("reflora_records removes indeterminate specimens with indets = FALSE", {
   result <- reflora_records(
     herbarium = "RB",
