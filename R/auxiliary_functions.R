@@ -847,7 +847,8 @@
 #_______________________________________________________________________________
 # Extract each "occurrence.txt" data frame and merge them ####
 
-.merge_occur_txt <- function(dwca_files) {
+.merge_occur_txt <- function(dwca_files,
+                             verbose = verbose) {
   occur_df <- dplyr::bind_rows(lapply(dwca_files, function(x) {
 
     df <- x[["data"]][["occurrence.txt"]]
@@ -855,7 +856,8 @@
     df$recordNumber <- suppressWarnings(as.character(df$recordNumber))
     df$decimalLongitude <- suppressWarnings(as.numeric(df$decimalLongitude))
     df$decimalLatitude <- suppressWarnings(as.numeric(df$decimalLatitude))
-
+    df$verbatimLatitude <- as.character(df$verbatimLatitude)
+    df$verbatimLongitude <- as.character(df$verbatimLongitude)
     df$occurrenceID <- as.character(df$occurrenceID)
     df$recordNumber <- as.character(df$recordNumber)
     df$minimumElevationInMeters <- as.character(df$minimumElevationInMeters)
