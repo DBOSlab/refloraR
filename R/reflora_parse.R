@@ -44,7 +44,7 @@
 #' @importFrom finch dwca_read
 #' @importFrom utils read.csv
 #' @importFrom stringr str_extract str_to_title
-#' @importFrom stringi stri_detect_regex
+#' @importFrom stringi stri_detect_regex stri_trim_both
 #' @importFrom dplyr filter mutate select recode
 #' @importFrom tidyr replace_na
 #' @importFrom magrittr "%>%"
@@ -106,15 +106,21 @@ reflora_parse <- function(path = NULL,
     "collectionCode",
     "catalogNumber",
     "taxonRank",
+    "kingdom",
+    "division",
+    "class",
+    "order",
     "family",
     "genus",
     "specificEpithet",
+    "species",
     "infraspecificEpithet",
     "taxonName",
     "scientificNameAuthorship",
     "scientificName",
     "recordedBy",
     "recordNumber",
+    "fieldNumber",
     "eventDate",
     "year",
     "month",
@@ -131,6 +137,8 @@ reflora_parse <- function(path = NULL,
     "maximumElevationInMeters",
     "decimalLatitude",
     "decimalLongitude",
+    "verbatimLatitude",
+    "verbatimLongitude",
     "identificationQualifier",
     "typeStatus",
     "identifiedBy",
@@ -140,26 +148,33 @@ reflora_parse <- function(path = NULL,
   )
 
   for (i in seq_along(dwca_files)) {
-    fields <- fields[fields %in% names(dwca_files[[i]][["data"]][["occurrence.txt"]])]
-    pos <- match("scientificName", fields)
+
+    temp <- dwca_files[[i]][["data"]][["occurrence.txt"]]
+
+    fields <- fields[fields %in% names(temp)]
+    pos <- match("specificEpithet", fields)
+    fields <- append(fields, "species", after = pos)
+    pos <- match("infraspecificEpithet", fields)
     fields <- append(fields, "taxonName", after = pos)
 
-    dwca_files[[i]][["data"]][["occurrence.txt"]] <- dwca_files[[i]][["data"]][["occurrence.txt"]] %>%
+    temp <- temp %>%
       dplyr::mutate(
         family = stringr::str_to_title(family),
         genus = stringr::str_to_title(genus),
-        taxonName = paste(genus, specificEpithet, infraspecificEpithet)
+        species = NA_character_,
+        taxonName = NA_character_
       ) %>%
       dplyr::select(all_of(fields)) %>%
-      dplyr::mutate(taxonRank = tidyr::replace_na(taxonRank, "FAMILY"))
+      dplyr::mutate(taxonRank = tidyr::replace_na(taxonRank, "FAMILY")) %>%
+      dplyr::mutate(kingdom = if (!"kingdom" %in% names(.)) NA else kingdom,
+                    .after = taxonRank) %>%
+      dplyr::mutate(division = if (!"division" %in% names(.)) NA else division,
+                    .after = kingdom) %>%
+      dplyr::mutate(class = if (!"class" %in% names(.)) NA else class,
+                    .after = division) %>%
+      dplyr::mutate(order = if (!"order" %in% names(.)) NA else order,
+                    .after = class)
 
-    dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName <-
-      gsub("(\\sNA){1,}$", "", dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName)
-
-    dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName <-
-      gsub("^NA$", NA, dwca_files[[i]][["data"]][["occurrence.txt"]]$taxonName)
-
-    temp <- dwca_files[[i]][["data"]][["occurrence.txt"]]
     temp <- .std_inside_columns(temp, verbose = verbose)
     dwca_files[[i]][["data"]][["occurrence.txt"]] <- temp
   }

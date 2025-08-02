@@ -45,7 +45,6 @@ test_that("reflora_download returns silently with existing dwca folder", {
                    verbose = FALSE,
                    dir = temp_dir)
 
-  # Call again to ensure it skips if files already exist
   expect_silent(reflora_download(herbarium = "ALCB",
                                  verbose = FALSE,
                                  dir = temp_dir))
