@@ -1,6 +1,6 @@
 test_that("reflora_records basic usage returns a data.frame", {
   result <- reflora_records(
-    herbarium = "RB",
+    herbarium = "ALCB",
     taxon = "Fabaceae",
     save = FALSE,
     verbose = FALSE
@@ -13,17 +13,17 @@ test_that("reflora_records basic usage returns a data.frame", {
 test_that("reflora_records handles empty taxon search", {
   expect_error(
     reflora_records(
-    herbarium = "RB",
-    taxon = "Fakeplantus invalidus",
-    save = FALSE,
-    verbose = FALSE)
-  )
+      herbarium = "ALCB",
+      taxon = "Fakeplantus invalidus",
+      save = FALSE,
+      verbose = FALSE)
+    )
 })
 
 
 test_that("reflora_records applies state and year filters", {
   result <- reflora_records(
-    herbarium = "RB",
+    herbarium = "ALCB",
     taxon = "Fabaceae",
     state = c("Bahia", "Minas Gerais"),
     recordYear = c("2000", "2024"),
@@ -37,7 +37,7 @@ test_that("reflora_records applies state and year filters", {
 
 test_that("reflora_records reorders columns properly", {
   result <- reflora_records(
-    herbarium = "RB",
+    herbarium = "ALCB",
     taxon = "Fabaceae",
     reorder = c("year", "herbarium"),
     save = FALSE,
@@ -52,12 +52,12 @@ test_that("reflora_records saves file when save = TRUE", {
   temp_dir <- tempdir()
   test_file <- "test_output"
   result <- reflora_records(
-    herbarium = "RB",
+    herbarium = "ALCB",
     taxon = "Fabaceae",
-    dir = temp_dir,
-    filename = test_file,
+    verbose = FALSE,
     save = TRUE,
-    verbose = FALSE
+    dir = temp_dir,
+    filename = test_file
   )
   output_path <- file.path(temp_dir, paste0(test_file, ".csv"))
   expect_true(file.exists(output_path))
@@ -68,24 +68,25 @@ test_that("reflora_records saves file when save = TRUE", {
 
 test_that("reflora_records removes indeterminate specimens with indets = FALSE", {
   result <- reflora_records(
-    herbarium = "RB",
+    herbarium = "ALCB",
     taxon = "Fabaceae",
     indets = FALSE,
-    save = FALSE,
-    verbose = FALSE
+    verbose = FALSE,
+    save = FALSE
   )
-  expect_false(any(result$taxonRank %in% c("family", "genus", "GENERO", "FAMILIA",
-                                           "TRIBO", "DIVISAO", "ORDEM", "CLASSE")))
+  expect_false(any(result$taxonRank %in% c("family", "genus", "FAMILY", "GENERO",
+                                           "FAMILIA", "SUB_FAMILIA", "TRIBO",
+                                           "DIVISAO", "ORDEM", "CLASSE")))
 })
 
 
 test_that("reflora_records triggers auto download when path is NULL", {
   result <- reflora_records(
-    herbarium = "RB",
+    herbarium = "ALCB",
     taxon = "Fabaceae",
     path = NULL,
-    save = FALSE,
-    verbose = FALSE
+    verbose = FALSE,
+    save = FALSE
   )
   expect_s3_class(result, "data.frame")
 })
@@ -96,7 +97,7 @@ test_that("reflora_records creates new dir if not present", {
   if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
   expect_silent(
     reflora_records(
-      herbarium = "RB",
+      herbarium = "ALCB",
       taxon = "Fabaceae",
       dir = tmp_dir,
       save = TRUE,
@@ -111,7 +112,7 @@ test_that("reflora_records creates new dir if not present", {
 test_that("reflora_records returns empty data.frame if no match after filters", {
   expect_error(
     reflora_records(
-      herbarium = "RB",
+      herbarium = "ALCB",
       taxon = "Fabaceae",
       state = "ZZ",  # invalid state
       save = FALSE,
@@ -131,8 +132,8 @@ test_that("reflora_records uses updates = FALSE with preexisting path", {
     taxon = "Fabaceae",
     path = test_path,
     updates = FALSE,
-    save = FALSE,
-    verbose = FALSE
+    verbose = FALSE,
+    save = FALSE
   )
   expect_s3_class(result, "data.frame")
 })
@@ -143,8 +144,8 @@ test_that("reflora_records handles partial reorder vector", {
     herbarium = "ALCB",
     taxon = "Fabaceae",
     reorder = c("taxa", "year"),
-    save = FALSE,
-    verbose = FALSE
+    verbose = FALSE,
+    save = FALSE
   )
   expect_true(all(c("family", "year") %in% colnames(result)))
 })
@@ -297,7 +298,50 @@ test_that("reflora_records with repatriated = FALSE excludes repatriated herbari
 
 test_that("reflora_records prints messages with verbose = TRUE", {
   expect_message(reflora_records(herbarium = "ALCB",
-                                 save = FALSE,
-                                 verbose = TRUE))
+                                 verbose = TRUE,
+                                 save = FALSE))
+})
+
+
+test_that("reflora_records creates directory when not found", {
+  tmpdir <- tempdir()
+  expect_message(
+    reflora_records(herbarium = "ALCB",
+                    state = "Bahia",
+                    recordYear = "2000",
+                    updates = FALSE,
+                    verbose = TRUE,
+                    save = FALSE,
+                    dir = "new_dir"),
+    "Creating directory 'new_dir' in working directory..."
+  )
+})
+
+
+test_that("reflora_records triggers dwca update message with path and updates = TRUE", {
+
+  temp_path <- file.path(tempdir(), "jabot_dwca_test")
+  if (!dir.exists(temp_path)) dir.create(temp_path)
+
+  # Run reflora_download manually to prepopulate path
+  reflora_download(herbarium = "ALCB",
+                   verbose = FALSE,
+                   dir = temp_path)
+  list.files(temp_path)
+  # Now call jabot_records with path + updates = TRUE to hit the uncovered branch
+  expect_message(
+    df <- reflora_records(
+      herbarium = "ALCB",
+      taxon = "Fabaceae",
+      path = temp_path,
+      updates = TRUE,
+      verbose = TRUE,
+      save = FALSE
+    ),
+    regexp = paste0("Updating dwca files within '", temp_path, "'")
+  )
+
+  expect_s3_class(df, "data.frame")
+  expect_true(nrow(df) >= 0)
 })
 
