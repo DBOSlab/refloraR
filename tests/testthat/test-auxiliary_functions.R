@@ -356,7 +356,7 @@ test_that(".check_year_match() behaves with single year and range", {
 })
 
 
-test_that(".fill_taxon_name() and .fill_scientific_name() are working", {
+test_that(".fill_species_name, .fill_taxon_name() and .fill_scientific_name() are working", {
   df <- data.frame(
     taxonRank = c("FAMILY", "SPECIES", "SUBSPECIES"),
     family = c("Fabaceae", NA, NA),
