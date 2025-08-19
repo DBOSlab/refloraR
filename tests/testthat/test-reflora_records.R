@@ -304,17 +304,14 @@ test_that("reflora_records prints messages with verbose = TRUE", {
 
 
 test_that("reflora_records creates directory when not found", {
-  tmpdir <- tempdir()
-  expect_message(
     reflora_records(herbarium = "ALCB",
                     state = "Bahia",
                     recordYear = "2000",
                     updates = FALSE,
                     verbose = TRUE,
                     save = FALSE,
-                    dir = "new_dir"),
-    "Creating directory 'new_dir' in working directory..."
-  )
+                    dir = "new_dir")
+  expect_true(dir.exists("new_dir"))
 })
 
 

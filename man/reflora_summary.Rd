@@ -21,7 +21,7 @@ summarizing specimen records will not be printed in the console in full.}
 
 \item{dir}{Pathway to the computer's directory, where the table-formatted
 summary will be saved. The default is to create a directory named
- \code{reflora_summary}.}
+\code{reflora_summary}.}
 }
 \value{
 A dataframe summarizing current available plant specimen records in

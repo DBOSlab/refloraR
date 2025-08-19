@@ -141,13 +141,117 @@
 
 
 #_______________________________________________________________________________
+# Auxiliary function to fix URL for downloading images ####
+.clean_media_urls_vectorized <- function(media_column) {
+  # Step 1: Split strings by "|" or " | "
+  split_urls <- strsplit(media_column, "\\s*\\|\\s*")
+  all_urls <- trimws(unlist(split_urls))
+
+  # Step 2: Fix AWS-hosted .dzi URLs
+  all_urls <- gsub(
+    "jbrj-public\\.s3(?:-sa-east-1)?\\.amazonaws\\.com/fsi/server\\?type=image&source=DZI/([^/]+)/(.+)\\.dzi",
+    "https://jbrj-public-img.s3.amazonaws.com/JPG/\\1/\\1/\\2.jpg",
+    all_urls,
+    ignore.case = TRUE
+  )
+
+  # Step 3: Handle imagens3/imagens4.jbrj.gov.br
+  img_pattern <- "imagens[34]\\.jbrj\\.gov\\.br/fsi/server\\?type=image&source=([^/]+)/.*?/?(.*?)/([A-Z0-9_\\-]+\\.(?:jpg|JPG))"
+
+  is_match <- grepl(img_pattern, all_urls, perl = TRUE)
+
+  if (any(is_match)) {
+    matched <- all_urls[is_match]
+    cleaned <- vapply(matched, function(m) {
+      parts <- regmatches(m, regexec(img_pattern, m, perl = TRUE))[[1]]
+      if (length(parts) == 4) {
+        herb <- tolower(parts[2])
+        path <- gsub("(^|/)(output[_ ]?\\d{0,8}/?)", "", parts[3], perl = TRUE, ignore.case = TRUE)
+        path <- gsub("^0/", "", path)  # remove any starting "0/" segment
+        file <- tolower(parts[4])
+        paste0("https://jbrj-public-img.s3.amazonaws.com/JPG/", herb, "/", herb, "/", path, "/", file)
+      } else {
+        m
+      }
+    }, character(1))
+    all_urls[is_match] <- cleaned
+  }
+
+  # Step 4: Remove triple herbarium (e.g., /alcb/alcb/alcb → /alcb/alcb)
+  all_urls <- gsub(
+    "(?<=/)([a-z]{2,})/\\1/\\1(?=/)",
+    "\\1/\\1",
+    all_urls,
+    perl = TRUE
+  )
+
+  # Step 5: Fix accidental multiple slashes
+  all_urls <- gsub("(?<!:)//+", "/", all_urls, perl = TRUE)
+
+  # Step 6: Recombine using " | "
+  lengths_vec <- lengths(split_urls)
+  split_back <- split(all_urls, rep(seq_along(lengths_vec), lengths_vec))
+  pasted <- vapply(split_back, function(x) paste(x, collapse = " | "), character(1))
+
+  return(pasted)
+}
+
+
+# .clean_media_urls_vectorized <- function(media_column) {
+#   # Step 1: Split on either "|" or " | " with optional spaces
+#   split_urls <- strsplit(media_column, "\\s*\\|\\s*")
+#
+#   # Step 2: Flatten and trim
+#   all_urls <- trimws(unlist(split_urls))
+#
+#   # Step 3: Replace AWS dzi → JPG
+#   all_urls <- gsub(
+#     "jbrj-public\\.s3(?:[-a-z0-9]*)?\\.amazonaws\\.com/fsi/server\\?type=image&source=DZI/(.*?)(?:\\.dzi)?$",
+#     "https://jbrj-public-img.s3.amazonaws.com/JPG/\\1.jpg",
+#     all_urls,
+#     ignore.case = TRUE
+#   )
+#
+#   # Step 4: Replace imagens4 → JPG
+#   all_urls <- gsub(
+#     "imagens4\\.jbrj\\.gov\\.br/fsi/server\\?type=image&source=([A-Za-z0-9 _/-]+)/([A-Z0-9_]+\\.JPG)",
+#     "https://jbrj-public-img.s3.amazonaws.com/JPG/\\1/\\2",
+#     all_urls,
+#     ignore.case = TRUE
+#   )
+#
+#   # Step 5: Replace imagens3 → JPG
+#   all_urls <- gsub(
+#     "imagens3\\.jbrj\\.gov\\.br/fsi/server\\?type=image&source=([A-Za-z0-9 _/-]+)/([A-Z0-9_]+\\.JPG)",
+#     "https://jbrj-public-img.s3.amazonaws.com/JPG/\\1/\\2",
+#     all_urls,
+#     ignore.case = TRUE
+#   )
+#
+#   # Step 6: Clean slashes and spaces
+#   all_urls <- gsub(" +", " ", all_urls)
+#   all_urls <- gsub("/+", "/", all_urls)
+#   all_urls <- trimws(all_urls)
+#
+#   # Step 7: Recombine with " | "
+#   lengths_vec <- lengths(split_urls)
+#   split_back <- split(all_urls, rep(seq_along(lengths_vec), lengths_vec))
+#   pasted <- vapply(split_back, function(x) paste(x, collapse = " | "), character(1))
+#
+#   return(pasted)
+# }
+
+
+#_______________________________________________________________________________
 # Function for standardizing taxonRank and taxonomic columns ####
 
 .std_inside_columns <- function(df,
+                                herbarium = herbarium,
+                                i = i,
                                 verbose = verbose) {
 
   if (verbose) {
-    message("Standardizing taxonomic columns...")
+    message(paste0("Standardizing taxonomic columns of '", herbarium[i], "'..."))
   }
 
   # Standardize and clean taxonRank column
@@ -1238,8 +1342,12 @@
   by_herbarium <- utils::capture.output(print(table(df$collectionCode)))
   by_family <- utils::capture.output(print(table(df$family)))
   by_genus <- utils::capture.output(print(table(df$genus)))
+  by_species <- utils::capture.output(print(table(df$species)))
   by_country <- utils::capture.output(print(table(df$country)))
   by_state <- utils::capture.output(print(table(df$stateProvince)))
+
+
+  if (length(unique(df$genus)) > 1) {
 
   stats_summary <- c(
     sprintf("Total records: %d", count_total),
@@ -1250,6 +1358,21 @@
     "\nRecords per stateProvince:", by_state,
     "--------------------------------------------------\n"
   )
+
+  } else {
+
+    stats_summary <- c(
+      sprintf("Total records: %d", count_total),
+      "\nRecords per herbarium:", by_herbarium,
+      "\nRecords per family:", by_family,
+      "\nRecords per genus:", by_genus,
+      "\nRecords per species:", by_species,
+      "\nRecords per country:", by_country,
+      "\nRecords per stateProvince:", by_state,
+      "--------------------------------------------------\n"
+    )
+
+  }
 
   write(c(log_line, stats_summary), file = file.path(dir, "log.txt"), append = TRUE)
 

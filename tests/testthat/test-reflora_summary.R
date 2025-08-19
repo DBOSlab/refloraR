@@ -67,7 +67,7 @@ test_that("reflora_summary prints expected verbose messages", {
     reflora_summary(herbarium = "RB",
                     verbose = TRUE,
                     save = FALSE),
-    regexp = "Checking whether the input herbarium code exist in the REFLORA..."
+    regexp = "Summarizing specimen collections of RB 1/1"
   )
 })
 

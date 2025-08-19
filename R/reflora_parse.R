@@ -144,8 +144,14 @@ reflora_parse <- function(path = NULL,
     "identifiedBy",
     "dateIdentified",
     "identificationRemarks",
-    "basisOfRecord"
+    "basisOfRecord",
+    "associatedMedia"
   )
+
+  herbarium <- sapply(dwca_filenames, function(x) {
+    csv <- x[grepl("_Reflora\\.csv$", x)]
+    sub("_Reflora\\.csv$", "", basename(csv))
+  })
 
   for (i in seq_along(dwca_files)) {
 
@@ -173,9 +179,19 @@ reflora_parse <- function(path = NULL,
       dplyr::mutate(class = if (!"class" %in% names(.)) NA else class,
                     .after = division) %>%
       dplyr::mutate(order = if (!"order" %in% names(.)) NA else order,
-                    .after = class)
+                    .after = class) %>%
+      dplyr::mutate(bibliographicCitation = paste0("REFLORA Virtual Herbarium, available at: https://reflora.jbrj.gov.br/reflora/herbarioVirtual/ConsultaPublicoHVUC/BemVindoConsultaPublicaHVConsultar.do?modoConsulta=LISTAGEM&quantidadeResultado=20&codigoBarra=",
+                                        temp$catalogNumber),
+                    .after = basisOfRecord)
 
-    temp <- .std_inside_columns(temp, verbose = verbose)
+    if (!all(is.na(temp$associatedMedia))) {
+      temp$associatedMedia <- .clean_media_urls_vectorized(temp$associatedMedia)
+    }
+
+    temp <- .std_inside_columns(temp,
+                                herbarium = herbarium,
+                                i = i,
+                                verbose = verbose)
     dwca_files[[i]][["data"]][["occurrence.txt"]] <- temp
   }
 
@@ -208,7 +224,7 @@ reflora_parse <- function(path = NULL,
 
   # Name the list with uploaded dwca files
   temp <- unlist(lapply(seq_along(dwca_files),
-                        function(i) dwca_files[[i]][["files"]][["xml_files"]][1]))
+                        function(x) dwca_files[[x]][["files"]][["xml_files"]][1]))
   names(dwca_files) <- gsub(".*[/]", "", gsub("[/]eml.*", "", temp))
 
 
@@ -219,3 +235,4 @@ reflora_parse <- function(path = NULL,
 
   return(dwca_files)
 }
+

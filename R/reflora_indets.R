@@ -10,7 +10,9 @@
 #' hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 #' The function automatically downloads and parses Darwin Core Archive (DwC-A)
 #' files, applies optional filters by taxon, herbarium, state, and year, and
-#' exports the results if desired.
+#' exports the results if desired. All returned records include direct links to
+#' specimen images (column \code{'bibliographicCitation'}) and, when available, high-resolution
+#' download URLs (column \code{'associatedMedia'}).
 #'
 #' @details
 #' This function supports downloading and processing Darwin Core Archive (DwC-A)
@@ -23,22 +25,27 @@
 #' provided, the function will automatically manage downloading and storing fresh DwC-A archives.
 #'
 #' @note
-#' - This function automatically downloads and parses Darwin Core Archive (DwC-A)
+#' (1) This function automatically downloads and parses Darwin Core Archive (DwC-A)
 #'   files for the specified herbarium collections using \code{reflora_download()}
 #'   internally.
-#' - If \code{path = NULL}, DwC-A files will be downloaded into a folder named
+#' (2) If \code{path = NULL}, DwC-A files will be downloaded into a folder named
 #'   \code{reflora_download} within your working directory.
-#' - If \code{save = TRUE}, the filtered output will be saved as a CSV file inside
+#' (3) If \code{save = TRUE}, the filtered output will be saved as a CSV file inside
 #'   the folder specified by \code{dir}. This folder will be created if it does
 #'   not already exist.
-#' - Ensure an active internet connection if downloading is required.
-#' - Some herbarium codes may not have updated records. Use \code{verbose = TRUE}
+#' (4) Ensure an active internet connection if downloading is required.
+#' (5) Some herbarium codes may not have updated records. Use \code{verbose = TRUE}
 #'   to monitor messages during execution.
-#' - Filtering by \code{level} does not guarantee full coverage of indeterminate
+#' (6) Filtering by \code{level} does not guarantee full coverage of indeterminate
 #'   records due to possible inconsistencies in \code{taxonRank} values in REFLORA
 #'   source data.
-#' - For reproducibility, consider recording your input parameters and saving all
+#' (7) For reproducibility, consider recording your input parameters and saving all
 #'   outputs.
+#' (8) \code{'bibliographicCitation'}: a clickable URL to the REFLORA specimen page
+#'   where the image is displayed.
+#' (9) \code{'associatedMedia'}: one or more direct URLs to the original specimen
+#'   image(s) (typically high resolution). Multiple URLs may be separated by vertical bar.
+#' (10) Image availability and resolution may vary by herbarium and record.
 #'
 #' @usage
 #' reflora_indets(level = NULL,
@@ -153,10 +160,7 @@ reflora_indets <- function(level = NULL,
 
   # herbarium check
   if (!is.null(herbarium)) {
-    if (verbose) {
-      message("Checking whether the input herbarium code exists in the REFLORA...")
-    }
-    .arg_check_herbarium(herbarium)
+    .arg_check_herbarium(herbarium, verbose = FALSE)
   }
 
   # state check

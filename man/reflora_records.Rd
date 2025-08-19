@@ -64,7 +64,7 @@ summarizing specimen records will not be printed in the console in full.}
 
 \item{dir}{Pathway to the computer's directory, where the table-formatted
 summary will be saved. The default is to create a directory named
- \code{reflora_records}.}
+\code{reflora_records}.}
 
 \item{filename}{Name of the output file to be saved. The default is to create
 a file entitled \code{reflora_records_search.csv}.}
@@ -82,7 +82,9 @@ Retrieve occurrence records for specific taxa from the
 \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium},
 hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 This function handles automatic download, parsing, filtering, and optional
-saving of the occurrence data.
+saving of the occurrence data. All returned records include direct links to
+specimen images (column \code{'bibliographicCitation'}) and, when available, high-resolution
+download URLs (column \code{'associatedMedia'}).
 }
 \details{
 This function processes Darwin Core Archive (DwC-A) files from REFLORA. You
@@ -94,11 +96,16 @@ status updates. Use \code{save = TRUE} to save results to disk as a CSV file in 
 specified directory.
 }
 \note{
-- Ensure internet access for downloading data if \code{path} is not provided.
-- State names may be full names or standard Brazilian two-letter codes.
-- Use \code{recordYear} as a character vector to avoid coercion issues.
-- This function does not apply filtering for indeterminate ranks
-  (use \code{reflora_indets()} for that).
+(1) Ensure internet access for downloading data if \code{path} is not provided.
+(2) State names may be full names or standard Brazilian two-letter codes.
+(3) Use \code{recordYear} as a character vector to avoid coercion issues.
+(4) This function does not apply filtering for indeterminate ranks
+(use \code{reflora_indets()} for that).
+(5) \code{'bibliographicCitation'}: a clickable URL to the REFLORA specimen page
+where the image is displayed.
+(6) \code{'associatedMedia'}: one or more direct URLs to the original specimen
+image(s) (typically high resolution). Multiple URLs may be separated by vertical bar.
+(7) Image availability and resolution may vary by herbarium and record.
 }
 \examples{
 \dontrun{

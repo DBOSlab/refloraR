@@ -20,49 +20,49 @@ reflora_indets(level = NULL,
 }
 \arguments{
 \item{level}{Character vector. Filter by taxonomic level. Accepted values:
-`"FAMILY"`, `"GENUS"`, or both. Defaults to `NULL` to include all
+\code{"FAMILY"}, \code{"GENUS"}, or both. Defaults to \code{NULL} to include all
 indeterminate ranks.}
 
-\item{herbarium}{Character vector. Herbarium codes (e.g., `"RB"`, `"SP"`) in
-uppercase. Use `NULL` to include all herbaria.}
+\item{herbarium}{Character vector. Herbarium codes (e.g., \code{"RB"}, \code{"SP"}) in
+uppercase. Use \code{NULL} to include all herbaria.}
 
-\item{repatriated}{Logical. If `FALSE`, skips downloading records from
-REFLORA-associated herbaria that have been repatriated. Default is `TRUE`.
-Use `reflora_summary()` to check which collections are repatriated.}
+\item{repatriated}{Logical. If \code{FALSE}, skips downloading records from
+REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
+Use \code{reflora_summary()} to check which collections are repatriated.}
 
 \item{taxon}{Character vector. Specific taxon names to filter by
-(e.g., `"Fabaceae"`).}
+(e.g., \code{"Fabaceae"}).}
 
 \item{state}{Character vector. Brazilian state full name or abbreviations
-(e.g., `"BA"`, `"SP"`) to filter by locality.}
+(e.g., \code{"BA"}, \code{"SP"}) to filter by locality.}
 
-\item{recordYear}{Character or numeric vector. A single year (e.g., `"2001"`)
-or a range (e.g., `c("2000", "2022")`).}
+\item{recordYear}{Character or numeric vector. A single year (e.g., \code{"2001"})
+or a range (e.g., \code{c("2000", "2022")}).}
 
 \item{reorder}{Character vector. Reorder output by columns. Defaults to:
-`c("herbarium", "taxa", "collector", "area", "year")`.}
+\code{c("herbarium", "taxa", "collector", "area", "year")}.}
 
-\item{path}{Character. Path to existing REFLORA dwca files. If `NULL`,
+\item{path}{Character. Path to existing REFLORA dwca files. If \code{NULL},
 downloads fresh data.}
 
-\item{updates}{Logical. If `TRUE` (default), checks for updated DwC-A files
+\item{updates}{Logical. If \code{TRUE} (default), checks for updated DwC-A files
 from REFLORA.}
 
-\item{verbose}{Logical. If `TRUE` (default), prints progress messages to the
+\item{verbose}{Logical. If \code{TRUE} (default), prints progress messages to the
 console.}
 
-\item{save}{Logical. If `TRUE` (default), saves the results to a CSV file.}
+\item{save}{Logical. If \code{TRUE} (default), saves the results to a CSV file.}
 
 \item{dir}{Character. Directory path to save output files. Default:
-`"reflora_indets"`.}
+\code{"reflora_indets"}.}
 
 \item{filename}{Character. Name of the output file (without extension).
-Default: `"reflora_indets_search"`.}
+Default: \code{"reflora_indets_search"}.}
 }
 \value{
-A `data.frame` containing filtered specimen records for the selected
-indeterminate specimens and criteria. If `save = TRUE`, a CSV file with the
-results will be written to the specified `dir`, and a `log.txt` file will be
+A \code{data.frame} containing filtered specimen records for the selected
+indeterminate specimens and criteria. If \code{save = TRUE}, a CSV file with the
+results will be written to the specified \code{dir}, and a \code{log.txt} file will be
 created or appended in the same directory summarizing the download session and
 key statistics (total records, breakdowns by herbarium, family, genus, country,
 and state).
@@ -74,7 +74,9 @@ only to family or genus level) from the
 hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 The function automatically downloads and parses Darwin Core Archive (DwC-A)
 files, applies optional filters by taxon, herbarium, state, and year, and
-exports the results if desired.
+exports the results if desired. All returned records include direct links to
+specimen images (column \code{'bibliographicCitation'}) and, when available, high-resolution
+download URLs (column \code{'associatedMedia'}).
 }
 \details{
 This function supports downloading and processing Darwin Core Archive (DwC-A)
@@ -87,22 +89,27 @@ to validate inputs and refine the occurrence records. If \code{path} is not
 provided, the function will automatically manage downloading and storing fresh DwC-A archives.
 }
 \note{
-- This function automatically downloads and parses Darwin Core Archive (DwC-A)
-  files for the specified herbarium collections using \code{reflora_download()}
-  internally.
-- If \code{path = NULL}, DwC-A files will be downloaded into a folder named
-  \code{reflora_download} within your working directory.
-- If \code{save = TRUE}, the filtered output will be saved as a CSV file inside
-  the folder specified by \code{dir}. This folder will be created if it does
-  not already exist.
-- Ensure an active internet connection if downloading is required.
-- Some herbarium codes may not have updated records. Use \code{verbose = TRUE}
-  to monitor messages during execution.
-- Filtering by \code{level} does not guarantee full coverage of indeterminate
-  records due to possible inconsistencies in \code{taxonRank} values in REFLORA
-  source data.
-- For reproducibility, consider recording your input parameters and saving all
-  outputs.
+(1) This function automatically downloads and parses Darwin Core Archive (DwC-A)
+files for the specified herbarium collections using \code{reflora_download()}
+internally.
+(2) If \code{path = NULL}, DwC-A files will be downloaded into a folder named
+\code{reflora_download} within your working directory.
+(3) If \code{save = TRUE}, the filtered output will be saved as a CSV file inside
+the folder specified by \code{dir}. This folder will be created if it does
+not already exist.
+(4) Ensure an active internet connection if downloading is required.
+(5) Some herbarium codes may not have updated records. Use \code{verbose = TRUE}
+to monitor messages during execution.
+(6) Filtering by \code{level} does not guarantee full coverage of indeterminate
+records due to possible inconsistencies in \code{taxonRank} values in REFLORA
+source data.
+(7) For reproducibility, consider recording your input parameters and saving all
+outputs.
+(8) \code{'bibliographicCitation'}: a clickable URL to the REFLORA specimen page
+where the image is displayed.
+(9) \code{'associatedMedia'}: one or more direct URLs to the original specimen
+image(s) (typically high resolution). Multiple URLs may be separated by vertical bar.
+(10) Image availability and resolution may vary by herbarium and record.
 }
 \examples{
 \dontrun{
