@@ -317,28 +317,32 @@ test_that("reflora_records creates directory when not found", {
 
 test_that("reflora_records triggers dwca update message with path and updates = TRUE", {
 
-  temp_path <- file.path(tempdir(), "jabot_dwca_test")
-  if (!dir.exists(temp_path)) dir.create(temp_path)
+  tmp_dir <- file.path(tempdir(), "reflora_dwca_test")
+  if (!dir.exists(tmp_dir)) dir.create(tmp_dir)
 
   # Run reflora_download manually to prepopulate path
   reflora_download(herbarium = "ALCB",
                    verbose = FALSE,
-                   dir = temp_path)
-  list.files(temp_path)
-  # Now call jabot_records with path + updates = TRUE to hit the uncovered branch
+                   dir = tmp_dir)
+
+  #list.files(tmp_dir)
+
+  # Now call reflora_records with path + updates = TRUE to hit the uncovered branch
   expect_message(
     df <- reflora_records(
       herbarium = "ALCB",
       taxon = "Fabaceae",
-      path = temp_path,
+      path = tmp_dir,
       updates = TRUE,
       verbose = TRUE,
       save = FALSE
     ),
-    regexp = paste0("Updating dwca files within '", temp_path, "'")
+    regexp = paste0("Updating dwca files within '", tmp_dir, "'")
   )
 
   expect_s3_class(df, "data.frame")
   expect_true(nrow(df) >= 0)
+
+  unlink(tmp_dir, recursive = TRUE)
 })
 
