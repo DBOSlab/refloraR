@@ -35,7 +35,7 @@ hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Gard
 \examples{
 \dontrun{
 
-reflora_summary(herbarium = c("ALCB", "HUEFS", "K", "RB"),
+reflora_summary(herbarium = c("ALCB", "HUEFS"),
                 verbose = TRUE,
                 save = TRUE,
                 dir = "reflora_summary")
