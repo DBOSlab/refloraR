@@ -180,8 +180,7 @@ reflora_records <- function(herbarium = NULL,
   if (!is.null(path)) {
     if (updates) {
       if (verbose) {
-        message(paste0("Updating dwca files within '",
-                       path, "'"))
+        message(paste0("Updating dwca files within '", path, "'"))
       }
 
       # The reflora_download will get updated dwca files only if any of the current
