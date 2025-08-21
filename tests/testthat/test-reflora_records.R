@@ -172,9 +172,9 @@ test_that("reflora_records stops on invalid year", {
 
 test_that("reflora_records updates data when path is given and updates = TRUE", {
   tmp_path <- tempdir()
-  reflora_download(herbarium = "RB", dir = tmp_path, verbose = FALSE)
+  reflora_download(herbarium = "ALCB", dir = tmp_path, verbose = FALSE)
   result <- reflora_records(
-    herbarium = "RB",
+    herbarium = "ALCB",
     taxon = "Fabaceae",
     path = tmp_path,
     updates = TRUE,
@@ -201,7 +201,7 @@ test_that("reflora_records saves CSV and log.txt with save = TRUE", {
   test_file <- "log_test"
 
   result <- reflora_records(
-    herbarium = "RB",
+    herbarium = "ALCB",
     taxon = "Fabaceae",
     save = TRUE,
     dir = tmp_dir,
@@ -220,7 +220,7 @@ test_that("reflora_records saves CSV and log.txt with save = TRUE", {
 test_that("reflora_records prints message when verbose = TRUE", {
   expect_message(
     reflora_records(
-      herbarium = "RB",
+      herbarium = "ALCB",
       taxon = "Fabaceae",
       save = FALSE,
       verbose = TRUE
@@ -232,7 +232,7 @@ test_that("reflora_records prints message when verbose = TRUE", {
 
 test_that("reflora_records handles NULL filename (if supported)", {
   result <- reflora_records(
-    herbarium = "RB",
+    herbarium = "ALCB",
     taxon = "Fabaceae",
     filename = NULL,
     save = FALSE,
@@ -245,7 +245,7 @@ test_that("reflora_records handles NULL filename (if supported)", {
 test_that("reflora_records handles invalid reorder column gracefully", {
   expect_error(
     reflora_records(
-      herbarium = "RB",
+      herbarium = "ALCB",
       taxon = "Fabaceae",
       reorder = c("INVALID_COLUMN"),
       save = FALSE,
@@ -257,7 +257,7 @@ test_that("reflora_records handles invalid reorder column gracefully", {
 
 test_that("reflora_records works with genus-level taxon only", {
   result <- reflora_records(
-    herbarium = "RB",
+    herbarium = "ALCB",
     taxon = "Inga",
     save = FALSE,
     verbose = FALSE
@@ -268,7 +268,7 @@ test_that("reflora_records works with genus-level taxon only", {
 
 test_that("reflora_records defaults to repatriated = TRUE", {
   result <- reflora_records(
-    herbarium = "RB",
+    herbarium = "ALCB",
     taxon = "Fabaceae",
     repatriated = TRUE,
     save = FALSE,
@@ -327,7 +327,14 @@ test_that("reflora_records triggers dwca update message with path and updates = 
 
   #list.files(tmp_dir)
 
-  # Now call reflora_records with path + updates = TRUE to hit the uncovered branch
+  # Prepopulate the dir with a DWCA file for ALCB
+  reflora_download(
+    herbarium = "ALCB",
+    verbose = FALSE,
+    dir = tmp_dir
+  )
+
+  # Now call reflora_records to force update
   expect_message(
     df <- reflora_records(
       herbarium = "ALCB",
@@ -337,12 +344,9 @@ test_that("reflora_records triggers dwca update message with path and updates = 
       verbose = TRUE,
       save = FALSE
     ),
-    regexp = paste0("Updating dwca files within '", tmp_dir, "'")
+    regexp = "Updating dwca files within.+reflora_dwca_test"
   )
 
   expect_s3_class(df, "data.frame")
   expect_true(nrow(df) >= 0)
-
-  unlink(tmp_dir, recursive = TRUE)
 })
-
