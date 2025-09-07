@@ -85,7 +85,7 @@ test_that(".save_csv() writes a file correctly", {
 
 test_that(".save_log() creates a log with summary statistics", {
   df <- data.frame(
-    collectionCode = c("RB", "RB", "K"),
+    collectionCode = c("ALCB", "RB", "K"),
     family = c("Fabaceae", "Fabaceae", "Asteraceae"),
     genus = c("Inga", "Inga", "Baccharis"),
     country = c("Brazil", "Brazil", "Brazil"),

@@ -161,7 +161,7 @@ test_that("reflora_records stops on invalid year", {
   expect_error(
     reflora_records(
       taxon = "Fabaceae",
-      herbarium = "RB",
+      herbarium = "ALCB",
       recordYear = c("1880", "1870"), # invalid range
       save = FALSE,
       verbose = FALSE
