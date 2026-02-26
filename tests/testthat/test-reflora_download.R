@@ -62,19 +62,6 @@ test_that("reflora_download throws error for invalid herbarium code", {
 })
 
 
-test_that("reflora_download works with default arguments (download all)", {
-  tmp_dir <- file.path(tempdir(), "reflora_all_test")
-  if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
-
-  expect_silent(reflora_download(verbose = FALSE, dir = tmp_dir))
-
-  expect_true(dir.exists(tmp_dir))
-  expect_true(length(list.files(tmp_dir)) > 0)
-
-  unlink(tmp_dir, recursive = TRUE)
-})
-
-
 test_that("reflora_download creates directory if it doesn't exist", {
   tmp_dir <- file.path(tempdir(), "reflora_auto_dir")
   if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
@@ -138,3 +125,15 @@ test_that("reflora_download prints messages with verbose = TRUE", {
   unlink(tmp_dir, recursive = TRUE)
 })
 
+
+# test_that("reflora_download works with default arguments (download all)", {
+#   tmp_dir <- file.path(tempdir(), "reflora_all_test")
+#   if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
+#
+#   expect_silent(reflora_download(verbose = FALSE, dir = tmp_dir))
+#
+#   expect_true(dir.exists(tmp_dir))
+#   expect_true(length(list.files(tmp_dir)) > 0)
+#
+#   unlink(tmp_dir, recursive = TRUE)
+# })

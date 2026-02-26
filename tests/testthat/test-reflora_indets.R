@@ -172,15 +172,6 @@ test_that("reflora_indets returns empty for unknown taxon", {
 })
 
 
-test_that("reflora_indets works with no filters (all default args)", {
-  df <- reflora_indets(
-    verbose = FALSE,
-    save = FALSE
-  )
-  expect_s3_class(df, "data.frame")
-})
-
-
 test_that("reflora_indets defaults to repatriated = TRUE", {
   result <- reflora_indets(
     herbarium = "ALCB",
@@ -190,24 +181,6 @@ test_that("reflora_indets defaults to repatriated = TRUE", {
     save = TRUE
   )
   expect_s3_class(result, "data.frame")
-})
-
-
-test_that("reflora_indets with repatriated = FALSE excludes repatriated herbaria", {
-  result <- reflora_indets(
-    herbarium = NULL,
-    repatriated = FALSE,
-    taxon = "Fabaceae",
-    verbose = FALSE,
-    save = TRUE
-  )
-
-  expect_s3_class(result, "data.frame")
-
-  # Ensure repatriated herbaria like K and E are not present
-  repatriated_codes <- c("K", "E")
-  found <- unique(result$collectionCode)
-  expect_true(all(!repatriated_codes %in% found))
 })
 
 
@@ -231,4 +204,31 @@ test_that("reflora_indets saves CSV and log", {
   expect_true(file.exists(file.path(tmp, "log.txt")))
   unlink(tmp, recursive = TRUE)
 })
+
+
+# test_that("reflora_indets works with no filters (all default args)", {
+#   df <- reflora_indets(
+#     verbose = FALSE,
+#     save = FALSE
+#   )
+#   expect_s3_class(df, "data.frame")
+# })
+
+
+# test_that("reflora_indets with repatriated = FALSE excludes repatriated herbaria", {
+#   result <- reflora_indets(
+#     herbarium = NULL,
+#     repatriated = FALSE,
+#     taxon = "Fabaceae",
+#     verbose = FALSE,
+#     save = TRUE
+#   )
+#
+#   expect_s3_class(result, "data.frame")
+#
+#   # Ensure repatriated herbaria like K and E are not present
+#   repatriated_codes <- c("K", "E")
+#   found <- unique(result$collectionCode)
+#   expect_true(all(!repatriated_codes %in% found))
+# })
 

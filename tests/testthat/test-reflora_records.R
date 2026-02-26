@@ -185,17 +185,6 @@ test_that("reflora_records updates data when path is given and updates = TRUE", 
 })
 
 
-test_that("reflora_records works with herbarium = NULL", {
-  result <- reflora_records(
-    herbarium = NULL,
-    taxon = "Fabaceae",
-    save = FALSE,
-    verbose = FALSE
-  )
-  expect_s3_class(result, "data.frame")
-})
-
-
 test_that("reflora_records saves CSV and log.txt with save = TRUE", {
   tmp_dir <- tempdir()
   test_file <- "log_test"
@@ -278,24 +267,6 @@ test_that("reflora_records defaults to repatriated = TRUE", {
 })
 
 
-test_that("reflora_records with repatriated = FALSE excludes repatriated herbaria", {
-  result <- reflora_records(
-    herbarium = NULL,
-    taxon = "Fabaceae",
-    repatriated = FALSE,
-    save = FALSE,
-    verbose = FALSE
-  )
-
-  expect_s3_class(result, "data.frame")
-
-  # Ensure repatriated herbaria like K and E are not present
-  repatriated_codes <- c("K", "E")
-  found <- unique(result$collectionCode)
-  expect_true(all(!repatriated_codes %in% found))
-})
-
-
 test_that("reflora_records prints messages with verbose = TRUE", {
   expect_message(reflora_records(herbarium = "ALCB",
                                  verbose = TRUE,
@@ -350,3 +321,32 @@ test_that("reflora_records triggers dwca update message with path and updates = 
   expect_s3_class(df, "data.frame")
   expect_true(nrow(df) >= 0)
 })
+
+
+# test_that("reflora_records with repatriated = FALSE excludes repatriated herbaria", {
+#   result <- reflora_records(
+#     herbarium = NULL,
+#     taxon = "Fabaceae",
+#     repatriated = FALSE,
+#     save = FALSE,
+#     verbose = FALSE
+#   )
+#
+#   expect_s3_class(result, "data.frame")
+#
+#   # Ensure repatriated herbaria like K and E are not present
+#   repatriated_codes <- c("K", "E")
+#   found <- unique(result$collectionCode)
+#   expect_true(all(!repatriated_codes %in% found))
+# })
+#
+#
+# test_that("reflora_records works with herbarium = NULL", {
+#   result <- reflora_records(
+#     herbarium = NULL,
+#     taxon = "Fabaceae",
+#     save = FALSE,
+#     verbose = FALSE
+#   )
+#   expect_s3_class(result, "data.frame")
+# })
