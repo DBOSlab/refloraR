@@ -25,7 +25,7 @@
 #' summary will be saved. The default is to create a directory named
 #'  \code{reflora_summary}.
 #'
-#'@return A \code{data.frame} with one row per herbarium collection and the
+#' @return A \code{data.frame} with one row per herbarium collection and the
 #' following columns:
 #' \describe{
 #'   \item{collectionCode}{Character. Herbarium acronym (collection code) as
@@ -78,21 +78,21 @@ reflora_summary <- function(herbarium = NULL,
                             verbose = TRUE,
                             save = TRUE,
                             dir = "reflora_summary") {
-  
+
   # herbarium check
   if (!is.null(herbarium)) {
     .arg_check_herbarium(herbarium, verbose = verbose)
   }
-  
+
   # dir check
   dir <- .arg_check_dir(dir)
-  
+
   # Get raw metadata from REFLORA repository
   ipt_info <- .get_ipt_info(herbarium)
   ipt_metadata = ipt_info[[1]]
   herb_URLs = ipt_info[[2]]
   herb_code = ipt_info[[3]]
-  
+
   summary_df <- data.frame(collectionCode = herb_code,
                            rightsHolder = NA,
                            Repatriated = NA,
@@ -102,35 +102,35 @@ reflora_summary <- function(herbarium = NULL,
                            Published.on = NA,
                            Records = NA,
                            Reflora_URL = NA)
-  
+
   for (i in seq_along(herb_URLs)) {
-    
+
     if (verbose) {
       message(paste0("Summarizing specimen collections of ",
                      herb_code[i], " ", i, "/",
                      length(herb_code)))
     }
-    
+
     herb_info <- .get_herb_info(herb_URLs, ipt_metadata, i)
-    
+
     tf <- summary_df$collectionCode %in% herb_code[i]
-    
+
     summary_df$rightsHolder[tf] <- herb_info[[4]][1]
     summary_df$contactPoint[tf] <- herb_info[[2]][1]
     summary_df$hasEmail[tf] <- herb_info[[3]][1]
-    
+
     summary_df$Repatriated[tf] <- herb_info[[6]][1]
     summary_df$Version[tf] <- herb_info[[1]][1]
     summary_df$Published.on[tf] <- herb_info[[1]][2]
     summary_df$Records[tf] <- herb_info[[1]][3]
     summary_df$Reflora_URL[tf] <- herb_info[[5]]
-    
+
   }
-  
+
   summary_df$Records <- as.numeric(gsub(",", "", summary_df$Records))
   summary_df <- summary_df[order(summary_df$collectionCode), ]
   row.names(summary_df) <- 1:length(row.names(summary_df))
-  
+
   # Save the search results if param save is TRUE
   if (save) {
     .save_csv(df = summary_df,
@@ -138,7 +138,7 @@ reflora_summary <- function(herbarium = NULL,
               filename = "reflora_summary",
               dir = dir)
   }
-  
+
   return(summary_df)
-  
+
 }
