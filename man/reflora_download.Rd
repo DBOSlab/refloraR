@@ -26,7 +26,8 @@ and the results will be saved within a subfolder named by each searched
 REFLORA-associated herbarium collection.}
 }
 \value{
-Folder with DwC-A files for an specific or all REFLORA-associated herbaria.
+Invisibly returns \code{NULL}. This function is called for downloading
+and extracting Darwin Core Archive (DwC-A) files into the specified directory.
 }
 \description{
 Download plant specimen records in Darwin Core Format from any

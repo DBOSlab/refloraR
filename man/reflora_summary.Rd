@@ -24,8 +24,37 @@ summary will be saved. The default is to create a directory named
 \code{reflora_summary}.}
 }
 \value{
-A dataframe summarizing current available plant specimen records in
-REFLORA Virtual Herbarium.
+A \code{data.frame} with one row per herbarium collection and the
+following columns:
+\describe{
+\item{collectionCode}{Character. Herbarium acronym (collection code) as
+registered in the REFLORA Virtual Herbarium.}
+
+\item{rightsHolder}{Character. Institution responsible for the collection,
+as reported in the IPT metadata.}
+
+\item{Repatriated}{Logical. Indicates whether the herbarium corresponds to
+a repatriated collection (i.e., Brazilian specimens digitized from foreign
+institutions such as US, NY, K, etc.).}
+
+\item{contactPoint}{Character. Name of the contact person or curator
+associated with the collection.}
+
+\item{hasEmail}{Character. Contact email address for the contactPoint,
+when available.}
+
+\item{Version}{Character. Current dataset version number available in
+the IPT repository.}
+
+\item{Published.on}{Character. Date and hour on which the current dataset
+version was published in the IPT.}
+
+\item{Records}{Numeric. Total number of specimen records currently
+available for the collection.}
+
+\item{Reflora_URL}{Character. Direct URL to the collection page in the
+REFLORA Virtual Herbarium.}
+}
 }
 \description{
 Summarize current available plant specimen records at

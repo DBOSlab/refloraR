@@ -70,12 +70,17 @@ summary will be saved. The default is to create a directory named
 a file entitled \code{reflora_records_search.csv}.}
 }
 \value{
-A \code{data.frame} containing occurrence records for the selected taxon
-and criteria from the chosen REFLORA herbaria. If \code{save = TRUE}, the function
-will write the results to a CSV file inside the \code{dir} directory, and also
-generate or append a \code{log.txt} file that summarizes the download session
-including total records and breakdowns by herbarium, family, genus, country,
-and state.
+A \code{data.frame} containing occurrence records from the selected
+REFLORA herbaria, filtered according to the user-specified arguments
+(e.g., \code{taxon}, \code{state}, \code{recordYear}, \code{indets},
+\code{herbarium}, and \code{repatriated}). Columns containing only
+\code{NA} values are removed before returning the object.
+
+If \code{save = TRUE}, the function also writes the results to a CSV file
+in the specified \code{dir} directory (creating it if necessary) and
+generates or appends a \code{log.txt} file summarizing the download session,
+including the total number of records and breakdowns by herbarium, family,
+genus, country, and state.
 }
 \description{
 Retrieve occurrence records for specific taxa from the

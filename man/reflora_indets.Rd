@@ -60,12 +60,26 @@ console.}
 Default: \code{"reflora_indets_search"}.}
 }
 \value{
-A \code{data.frame} containing filtered specimen records for the selected
-indeterminate specimens and criteria. If \code{save = TRUE}, a CSV file with the
-results will be written to the specified \code{dir}, and a \code{log.txt} file will be
-created or appended in the same directory summarizing the download session and
-key statistics (total records, breakdowns by herbarium, family, genus, country,
-and state).
+A \code{data.frame} containing occurrence records for indeterminate
+specimens retrieved from the selected REFLORA herbaria. Records are filtered
+according to the user-specified arguments (e.g., \code{level}, \code{taxon},
+\code{state}, \code{recordYear}, \code{herbarium}, and \code{repatriated}).
+By default, higher-rank indeterminate taxa (e.g., \code{"FAMILY"},
+\code{"GENUS"}, \code{"SUBFAMILY"}, \code{"TRIBE"}, \code{"DIVISION"},
+\code{"ORDER"}, \code{"CLASS"}) are included unless a specific
+\code{level} is provided.
+
+The returned data frame includes specimen metadata and direct links to
+images via the \code{bibliographicCitation} (specimen page URL) and
+\code{associatedMedia} (high-resolution image URL(s), when available)
+columns. Columns containing only \code{NA} values are removed before
+returning the object.
+
+If \code{save = TRUE}, the function also writes the results to a CSV file
+in the specified \code{dir} directory (creating it if necessary) and
+generates or appends a \code{log.txt} file summarizing the session,
+including total records and breakdowns by herbarium, family, genus,
+country, and state.
 }
 \description{
 Retrieves occurrence records for indeterminate specimens (e.g., identified
