@@ -1,19 +1,19 @@
 Package: refloraR
 Type: Package
-Title: Tools for Exploring Plant Specimen Collections from REFLORA Virtual Herbarium
+Title: Tools for efficiently retrieving and analyzing plant specimen data from the REFLORA Virtual Herbarium
 Version: 1.0.0
 Authors@R:
     c(
+      person(given = "Carlos",
+             family = "Calderón del Cid",
+             role = c("aut", "cph"),
+             email = "caldecid@gmail.com",
+             comment = c(ORCID = "0000-0002-3897-4615")),
       person(given = "Domingos",
              family = "Cardoso",
              role = c("aut", "cre", "cph"),
              email = "domingoscardoso@jbrj.gov.br",
-             comment = c(ORCID = "0000-0001-7072-2656")),
-      person(given = "Carlos",
-             family = "Calderón",
-             role = c("aut", "cph"),
-             email = "caldecid@gmail.com",
-             comment = c(ORCID = "0000-0002-3897-4615"))
+             comment = c(ORCID = "0000-0001-7072-2656"))
     )
 Maintainer: Domingos Cardoso <domingoscardoso@jbrj.gov.br>
 Description: Provides tools to access and analyze plant specimen records from
