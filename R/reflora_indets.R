@@ -71,7 +71,12 @@
 #'
 #' @param repatriated Logical. If `FALSE`, skips downloading records from
 #' REFLORA-associated herbaria that have been repatriated. Default is `TRUE`.
-#' Use `reflora_summary()` to check which collections are repatriated.
+#' Use `reflora_summary()` to check which collections are repatriated. REFLORA
+#' aggregates collections from both Brazilian and international herbaria
+#' that hold Brazilian specimens. In this context, “digital repatriation” refers
+#' to making high-resolution images and associated specimen metadata openly
+#' accessible through a Brazilian public infrastructure (HVR/IPT), even when the
+#' physical specimens remain curated in the holding herbarium.
 #
 #' @param taxon Character vector. Specific taxon names to filter by
 #' (e.g., `"Fabaceae"`).
@@ -163,7 +168,7 @@ reflora_indets <- function(level = NULL,
                            save = TRUE,
                            dir = "reflora_indets",
                            filename = "reflora_indets_search") {
-  
+
   # level check
   if (!is.null(level)) {
     if (verbose) {
@@ -171,12 +176,12 @@ reflora_indets <- function(level = NULL,
     }
     level <- .arg_check_level(level)
   }
-  
+
   # herbarium check
   if (!is.null(herbarium)) {
     .arg_check_herbarium(herbarium, verbose = FALSE)
   }
-  
+
   # state check
   if (!is.null(state)) {
     if (verbose) {
@@ -184,7 +189,7 @@ reflora_indets <- function(level = NULL,
     }
     state <- .arg_check_state(state)
   }
-  
+
   # recordYear check
   if (!is.null(recordYear)) {
     if (verbose) {
@@ -192,10 +197,10 @@ reflora_indets <- function(level = NULL,
     }
     .arg_check_recordYear(recordYear)
   }
-  
+
   # dir check
   dir <- .arg_check_dir(dir)
-  
+
   # Create a new directory to save the dataframe
   # If there is no directory create one in the working directory
   if (!dir.exists(dir)) {
@@ -204,14 +209,14 @@ reflora_indets <- function(level = NULL,
     }
     dir.create(dir)
   }
-  
+
   if (!is.null(path)) {
     if (updates) {
       if (verbose) {
         message(paste0("Updating dwca files within '",
                        path, "'"))
       }
-      
+
       # The reflora_download will get updated dwca files only if any of the current
       # versions differ from the REFLORA IPT
       reflora_download(herbarium = herbarium,
@@ -219,31 +224,31 @@ reflora_indets <- function(level = NULL,
                        verbose = verbose,
                        dir = path)
     }
-    
+
     # Parse REFLORA dwca files
     dwca_files <- reflora_parse(path = path,
                                 herbarium = herbarium,
                                 repatriated = repatriated,
                                 verbose = verbose)
   } else {
-    
+
     # The reflora_download will get updated dwca files only if any of the current
     # versions differ from the REFLORA IPT
     reflora_download(herbarium = herbarium,
                      repatriated = repatriated,
                      verbose = verbose,
                      dir = "reflora_download")
-    
+
     # Parse REFLORA dwca files
     dwca_files <- reflora_parse(path = "reflora_download",
                                 herbarium = herbarium,
                                 repatriated = repatriated,
                                 verbose = verbose)
   }
-  
+
   # Extract each "occurrence.txt" data frame and merge them
   occur_df <- .merge_occur_txt(dwca_files)
-  
+
   if (is.null(level)) {
     # Keep only higher-rank indeterminate taxa
     indets <- c("FAMILY", "GENUS", "SUBFAMILY", "TRIBE", "DIVISION", "ORDER", "CLASS")
@@ -265,16 +270,16 @@ reflora_indets <- function(level = NULL,
       }
     }
   }
-  
+
   # Filter occurrence data
   occur_df <- .filter_occur_df(occur_df, taxon, state, recordYear, verbose)
-  
+
   # Reorder the data by the order of specific columns
   occur_df <- .reorder_df(occur_df, reorder)
-  
+
   # Remove columns that are completely NA
   occur_df <- occur_df[, colSums(!is.na(occur_df)) > 0]
-  
+
   # Save the search results if param save is TRUE
   if (save) {
     .save_csv(df = occur_df,
@@ -286,6 +291,6 @@ reflora_indets <- function(level = NULL,
               filename = filename,
               dir = dir)
   }
-  
+
   return(occur_df)
 }

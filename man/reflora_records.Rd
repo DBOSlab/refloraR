@@ -25,7 +25,12 @@ for all REFLORA-hosted herbaria.}
 
 \item{repatriated}{Logical. If \code{FALSE}, skips downloading records from
 REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
-Use \code{reflora_summary()} to check which collections are repatriated.}
+Use \code{reflora_summary()} to check which collections are repatriated.
+REFLORA aggregates collections from both Brazilian and international herbaria
+that hold Brazilian specimens. In this context, “digital repatriation” refers
+to making high-resolution images and associated specimen metadata openly
+accessible through a Brazilian public infrastructure (HVR/IPT), even when the
+physical specimens remain curated in the holding herbarium.}
 
 \item{taxon}{A vector with the required taxon. It can be one or a vector of
 multiple scientific names at family, genus or species level.}

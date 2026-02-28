@@ -55,6 +55,11 @@
 #' @param repatriated Logical. If \code{FALSE}, skips downloading records from
 #' REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
 #' Use \code{reflora_summary()} to check which collections are repatriated.
+#' REFLORA aggregates collections from both Brazilian and international herbaria
+#' that hold Brazilian specimens. In this context, “digital repatriation” refers
+#' to making high-resolution images and associated specimen metadata openly
+#' accessible through a Brazilian public infrastructure (HVR/IPT), even when the
+#' physical specimens remain curated in the holding herbarium.
 #
 #' @param taxon A vector with the required taxon. It can be one or a vector of
 #' multiple scientific names at family, genus or species level.
@@ -98,16 +103,16 @@
 #' @param filename Name of the output file to be saved. The default is to create
 #' a file entitled \code{reflora_records_search.csv}.
 #'
-#' @return A \code{data.frame} containing occurrence records from the selected 
-#' REFLORA herbaria, filtered according to the user-specified arguments 
-#' (e.g., \code{taxon}, \code{state}, \code{recordYear}, \code{indets}, 
-#' \code{herbarium}, and \code{repatriated}). Columns containing only 
+#' @return A \code{data.frame} containing occurrence records from the selected
+#' REFLORA herbaria, filtered according to the user-specified arguments
+#' (e.g., \code{taxon}, \code{state}, \code{recordYear}, \code{indets},
+#' \code{herbarium}, and \code{repatriated}). Columns containing only
 #' \code{NA} values are removed before returning the object.
-#' 
-#' If \code{save = TRUE}, the function also writes the results to a CSV file 
-#' in the specified \code{dir} directory (creating it if necessary) and 
-#' generates or appends a \code{log.txt} file summarizing the download session, 
-#' including the total number of records and breakdowns by herbarium, family, 
+#'
+#' If \code{save = TRUE}, the function also writes the results to a CSV file
+#' in the specified \code{dir} directory (creating it if necessary) and
+#' generates or appends a \code{log.txt} file summarizing the download session,
+#' including the total number of records and breakdowns by herbarium, family,
 #' genus, country, and state.
 #'
 #' @seealso \code{\link{reflora_download}}
@@ -148,12 +153,12 @@ reflora_records <- function(herbarium = NULL,
                             save = TRUE,
                             dir = "reflora_records",
                             filename = "reflora_records_search") {
-  
+
   # herbarium check
   if (!is.null(herbarium)) {
     .arg_check_herbarium(herbarium, verbose = FALSE)
   }
-  
+
   # state check
   if (!is.null(state)) {
     if (verbose) {
@@ -161,7 +166,7 @@ reflora_records <- function(herbarium = NULL,
     }
     state <- .arg_check_state(state)
   }
-  
+
   # recordYear check
   if (!is.null(recordYear)) {
     if (verbose) {
@@ -169,10 +174,10 @@ reflora_records <- function(herbarium = NULL,
     }
     .arg_check_recordYear(recordYear)
   }
-  
+
   # dir check
   dir <- .arg_check_dir(dir)
-  
+
   # Create a new directory to save the dataframe
   # If it does not exist, create it in the working directory
   if (!dir.exists(dir)) {
@@ -181,13 +186,13 @@ reflora_records <- function(herbarium = NULL,
     }
     dir.create(dir)
   }
-  
+
   if (!is.null(path)) {
     if (updates) {
       if (verbose) {
         message(paste0("Updating dwca files within '", path, "'"))
       }
-      
+
       # The reflora_download will get updated dwca files only if any of the current
       # versions differ from the REFLORA IPT
       reflora_download(herbarium = herbarium,
@@ -195,34 +200,34 @@ reflora_records <- function(herbarium = NULL,
                        verbose = verbose,
                        dir = path)
     }
-    
+
     # Parse REFLORA dwca files
     dwca_files <- reflora_parse(path = path,
                                 herbarium = herbarium,
                                 repatriated = repatriated,
                                 verbose = verbose)
   } else {
-    
+
     # The reflora_download will get updated dwca files only if any of the current
     # versions differ from the REFLORA IPT
     reflora_download(herbarium = herbarium,
                      repatriated = repatriated,
                      verbose = verbose,
                      dir = "reflora_download")
-    
+
     # Parse REFLORA dwca files
     dwca_files <- reflora_parse(path = "reflora_download",
                                 herbarium = herbarium,
                                 repatriated = repatriated,
                                 verbose = verbose)
   }
-  
+
   # Extract each "occurrence.txt" data frame and merge them
   occur_df <- .merge_occur_txt(dwca_files)
-  
+
   # Filter occurrence data
   occur_df <- .filter_occur_df(occur_df, taxon, state, recordYear, verbose)
-  
+
   # Remove indeterminate specimens
   if (indets == FALSE) {
     indets <- c("FAMILY", "GENUS", "SUBFAMILY", "TRIBE", "DIVISION", "ORDER", "CLASS")
@@ -231,13 +236,13 @@ reflora_records <- function(herbarium = NULL,
       occur_df <- occur_df[tf, ]
     }
   }
-  
+
   # Reorder the data by the order of specific columns
   occur_df <- .reorder_df(occur_df, reorder)
-  
+
   # Remove columns that are completely NA
   occur_df <- occur_df[ , colSums(!is.na(occur_df)) > 0]
-  
+
   # Save the search results if param save is TRUE
   if (save) {
     .save_csv(df = occur_df,
@@ -249,6 +254,6 @@ reflora_records <- function(herbarium = NULL,
               filename = filename,
               dir = dir)
   }
-  
+
   return(occur_df)
 }

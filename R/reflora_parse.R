@@ -22,6 +22,11 @@
 #' @param repatriated Logical. If \code{FALSE}, skips downloading records from
 #' REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
 #' Use \code{reflora_summary()} to check which collections are repatriated.
+#' REFLORA aggregates collections from both Brazilian and international herbaria
+#' that hold Brazilian specimens. In this context, “digital repatriation” refers
+#' to making high-resolution images and associated specimen metadata openly
+#' accessible through a Brazilian public infrastructure (HVR/IPT), even when the
+#' physical specimens remain curated in the holding herbarium.
 #'
 #' @param verbose Logical, if \code{FALSE}, a message showing steps when
 #' summarizing specimen records will not be printed in the console in full.
@@ -70,17 +75,17 @@ reflora_parse <- function(path = NULL,
                           herbarium = NULL,
                           repatriated = TRUE,
                           verbose = TRUE) {
-  
+
   dwca_folders <- list.files(path)
   dwca_filenames <- lapply(paste0(path, "/", dwca_folders), list.files)
-  
+
   if (!is.null(herbarium)) {
     current_herbarium <- toupper(stringr::str_extract(dwca_folders,
                                                       "(?<=dwca[-_])[^-_]+"))
     dwca_folders <- dwca_folders[current_herbarium %in% herbarium]
     dwca_filenames <- dwca_filenames[current_herbarium %in% herbarium]
   }
-  
+
   if (is.null(herbarium) && repatriated == FALSE) {
     temp <- reflora_summary(herbarium = NULL,
                             verbose = FALSE,
@@ -98,12 +103,12 @@ reflora_parse <- function(path = NULL,
     dwca_folders <- dwca_folders[current_herbarium %in% non_repatriated]
     dwca_filenames <- dwca_filenames[current_herbarium %in% non_repatriated]
   }
-  
+
   # path check
   .arg_check_path(path, dwca_folders, dwca_filenames)
-  
+
   # Calling all dwca files
-  
+
   if (verbose) {
     message("Parsing data from dwca folders...\n\n")
   }
@@ -112,7 +117,7 @@ reflora_parse <- function(path = NULL,
                                                     read = TRUE,
                                                     encoding = "UTF-8",
                                                     na.strings = ""))
-  
+
   # Order and clean specific columns within dwca_files
   fields <- c(
     "occurrenceID",
@@ -161,22 +166,22 @@ reflora_parse <- function(path = NULL,
     "basisOfRecord",
     "associatedMedia"
   )
-  
+
   herbarium <- sapply(dwca_filenames, function(x) {
     csv <- x[grepl("_Reflora\\.csv$", x)]
     sub("_Reflora\\.csv$", "", basename(csv))
   })
-  
+
   for (i in seq_along(dwca_files)) {
-    
+
     temp <- dwca_files[[i]][["data"]][["occurrence.txt"]]
-    
+
     fields <- fields[fields %in% names(temp)]
     pos <- match("specificEpithet", fields)
     fields <- append(fields, "species", after = pos)
     pos <- match("infraspecificEpithet", fields)
     fields <- append(fields, "taxonName", after = pos)
-    
+
     temp <- temp %>%
       dplyr::mutate(
         family = stringr::str_to_title(family),
@@ -197,22 +202,22 @@ reflora_parse <- function(path = NULL,
       dplyr::mutate(bibliographicCitation = paste0("REFLORA Virtual Herbarium, available at: https://reflora.jbrj.gov.br/reflora/herbarioVirtual/ConsultaPublicoHVUC/BemVindoConsultaPublicaHVConsultar.do?modoConsulta=LISTAGEM&quantidadeResultado=20&codigoBarra=",
                                                    temp$catalogNumber),
                     .after = basisOfRecord)
-    
+
     if (!all(is.na(temp$associatedMedia))) {
       temp$associatedMedia <- .clean_media_urls_vectorized(temp$associatedMedia)
     }
-    
+
     temp <- .std_inside_columns(temp,
                                 herbarium = herbarium,
                                 i = i,
                                 verbose = verbose)
     dwca_files[[i]][["data"]][["occurrence.txt"]] <- temp
   }
-  
+
   # Parsing csv files, if they exist
   tf <- lapply(dwca_filenames, function(x) grepl("[.]csv$", x))
   tf_csv <- unlist(lapply(tf, any))
-  
+
   if (any(tf_csv)) {
     csv_filenames <- unlist(Map(`[`, dwca_filenames, tf)[tf_csv])
     dwca_folders = dwca_folders[tf_csv]
@@ -223,29 +228,29 @@ reflora_parse <- function(path = NULL,
                                                         "/",
                                                         csv_filenames[i]),
                                                  na.strings = ""))
-    
+
     name <- paste0("summary_",
                    unlist(lapply(seq_along(csv_df),
                                  function(i) csv_df[[i]]$collectionCode)))
-    
+
     # Use mapply to add each summary data frame to each dwca_files element
     dwca_files[tf_csv] <- mapply(function(x, y, name) {
       x[[name]] <- y
       x
     }, dwca_files[tf_csv], csv_df, name, SIMPLIFY = FALSE)
-    
+
   }
-  
+
   # Name the list with uploaded dwca files
   temp <- unlist(lapply(seq_along(dwca_files),
                         function(x) dwca_files[[x]][["files"]][["xml_files"]][1]))
   names(dwca_files) <- gsub(".*[/]", "", gsub("[/]eml.*", "", temp))
-  
-  
+
+
   if (verbose) {
     message("Collections and associated metadata were parsed from the following dwca folders: \n\n",
             paste0(names(dwca_files), "\n"))
   }
-  
+
   return(dwca_files)
 }

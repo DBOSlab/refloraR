@@ -5,6 +5,13 @@
 #' @description Summarize current available plant specimen records at
 #' \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
 #' hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
+#' REFLORA aggregates collections from both Brazilian and international herbaria
+#' that hold Brazilian specimens. In this context, “digital repatriation” refers
+#' to making high-resolution images and associated specimen metadata openly
+#' accessible through a Brazilian public infrastructure (HVR/IPT), even when the
+#' physical specimens remain curated in the holding herbarium. The
+#' \code{reflora_summary()} output includes a repatriation status field to help
+#' users identify these digitally repatriated collections.
 #'
 #' @usage
 #' reflora_summary(herbarium = NULL,
@@ -13,8 +20,8 @@
 #'                 dir = "reflora_summary")
 #'
 #' @param herbarium A vector of specific herbarium acronyms (collection code) in
-#' uppercase letters or leave it as \code{NULL} to summarize specimen records for all
-#' REFLORA-hosted herbaria.
+#' uppercase letters or leave it as \code{NULL} to summarize specimen records for
+#' all REFLORA-hosted herbaria.
 #'
 #' @param verbose Logical, if \code{FALSE}, a message showing steps when
 #' summarizing specimen records will not be printed in the console in full.

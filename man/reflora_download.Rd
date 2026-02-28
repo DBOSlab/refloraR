@@ -33,6 +33,11 @@ and extracting Darwin Core Archive (DwC-A) files into the specified directory.
 Download plant specimen records in Darwin Core Format from any
 herbarium collection at \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
 hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
+REFLORA aggregates collections from both Brazilian and international herbaria
+that hold Brazilian specimens. In this context, “digital repatriation” refers
+to making high-resolution images and associated specimen metadata openly
+accessible through a Brazilian public infrastructure (HVR/IPT), even when the
+physical specimens remain curated in the holding herbarium.
 }
 \examples{
 \dontrun{
