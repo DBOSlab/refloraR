@@ -49,17 +49,17 @@ test_that("reflora_records reorders columns properly", {
 
 
 test_that("reflora_records saves file when save = TRUE", {
-  temp_dir <- tempdir()
   test_file <- "test_output"
   result <- reflora_records(
     herbarium = "ALCB",
     taxon = "Fabaceae",
     verbose = FALSE,
     save = TRUE,
-    dir = temp_dir,
     filename = test_file
   )
-  output_path <- file.path(temp_dir, paste0(test_file, ".csv"))
+
+  list.files()
+  output_path <- file.path("reflora_records", paste0(test_file, ".csv"))
   expect_true(file.exists(output_path))
 
   unlink(output_path)
