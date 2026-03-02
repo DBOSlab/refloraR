@@ -8,10 +8,7 @@
 #' herbarium collection at \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
 #' hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 #' REFLORA aggregates collections from both Brazilian and international herbaria
-#' that hold Brazilian specimens. In this context, “digital repatriation” refers
-#' to making high-resolution images and associated specimen metadata openly
-#' accessible through a Brazilian public infrastructure (HVR/IPT), even when the
-#' physical specimens remain curated in the holding herbarium.
+#' that hold Brazilian specimens.
 #'
 #' @usage
 #' reflora_download(herbarium = NULL,
@@ -25,6 +22,9 @@
 #' @param repatriated Logical. If \code{FALSE}, skips downloading records from
 #' REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
 #' Use \code{reflora_summary()} to check which collections are repatriated.
+#' In this context, “digital repatriation” refers to making high-resolution images
+#' and associated specimen metadata openly accessible through a Brazilian public
+#' infrastructure (HVR/IPT).
 #'
 #' @param verbose Logical, if \code{FALSE}, a message showing steps when downloading
 #' herbarium specimen records will not be printed in the console in full.

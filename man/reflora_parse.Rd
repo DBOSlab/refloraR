@@ -23,8 +23,7 @@ Use \code{reflora_summary()} to check which collections are repatriated.
 REFLORA aggregates collections from both Brazilian and international herbaria
 that hold Brazilian specimens. In this context, “digital repatriation” refers
 to making high-resolution images and associated specimen metadata openly
-accessible through a Brazilian public infrastructure (HVR/IPT), even when the
-physical specimens remain curated in the holding herbarium.}
+accessible through a Brazilian public infrastructure (HVR/IPT).}
 
 \item{verbose}{Logical, if \code{FALSE}, a message showing steps when
 summarizing specimen records will not be printed in the console in full.}
