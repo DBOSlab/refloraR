@@ -2,7 +2,7 @@
 % Please edit documentation in R/reflora_download.R
 \name{reflora_download}
 \alias{reflora_download}
-\title{Download plant specimen records from REFLORA Virtual Herbarium}
+\title{Download plant specimen records from Reflora Virtual Herbarium}
 \usage{
 reflora_download(herbarium = NULL,
                  repatriated = TRUE,
@@ -11,10 +11,10 @@ reflora_download(herbarium = NULL,
 }
 \arguments{
 \item{herbarium}{A vector of specific herbarium acronyms (collection code) in
-uppercase letters or leave it as NULL to download records for all REFLORA herbaria.}
+uppercase letters or leave it as NULL to download records for all Reflora herbaria.}
 
 \item{repatriated}{Logical. If \code{FALSE}, skips downloading records from
-REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
+Reflora-associated herbaria that have been repatriated. Default is \code{TRUE}.
 Use \code{reflora_summary()} to check which collections are repatriated.
 In this context, “digital repatriation” refers to making high-resolution images
 and associated specimen metadata openly accessible through a Brazilian public
@@ -26,7 +26,7 @@ herbarium specimen records will not be printed in the console in full.}
 \item{dir}{Pathway to the computer's directory, where the file will be saved.
 The default is to create a directory named \code{reflora_download}
 and the results will be saved within a subfolder named by each searched
-REFLORA-associated herbarium collection.}
+Reflora-associated herbarium collection.}
 }
 \value{
 Invisibly returns \code{NULL}. This function is called for downloading
@@ -34,9 +34,9 @@ and extracting Darwin Core Archive (DwC-A) files into the specified directory.
 }
 \description{
 Download plant specimen records in Darwin Core Format from any
-herbarium collection at \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
+herbarium collection at \href{https://ipt.jbrj.gov.br/reflora/}{Reflora Virtual Herbarium}
 hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
-REFLORA aggregates collections from both Brazilian and international herbaria
+Reflora aggregates collections from both Brazilian and international herbaria
 that hold Brazilian specimens.
 }
 \examples{

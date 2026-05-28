@@ -10,7 +10,7 @@ reflora_parse(path = NULL,
               verbose = TRUE)
 }
 \arguments{
-\item{path}{Pathway to the computer's directory, where the REFLORA-downloaded
+\item{path}{Pathway to the computer's directory, where the Reflora-downloaded
 dwca folders are.}
 
 \item{herbarium}{A vector of specific herbarium acronyms (collection code) in
@@ -18,9 +18,9 @@ uppercase letters or leave it as \code{NULL} to parse specimen records for all
 herbarim dcwa folders in the defined path directory.}
 
 \item{repatriated}{Logical. If \code{FALSE}, skips downloading records from
-REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
+Reflora-associated herbaria that have been repatriated. Default is \code{TRUE}.
 Use \code{reflora_summary()} to check which collections are repatriated.
-REFLORA aggregates collections from both Brazilian and international herbaria
+Reflora aggregates collections from both Brazilian and international herbaria
 that hold Brazilian specimens. In this context, “digital repatriation” refers
 to making high-resolution images and associated specimen metadata openly
 accessible through a Brazilian public infrastructure (HVR/IPT).}
@@ -47,7 +47,7 @@ are appended as additional elements within each herbarium object.
 }
 \description{
 Read Darwin Core Archive (DwC-A) files from any downloaded dwca
-folder at \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
+folder at \href{https://ipt.jbrj.gov.br/reflora/}{Reflora Virtual Herbarium}
 hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 }
 \examples{

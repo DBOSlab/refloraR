@@ -1,6 +1,6 @@
 Package: refloraR
 Type: Package
-Title: Tools for efficiently retrieving and analyzing plant specimen data from the REFLORA Virtual Herbarium
+Title: Tools for efficiently retrieving and analyzing plant specimen data from the Herbario Virtual Reflora
 Version: 1.0.0
 Authors@R:
     c(
@@ -17,7 +17,7 @@ Authors@R:
     )
 Maintainer: Domingos Cardoso <domingoscardoso@jbrj.gov.br>
 Description: Provides tools to access and analyze plant specimen records from
-    REFLORA Virtual Herbarium, a botanical data repository maintained by the
+    Reflora Virtual Herbarium, a botanical data repository maintained by the
     Rio de Janeiro Botanical Garden. Users can retrieve, filter, and summarize
     specimen data using taxonomic, geographic, or temporal criteria. The
     package supports downloading structured Darwin Core (DwC-A) archives and

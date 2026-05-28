@@ -2,7 +2,7 @@
 % Please edit documentation in R/reflora_summary.R
 \name{reflora_summary}
 \alias{reflora_summary}
-\title{Summarize current plant specimen records at REFLORA Virtual Herbarium}
+\title{Summarize current plant specimen records at Reflora Virtual Herbarium}
 \usage{
 reflora_summary(herbarium = NULL,
                 verbose = TRUE,
@@ -12,7 +12,7 @@ reflora_summary(herbarium = NULL,
 \arguments{
 \item{herbarium}{A vector of specific herbarium acronyms (collection code) in
 uppercase letters or leave it as \code{NULL} to summarize specimen records for
-all REFLORA-hosted herbaria.}
+all Reflora-hosted herbaria.}
 
 \item{verbose}{Logical, if \code{FALSE}, a message showing steps when
 summarizing specimen records will not be printed in the console in full.}
@@ -28,7 +28,7 @@ A \code{data.frame} with one row per herbarium collection and the
 following columns:
 \describe{
 \item{collectionCode}{Character. Herbarium acronym (collection code) as
-registered in the REFLORA Virtual Herbarium.}
+registered in the Reflora Virtual Herbarium.}
 
 \item{rightsHolder}{Character. Institution responsible for the collection,
 as reported in the IPT metadata.}
@@ -53,14 +53,14 @@ version was published in the IPT.}
 available for the collection.}
 
 \item{Reflora_URL}{Character. Direct URL to the collection page in the
-REFLORA Virtual Herbarium.}
+Reflora Virtual Herbarium.}
 }
 }
 \description{
 Summarize current available plant specimen records at
-\href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
+\href{https://ipt.jbrj.gov.br/reflora/}{Reflora Virtual Herbarium}
 hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
-REFLORA aggregates collections from both Brazilian and international herbaria
+Reflora aggregates collections from both Brazilian and international herbaria
 that hold Brazilian specimens. In this context, “digital repatriation” refers
 to making high-resolution images and associated specimen metadata openly
 accessible through a Brazilian public infrastructure (HVR/IPT), even when the

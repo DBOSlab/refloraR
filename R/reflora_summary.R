@@ -1,11 +1,11 @@
-#' Summarize current plant specimen records at REFLORA Virtual Herbarium
+#' Summarize current plant specimen records at Reflora Virtual Herbarium
 #'
 #' @author Domingos Cardoso
 #'
 #' @description Summarize current available plant specimen records at
-#' \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
+#' \href{https://ipt.jbrj.gov.br/reflora/}{Reflora Virtual Herbarium}
 #' hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
-#' REFLORA aggregates collections from both Brazilian and international herbaria
+#' Reflora aggregates collections from both Brazilian and international herbaria
 #' that hold Brazilian specimens. In this context, “digital repatriation” refers
 #' to making high-resolution images and associated specimen metadata openly
 #' accessible through a Brazilian public infrastructure (HVR/IPT), even when the
@@ -21,7 +21,7 @@
 #'
 #' @param herbarium A vector of specific herbarium acronyms (collection code) in
 #' uppercase letters or leave it as \code{NULL} to summarize specimen records for
-#' all REFLORA-hosted herbaria.
+#' all Reflora-hosted herbaria.
 #'
 #' @param verbose Logical, if \code{FALSE}, a message showing steps when
 #' summarizing specimen records will not be printed in the console in full.
@@ -36,7 +36,7 @@
 #' following columns:
 #' \describe{
 #'   \item{collectionCode}{Character. Herbarium acronym (collection code) as
-#'   registered in the REFLORA Virtual Herbarium.}
+#'   registered in the Reflora Virtual Herbarium.}
 #'
 #'   \item{rightsHolder}{Character. Institution responsible for the collection,
 #'   as reported in the IPT metadata.}
@@ -61,7 +61,7 @@
 #'   available for the collection.}
 #'
 #'   \item{Reflora_URL}{Character. Direct URL to the collection page in the
-#'   REFLORA Virtual Herbarium.}
+#'   Reflora Virtual Herbarium.}
 #' }
 #'
 #' @seealso \code{\link{reflora_download}}
@@ -94,7 +94,7 @@ reflora_summary <- function(herbarium = NULL,
   # dir check
   dir <- .arg_check_dir(dir)
 
-  # Get raw metadata from REFLORA repository
+  # Get raw metadata from Reflora repository
   ipt_info <- .get_ipt_info(herbarium)
   ipt_metadata = ipt_info[[1]]
   herb_URLs = ipt_info[[2]]

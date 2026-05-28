@@ -3,7 +3,7 @@
 
 
 #_______________________________________________________________________________
-# Function to get raw metadata from REFLORA repository ####
+# Function to get raw metadata from Reflora repository ####
 
 .get_ipt_info <- function(herbarium) {
 
@@ -38,7 +38,7 @@
 
 
 #_______________________________________________________________________________
-# Function to get summary information of each REFLORA-associated collection ####
+# Function to get summary information of each Reflora-associated collection ####
 
 .get_herb_info <- function(herb_URLs, ipt_metadata, i) {
 
@@ -1252,7 +1252,7 @@
 
   if (!any(matches)) {
     stop(paste0(
-      "Your input 'taxon' list must contain at least one name existing within the REFLORA collections.\n",
+      "Your input 'taxon' list must contain at least one name existing within the Reflora collections.\n",
       "Check whether the input taxon list has any typo: ",
       paste(unmatched_taxa, collapse = ", ")
     ))
@@ -1270,7 +1270,7 @@
 
   if (length(matched_state) == 0) {
     stop(paste0(
-      "Your input 'state' list must contain at least one name existing within the REFLORA collections.\n",
+      "Your input 'state' list must contain at least one name existing within the Reflora collections.\n",
       "Check whether the input state list has any typo: ",
       paste(unmatched_state, collapse = ", ")
     ))
@@ -1288,7 +1288,7 @@
 
   if (length(matched_year) == 0) {
     stop(paste0(
-      "Your input 'recordYear' list must contain at least one year existing within the REFLORA collections.\n",
+      "Your input 'recordYear' list must contain at least one year existing within the Reflora collections.\n",
       "Check whether the input recordYear list has any typo: ",
       paste(unmatched_year, collapse = ", ")
     ))

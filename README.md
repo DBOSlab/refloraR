@@ -17,11 +17,11 @@ MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 <!-- badges: end -->
 
 `refloraR` is an R package for accessing and analyzing plant specimen
-data from the [REFLORA Virtual
+data from the [Reflora Virtual
 Herbarium](https://reflora.jbrj.gov.br/reflora/herbarioVirtual/), hosted
 by the [Rio de Janeiro Botanical Garden](https://www.gov.br/jbrj/pt-br).
 It provides tools for downloading, summarizing, and filtering herbarium
-records in Darwin Core Archive (DwC-A) format via the [REFLORA
+records in Darwin Core Archive (DwC-A) format via the [Reflora
 IPT](https://ipt.jbrj.gov.br/reflora/).
 
 ## Installation
@@ -48,12 +48,12 @@ A general description of the available main functions
 collections are provided below.  
   
 
-#### *1. `reflora_summary`: Summarizing REFLORA collections*
+#### *1. `reflora_summary`: Summarizing Reflora collections*
 
 The following code can be used to extract a summary of all
-REFLORA-associated collections, including herbarium acronym, curator’s
+Reflora-associated collections, including herbarium acronym, curator’s
 email contact, number of records and a direct link to the original
-REFLORA Integrated Publishing Toolkit
+Reflora Integrated Publishing Toolkit
 ([IPT](https://ipt.jbrj.gov.br/reflora)).  
 
 ``` r
@@ -81,7 +81,7 @@ summary_some_df <- reflora_summary(herbarium = c("ALCB", "RB", "HUEFS", "US", "K
 #### *2. `reflora_download`: Downloading REFLORA specimen records*
 
 The following code can be used to download original specimen records in
-DwC-A format and associated metada for all REFLORA collections.  
+DwC-A format and associated metada for all Reflora collections.  
 
 ``` r
 library(refloraR)
@@ -114,5 +114,5 @@ Full function documentation and articles are available at the `refloraR`
 Calderón del Cid, C.; Versiane, A.F.A.; Leitman, P.; Filardi, F.R.;
 Forzza, R.C. & Cardoso, D. 2026. *refloraR*: An R package for
 efficiently retrieving and analyzing plant specimen data from the
-REFLORA Virtual Herbarium. Applications in Plant Sciences.
+Herbário Virtual Reflora. Applications in Plant Sciences.
 <https://github.com/dboslab/refloraR>

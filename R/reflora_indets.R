@@ -1,4 +1,4 @@
-#' Retrieve indeterminate specimens from REFLORA collections
+#' Retrieve indeterminate specimens from Reflora collections
 #'
 #' @author
 #' Domingos Cardoso
@@ -6,7 +6,7 @@
 #' @description
 #' Retrieves occurrence records for indeterminate specimens (e.g., identified
 #' only to family or genus level) from the
-#' \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
+#' \href{https://ipt.jbrj.gov.br/reflora/}{Reflora Virtual Herbarium}
 #' hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 #' The function automatically downloads and parses Darwin Core Archive (DwC-A)
 #' files, applies optional filters by taxon, herbarium, state, and year, and
@@ -16,7 +16,7 @@
 #'
 #' @details
 #' This function supports downloading and processing Darwin Core Archive (DwC-A)
-#' files directly from the REFLORA repository. It allows for flexible filtering
+#' files directly from the Reflora repository. It allows for flexible filtering
 #' by taxon, herbarium, locality (Brazilian states), and collection year(s). The
 #' \code{level} parameter enables filtering for indeterminate records such as those
 #' identified only to \code{'FAMILY'} or \code{'GENUS'} rank. The function uses
@@ -37,11 +37,11 @@
 #' (5) Some herbarium codes may not have updated records. Use \code{verbose = TRUE}
 #'   to monitor messages during execution.
 #' (6) Filtering by \code{level} does not guarantee full coverage of indeterminate
-#'   records due to possible inconsistencies in \code{taxonRank} values in REFLORA
+#'   records due to possible inconsistencies in \code{taxonRank} values in Reflora
 #'   source data.
 #' (7) For reproducibility, consider recording your input parameters and saving all
 #'   outputs.
-#' (8) \code{'bibliographicCitation'}: a clickable URL to the REFLORA specimen page
+#' (8) \code{'bibliographicCitation'}: a clickable URL to the Reflora specimen page
 #'   where the image is displayed.
 #' (9) \code{'associatedMedia'}: one or more direct URLs to the original specimen
 #'   image(s) (typically high resolution). Multiple URLs may be separated by vertical bar.
@@ -70,8 +70,8 @@
 #' uppercase. Use `NULL` to include all herbaria.
 #'
 #' @param repatriated Logical. If `FALSE`, skips downloading records from
-#' REFLORA-associated herbaria that have been repatriated. Default is `TRUE`.
-#' Use `reflora_summary()` to check which collections are repatriated. REFLORA
+#' Reflora-associated herbaria that have been repatriated. Default is `TRUE`.
+#' Use `reflora_summary()` to check which collections are repatriated. Reflora
 #' aggregates collections from both Brazilian and international herbaria
 #' that hold Brazilian specimens. In this context, “digital repatriation” refers
 #' to making high-resolution images and associated specimen metadata openly
@@ -90,11 +90,11 @@
 #' @param reorder Character vector. Reorder output by columns. Defaults to:
 #' `c("herbarium", "taxa", "collector", "area", "year")`.
 #'
-#' @param path Character. Path to existing REFLORA dwca files. If `NULL`,
+#' @param path Character. Path to existing Reflora dwca files. If `NULL`,
 #' downloads fresh data.
 #'
 #' @param updates Logical. If `TRUE` (default), checks for updated DwC-A files
-#' from REFLORA.
+#' from Reflora.
 #'
 #' @param verbose Logical. If `TRUE` (default), prints progress messages to the
 #' console.
@@ -108,7 +108,7 @@
 #' Default: `"reflora_indets_search"`.
 #'
 #' @return A \code{data.frame} containing occurrence records for indeterminate
-#' specimens retrieved from the selected REFLORA herbaria. Records are filtered
+#' specimens retrieved from the selected Reflora herbaria. Records are filtered
 #' according to the user-specified arguments (e.g., \code{level}, \code{taxon},
 #' \code{state}, \code{recordYear}, \code{herbarium}, and \code{repatriated}).
 #' By default, higher-rank indeterminate taxa (e.g., \code{"FAMILY"},
@@ -185,7 +185,7 @@ reflora_indets <- function(level = NULL,
   # state check
   if (!is.null(state)) {
     if (verbose) {
-      message("Checking whether the input state list exists in the REFLORA...")
+      message("Checking whether the input state list exists in the Reflora...")
     }
     state <- .arg_check_state(state)
   }
@@ -193,7 +193,7 @@ reflora_indets <- function(level = NULL,
   # recordYear check
   if (!is.null(recordYear)) {
     if (verbose) {
-      message("Checking whether the input recordYear range exists in the REFLORA...")
+      message("Checking whether the input recordYear range exists in the Reflora...")
     }
     .arg_check_recordYear(recordYear)
   }
@@ -218,14 +218,14 @@ reflora_indets <- function(level = NULL,
       }
 
       # The reflora_download will get updated dwca files only if any of the current
-      # versions differ from the REFLORA IPT
+      # versions differ from the Reflora IPT
       reflora_download(herbarium = herbarium,
                        repatriated = repatriated,
                        verbose = verbose,
                        dir = path)
     }
 
-    # Parse REFLORA dwca files
+    # Parse Reflora dwca files
     dwca_files <- reflora_parse(path = path,
                                 herbarium = herbarium,
                                 repatriated = repatriated,
@@ -233,13 +233,13 @@ reflora_indets <- function(level = NULL,
   } else {
 
     # The reflora_download will get updated dwca files only if any of the current
-    # versions differ from the REFLORA IPT
+    # versions differ from the Reflora IPT
     reflora_download(herbarium = herbarium,
                      repatriated = repatriated,
                      verbose = verbose,
                      dir = "reflora_download")
 
-    # Parse REFLORA dwca files
+    # Parse Reflora dwca files
     dwca_files <- reflora_parse(path = "reflora_download",
                                 herbarium = herbarium,
                                 repatriated = repatriated,

@@ -3,7 +3,7 @@
 #' @author Domingos Cardoso
 #'
 #' @description Read Darwin Core Archive (DwC-A) files from any downloaded dwca
-#' folder at \href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
+#' folder at \href{https://ipt.jbrj.gov.br/reflora/}{Reflora Virtual Herbarium}
 #' hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 #'
 #' @usage
@@ -12,7 +12,7 @@
 #'               repatriated = TRUE,
 #'               verbose = TRUE)
 #'
-#' @param path Pathway to the computer's directory, where the REFLORA-downloaded
+#' @param path Pathway to the computer's directory, where the Reflora-downloaded
 #' dwca folders are.
 #'
 #' @param herbarium A vector of specific herbarium acronyms (collection code) in
@@ -20,9 +20,9 @@
 #' herbarim dcwa folders in the defined path directory.
 #'
 #' @param repatriated Logical. If \code{FALSE}, skips downloading records from
-#' REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
+#' Reflora-associated herbaria that have been repatriated. Default is \code{TRUE}.
 #' Use \code{reflora_summary()} to check which collections are repatriated.
-#' REFLORA aggregates collections from both Brazilian and international herbaria
+#' Reflora aggregates collections from both Brazilian and international herbaria
 #' that hold Brazilian specimens. In this context, “digital repatriation” refers
 #' to making high-resolution images and associated specimen metadata openly
 #' accessible through a Brazilian public infrastructure (HVR/IPT).
@@ -198,7 +198,7 @@ reflora_parse <- function(path = NULL,
                     .after = division) %>%
       dplyr::mutate(order = if (!"order" %in% names(.)) NA else order,
                     .after = class) %>%
-      dplyr::mutate(bibliographicCitation = paste0("REFLORA Virtual Herbarium, available at: https://reflora.jbrj.gov.br/reflora/herbarioVirtual/ConsultaPublicoHVUC/BemVindoConsultaPublicaHVConsultar.do?modoConsulta=LISTAGEM&quantidadeResultado=20&codigoBarra=",
+      dplyr::mutate(bibliographicCitation = paste0("Reflora Virtual Herbarium, available at: https://reflora.jbrj.gov.br/reflora/herbarioVirtual/ConsultaPublicoHVUC/BemVindoConsultaPublicaHVConsultar.do?modoConsulta=LISTAGEM&quantidadeResultado=20&codigoBarra=",
                                                    temp$catalogNumber),
                     .after = basisOfRecord)
 

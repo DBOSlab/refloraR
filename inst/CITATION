@@ -4,7 +4,7 @@ citHeader("To cite the refloraR package in publications, use:")
 
 bibentry(
   bibtype = "Manual",
-  title = "refloraR: An R Package for Exploring Plant Specimen Collections from REFLORA Virtual Herbarium",
+  title = "refloraR: An R package for efficiently retrieving and analyzing plant specimen data from the Herbário Virtual Reflora",
   author = c(
     person(given = "Carlos", family = "Calderón del Cid",
            role = "aut",

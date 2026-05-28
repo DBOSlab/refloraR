@@ -32,7 +32,7 @@
          call. = FALSE)
   } else {
     if (!any(grepl("^dwca", dwca_folders))) {
-      stop(paste0("There is no REFLORA-downloaded dwca folder within the directory '", path, "'."),
+      stop(paste0("There is no Reflora-downloaded dwca folder within the directory '", path, "'."),
            call. = FALSE)
     } else {
       tf <- 0 == unlist(lapply(dwca_filenames, length))
@@ -133,10 +133,10 @@
   if (is.null(x) || length(x) == 0) return(invisible(TRUE))
 
   if (verbose) {
-    message("Checking whether the input herbarium code exists in the REFLORA...")
+    message("Checking whether the input herbarium code exists in the Reflora...")
   }
 
-  # Get valid herbarium acronyms from REFLORA metadata
+  # Get valid herbarium acronyms from Reflora metadata
   ipt_info <- .get_ipt_info(herbarium = NULL)
   correct_acronyms <- ipt_info[[3]]
 
@@ -146,7 +146,7 @@
   if (length(invalid) > 0) {
     stop(
       sprintf(
-        "The following herbarium acronym(s) are not recognized by REFLORA: %s
+        "The following herbarium acronym(s) are not recognized by Reflora: %s
         \nUse `reflora_summary()` to view available collections.",
         paste0(shQuote(invalid), collapse = ", ")
       ),

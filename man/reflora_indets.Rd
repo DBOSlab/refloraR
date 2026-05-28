@@ -2,7 +2,7 @@
 % Please edit documentation in R/reflora_indets.R
 \name{reflora_indets}
 \alias{reflora_indets}
-\title{Retrieve indeterminate specimens from REFLORA collections}
+\title{Retrieve indeterminate specimens from Reflora collections}
 \usage{
 reflora_indets(level = NULL,
                herbarium = NULL,
@@ -27,8 +27,8 @@ indeterminate ranks.}
 uppercase. Use \code{NULL} to include all herbaria.}
 
 \item{repatriated}{Logical. If \code{FALSE}, skips downloading records from
-REFLORA-associated herbaria that have been repatriated. Default is \code{TRUE}.
-Use \code{reflora_summary()} to check which collections are repatriated. REFLORA
+Reflora-associated herbaria that have been repatriated. Default is \code{TRUE}.
+Use \code{reflora_summary()} to check which collections are repatriated. Reflora
 aggregates collections from both Brazilian and international herbaria
 that hold Brazilian specimens. In this context, “digital repatriation” refers
 to making high-resolution images and associated specimen metadata openly
@@ -47,11 +47,11 @@ or a range (e.g., \code{c("2000", "2022")}).}
 \item{reorder}{Character vector. Reorder output by columns. Defaults to:
 \code{c("herbarium", "taxa", "collector", "area", "year")}.}
 
-\item{path}{Character. Path to existing REFLORA dwca files. If \code{NULL},
+\item{path}{Character. Path to existing Reflora dwca files. If \code{NULL},
 downloads fresh data.}
 
 \item{updates}{Logical. If \code{TRUE} (default), checks for updated DwC-A files
-from REFLORA.}
+from Reflora.}
 
 \item{verbose}{Logical. If \code{TRUE} (default), prints progress messages to the
 console.}
@@ -66,7 +66,7 @@ Default: \code{"reflora_indets_search"}.}
 }
 \value{
 A \code{data.frame} containing occurrence records for indeterminate
-specimens retrieved from the selected REFLORA herbaria. Records are filtered
+specimens retrieved from the selected Reflora herbaria. Records are filtered
 according to the user-specified arguments (e.g., \code{level}, \code{taxon},
 \code{state}, \code{recordYear}, \code{herbarium}, and \code{repatriated}).
 By default, higher-rank indeterminate taxa (e.g., \code{"FAMILY"},
@@ -89,7 +89,7 @@ country, and state.
 \description{
 Retrieves occurrence records for indeterminate specimens (e.g., identified
 only to family or genus level) from the
-\href{https://ipt.jbrj.gov.br/reflora/}{REFLORA Virtual Herbarium}
+\href{https://ipt.jbrj.gov.br/reflora/}{Reflora Virtual Herbarium}
 hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 The function automatically downloads and parses Darwin Core Archive (DwC-A)
 files, applies optional filters by taxon, herbarium, state, and year, and
@@ -99,7 +99,7 @@ download URLs (column \code{'associatedMedia'}).
 }
 \details{
 This function supports downloading and processing Darwin Core Archive (DwC-A)
-files directly from the REFLORA repository. It allows for flexible filtering
+files directly from the Reflora repository. It allows for flexible filtering
 by taxon, herbarium, locality (Brazilian states), and collection year(s). The
 \code{level} parameter enables filtering for indeterminate records such as those
 identified only to \code{'FAMILY'} or \code{'GENUS'} rank. The function uses
@@ -120,11 +120,11 @@ not already exist.
 (5) Some herbarium codes may not have updated records. Use \code{verbose = TRUE}
 to monitor messages during execution.
 (6) Filtering by \code{level} does not guarantee full coverage of indeterminate
-records due to possible inconsistencies in \code{taxonRank} values in REFLORA
+records due to possible inconsistencies in \code{taxonRank} values in Reflora
 source data.
 (7) For reproducibility, consider recording your input parameters and saving all
 outputs.
-(8) \code{'bibliographicCitation'}: a clickable URL to the REFLORA specimen page
+(8) \code{'bibliographicCitation'}: a clickable URL to the Reflora specimen page
 where the image is displayed.
 (9) \code{'associatedMedia'}: one or more direct URLs to the original specimen
 image(s) (typically high resolution). Multiple URLs may be separated by vertical bar.
