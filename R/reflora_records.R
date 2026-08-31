@@ -179,11 +179,13 @@ reflora_records <- function(herbarium = NULL,
 
   # Create a new directory to save the dataframe
   # If it does not exist, create it in the working directory
-  if (!dir.exists(dir)) {
-    if (verbose) {
-      message(paste0("Creating directory '", dir, "' in working directory..."))
+  if (save) {
+    if (!dir.exists(dir)) {
+      if (verbose) {
+        message(paste0("Creating directory '", dir, "' in working directory..."))
+      }
+      dir.create(dir)
     }
-    dir.create(dir)
   }
 
   if (!is.null(path)) {

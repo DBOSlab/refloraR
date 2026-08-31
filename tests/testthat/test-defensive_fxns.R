@@ -17,7 +17,7 @@ test_that(".arg_check_path detects missing or invalid folders", {
   expect_error(.arg_check_path("not_exist", character(), list()), "There is no folder")
 
   # 3. No dwca folders
-  expect_error(.arg_check_path(empty_dir, "folder", list()), "no REFLORA-downloaded dwca")
+  expect_error(.arg_check_path(empty_dir, "folder", list()), "no Reflora-downloaded dwca")
 
   # 4. dwca folder but empty
   fake_dwca <- file.path(temp, "dwca_example")

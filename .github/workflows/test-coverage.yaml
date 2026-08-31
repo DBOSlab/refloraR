@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main, master]
 
-name: Test Coverage
+name: test-coverage
 
 permissions: read-all
 

@@ -1,4 +1,5 @@
 test_that("reflora_records basic usage returns a data.frame", {
+  skip_if_no_reflora()
   result <- reflora_records(
     herbarium = "ALCB",
     taxon = "Fabaceae",
@@ -11,6 +12,7 @@ test_that("reflora_records basic usage returns a data.frame", {
 
 
 test_that("reflora_records handles empty taxon search", {
+  skip_if_no_reflora()
   expect_error(
     reflora_records(
       herbarium = "ALCB",
@@ -22,6 +24,7 @@ test_that("reflora_records handles empty taxon search", {
 
 
 test_that("reflora_records applies state and year filters", {
+  skip_if_no_reflora()
   result <- reflora_records(
     herbarium = "ALCB",
     taxon = "Fabaceae",
@@ -36,6 +39,7 @@ test_that("reflora_records applies state and year filters", {
 
 
 test_that("reflora_records reorders columns properly", {
+  skip_if_no_reflora()
   result <- reflora_records(
     herbarium = "ALCB",
     taxon = "Fabaceae",
@@ -49,6 +53,7 @@ test_that("reflora_records reorders columns properly", {
 
 
 test_that("reflora_records saves file when save = TRUE", {
+  skip_if_no_reflora()
   test_file <- "test_output"
   result <- reflora_records(
     herbarium = "ALCB",
@@ -67,6 +72,7 @@ test_that("reflora_records saves file when save = TRUE", {
 
 
 test_that("reflora_records removes indeterminate specimens with indets = FALSE", {
+  skip_if_no_reflora()
   result <- reflora_records(
     herbarium = "ALCB",
     taxon = "Fabaceae",
@@ -81,6 +87,7 @@ test_that("reflora_records removes indeterminate specimens with indets = FALSE",
 
 
 test_that("reflora_records triggers auto download when path is NULL", {
+  skip_if_no_reflora()
   result <- reflora_records(
     herbarium = "ALCB",
     taxon = "Fabaceae",
@@ -93,6 +100,7 @@ test_that("reflora_records triggers auto download when path is NULL", {
 
 
 test_that("reflora_records creates new dir if not present", {
+  skip_if_no_reflora()
   tmp_dir <- file.path(tempdir(), "new_reflora_records_dir")
   if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
   expect_silent(
@@ -110,6 +118,7 @@ test_that("reflora_records creates new dir if not present", {
 
 
 test_that("reflora_records returns empty data.frame if no match after filters", {
+  skip_if_no_reflora()
   expect_error(
     reflora_records(
       herbarium = "ALCB",
@@ -122,6 +131,7 @@ test_that("reflora_records returns empty data.frame if no match after filters", 
 
 
 test_that("reflora_records uses updates = FALSE with preexisting path", {
+  skip_if_no_reflora()
   test_path <- tempdir()
   reflora_download(herbarium = "ALCB",
                    dir = test_path,
@@ -140,6 +150,7 @@ test_that("reflora_records uses updates = FALSE with preexisting path", {
 
 
 test_that("reflora_records handles partial reorder vector", {
+  skip_if_no_reflora()
   result <- reflora_records(
     herbarium = "ALCB",
     taxon = "Fabaceae",
@@ -150,14 +161,14 @@ test_that("reflora_records handles partial reorder vector", {
   expect_true(all(c("family", "year") %in% colnames(result)))
 })
 
-
 test_that("reflora_records with default values still returns results", {
+  skip_if_no_reflora()
   result <- reflora_records()
   expect_s3_class(result, "data.frame")
 })
 
-
 test_that("reflora_records stops on invalid year", {
+  skip_if_no_reflora()
   expect_error(
     reflora_records(
       taxon = "Fabaceae",
@@ -171,6 +182,7 @@ test_that("reflora_records stops on invalid year", {
 
 
 test_that("reflora_records updates data when path is given and updates = TRUE", {
+  skip_if_no_reflora()
   tmp_path <- tempdir()
   reflora_download(herbarium = "ALCB", dir = tmp_path, verbose = FALSE)
   result <- reflora_records(
@@ -186,6 +198,7 @@ test_that("reflora_records updates data when path is given and updates = TRUE", 
 
 
 test_that("reflora_records saves CSV and log.txt with save = TRUE", {
+  skip_if_no_reflora()
   tmp_dir <- tempdir()
   test_file <- "log_test"
 
@@ -207,6 +220,7 @@ test_that("reflora_records saves CSV and log.txt with save = TRUE", {
 
 
 test_that("reflora_records prints message when verbose = TRUE", {
+  skip_if_no_reflora()
   expect_message(
     reflora_records(
       herbarium = "ALCB",
@@ -220,6 +234,7 @@ test_that("reflora_records prints message when verbose = TRUE", {
 
 
 test_that("reflora_records handles NULL filename (if supported)", {
+  skip_if_no_reflora()
   result <- reflora_records(
     herbarium = "ALCB",
     taxon = "Fabaceae",
@@ -232,6 +247,7 @@ test_that("reflora_records handles NULL filename (if supported)", {
 
 
 test_that("reflora_records handles invalid reorder column gracefully", {
+  skip_if_no_reflora()
   expect_error(
     reflora_records(
       herbarium = "ALCB",
@@ -245,6 +261,7 @@ test_that("reflora_records handles invalid reorder column gracefully", {
 
 
 test_that("reflora_records works with genus-level taxon only", {
+  skip_if_no_reflora()
   result <- reflora_records(
     herbarium = "ALCB",
     taxon = "Inga",
@@ -256,6 +273,7 @@ test_that("reflora_records works with genus-level taxon only", {
 
 
 test_that("reflora_records defaults to repatriated = TRUE", {
+  skip_if_no_reflora()
   result <- reflora_records(
     herbarium = "ALCB",
     taxon = "Fabaceae",
@@ -268,6 +286,7 @@ test_that("reflora_records defaults to repatriated = TRUE", {
 
 
 test_that("reflora_records prints messages with verbose = TRUE", {
+  skip_if_no_reflora()
   expect_message(reflora_records(herbarium = "ALCB",
                                  verbose = TRUE,
                                  save = FALSE))
@@ -275,7 +294,8 @@ test_that("reflora_records prints messages with verbose = TRUE", {
 
 
 test_that("reflora_records creates directory when not found", {
-    reflora_records(herbarium = "ALCB",
+  skip_if_no_reflora()
+  reflora_records(herbarium = "ALCB",
                     state = "Bahia",
                     recordYear = "2000",
                     updates = FALSE,
@@ -287,7 +307,7 @@ test_that("reflora_records creates directory when not found", {
 
 
 test_that("reflora_records triggers dwca update message with path and updates = TRUE", {
-
+  skip_if_no_reflora()
   tmp_dir <- file.path(tempdir(), "reflora_dwca_test")
   if (!dir.exists(tmp_dir)) dir.create(tmp_dir)
 

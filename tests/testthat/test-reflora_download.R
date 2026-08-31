@@ -1,4 +1,5 @@
 test_that("reflora_download downloads multiple herbaria correctly", {
+  skip_if_no_reflora()
   temp_dir <- file.path(tempdir(), "reflora_download_test")
   if (dir.exists(temp_dir)) unlink(temp_dir, recursive = TRUE)
 
@@ -19,6 +20,7 @@ test_that("reflora_download downloads multiple herbaria correctly", {
 
 
 test_that("reflora_download creates _Reflora.csv per herbarium", {
+  skip_if_no_reflora()
   temp_dir <- file.path(tempdir(), "reflora_csv_test")
   if (dir.exists(temp_dir)) unlink(temp_dir, recursive = TRUE)
 
@@ -37,6 +39,7 @@ test_that("reflora_download creates _Reflora.csv per herbarium", {
 
 
 test_that("reflora_download returns silently with existing dwca folder", {
+  skip_if_no_reflora()
   temp_dir <- file.path(tempdir(), "reflora_download_cached")
   if (dir.exists(temp_dir)) unlink(temp_dir, recursive = TRUE)
   dir.create(temp_dir)
@@ -54,6 +57,7 @@ test_that("reflora_download returns silently with existing dwca folder", {
 
 
 test_that("reflora_download throws error for invalid herbarium code", {
+  skip_if_no_reflora()
   expect_error(
     reflora_summary(herbarium = "INVALIDCODE",
                     verbose = FALSE,
@@ -63,6 +67,7 @@ test_that("reflora_download throws error for invalid herbarium code", {
 
 
 test_that("reflora_download creates directory if it doesn't exist", {
+  skip_if_no_reflora()
   tmp_dir <- file.path(tempdir(), "reflora_auto_dir")
   if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
 
@@ -75,6 +80,7 @@ test_that("reflora_download creates directory if it doesn't exist", {
 
 
 test_that("reflora_download prints messages when verbose = TRUE", {
+  skip_if_no_reflora()
   tmp_dir <- file.path(tempdir(), "reflora_verbose_test")
   if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
 
@@ -88,6 +94,7 @@ test_that("reflora_download prints messages when verbose = TRUE", {
 
 
 test_that("reflora_download defaults to repatriated = TRUE", {
+  skip_if_no_reflora()
   tmp_dir <- file.path(tempdir(), "reflora_repatriated_test")
   if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
 
@@ -103,6 +110,7 @@ test_that("reflora_download defaults to repatriated = TRUE", {
 
 
 test_that("reflora_download with repatriated = FALSE excludes repatriated herbaria", {
+  skip_if_no_reflora()
   tmp_dir <- file.path(tempdir(), "reflora_repatriated_test")
   if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
 
@@ -118,22 +126,10 @@ test_that("reflora_download with repatriated = FALSE excludes repatriated herbar
 
 
 test_that("reflora_download prints messages with verbose = TRUE", {
+  skip_if_no_reflora()
   tmp_dir <- file.path(tempdir(), "reflora_verbose_test")
   if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
   expect_message(reflora_download(herbarium = "ALCB",
                                   verbose = TRUE))
   unlink(tmp_dir, recursive = TRUE)
 })
-
-
-# test_that("reflora_download works with default arguments (download all)", {
-#   tmp_dir <- file.path(tempdir(), "reflora_all_test")
-#   if (dir.exists(tmp_dir)) unlink(tmp_dir, recursive = TRUE)
-#
-#   expect_silent(reflora_download(verbose = FALSE, dir = tmp_dir))
-#
-#   expect_true(dir.exists(tmp_dir))
-#   expect_true(length(list.files(tmp_dir)) > 0)
-#
-#   unlink(tmp_dir, recursive = TRUE)
-# })

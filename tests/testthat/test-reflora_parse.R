@@ -1,4 +1,5 @@
 test_that("reflora_parse excludes repatriated herbaria when repatriated = FALSE", {
+  skip_if_no_reflora()
   test_path <- file.path(tempdir(), "reflora_repatriated_test")
   if (dir.exists(test_path)) unlink(test_path, recursive = TRUE)
 
@@ -24,6 +25,7 @@ test_that("reflora_parse excludes repatriated herbaria when repatriated = FALSE"
 
 
 test_that("reflora_parse includes repatriated herbaria when repatriated = TRUE", {
+  skip_if_no_reflora()
   test_path <- file.path(tempdir(), "reflora_repatriated_test")
   if (dir.exists(test_path)) unlink(test_path, recursive = TRUE)
 
@@ -46,6 +48,7 @@ test_that("reflora_parse includes repatriated herbaria when repatriated = TRUE",
 
 
 test_that("reflora_parse emits message when skipping repatriated collections", {
+  skip_if_no_reflora()
   test_path <- file.path(tempdir(), "reflora_repatriated_test")
   if (dir.exists(test_path)) unlink(test_path, recursive = TRUE)
 

@@ -1,4 +1,5 @@
 test_that("reflora_summary works for full search (herbarium = NULL) or with a vector of herbarium acronyms", {
+  skip_if_no_reflora()
   res_ex <- reflora_summary(verbose = FALSE,
                             save = FALSE,
                             dir = "reflora_summary")
@@ -27,6 +28,7 @@ test_that("reflora_summary works for full search (herbarium = NULL) or with a ve
 
 
 test_that("reflora_summary saves file when save = TRUE", {
+  skip_if_no_reflora()
   temp_dir <- tempdir()
   res <- reflora_summary(herbarium = c("RB"),
                          verbose = FALSE,
@@ -40,6 +42,7 @@ test_that("reflora_summary saves file when save = TRUE", {
 
 
 test_that("reflora_summary fails with invalid herbarium code", {
+  skip_if_no_reflora()
   expect_error(
     reflora_summary(herbarium = "FAKE",
                     verbose = FALSE,
@@ -48,6 +51,7 @@ test_that("reflora_summary fails with invalid herbarium code", {
 })
 
 test_that("reflora_summary works with trailing slash in dir", {
+  skip_if_no_reflora()
   temp_dir <- file.path(tempdir(), "reflora_summary_dir/")
   res <- reflora_summary(herbarium = "RB",
                          verbose = FALSE,
@@ -62,6 +66,7 @@ test_that("reflora_summary works with trailing slash in dir", {
 
 
 test_that("reflora_summary prints expected verbose messages", {
+  skip_if_no_reflora()
   local_edition(3)  # Required for proper testthat behavior under covr
   expect_message(
     reflora_summary(herbarium = "RB",
@@ -73,6 +78,7 @@ test_that("reflora_summary prints expected verbose messages", {
 
 
 test_that("reflora_summary returns NA if contact email is missing", {
+  skip_if_no_reflora()
   df <- reflora_summary(herbarium = "RB",
                         verbose = FALSE,
                         save = FALSE)
@@ -81,6 +87,7 @@ test_that("reflora_summary returns NA if contact email is missing", {
 
 
 test_that("reflora_summary returns Records column as numeric", {
+  skip_if_no_reflora()
   df <- reflora_summary(herbarium = "RB",
                         verbose = FALSE,
                         save = FALSE)

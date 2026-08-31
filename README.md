@@ -9,8 +9,6 @@
 coverage](https://codecov.io/gh/DBOSlab/refloraR/graph/badge.svg)](https://app.codecov.io/gh/DBOSlab/refloraR)
 [![Test
 Coverage](https://github.com/DBOSlab/refloraR/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/DBOSlab/refloraR/actions/workflows/test-coverage.yaml)
-[![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/refloraR)](https://cran.r-project.org/package=refloraR)
 [![R-CMD-check](https://github.com/DBOSlab/refloraR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DBOSlab/refloraR/actions/workflows/R-CMD-check.yaml)
 [![License:
 MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)

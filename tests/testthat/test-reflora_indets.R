@@ -1,4 +1,5 @@
 test_that("reflora_indets returns a data.frame and filters by level 'FAMILY'", {
+  skip_if_no_reflora()
   df <- reflora_indets(
     level = "FAMILY",
     herbarium = "ALCB",
@@ -12,6 +13,7 @@ test_that("reflora_indets returns a data.frame and filters by level 'FAMILY'", {
 
 
 test_that("reflora_indets filters by level 'GENUS'", {
+  skip_if_no_reflora()
   df <- reflora_indets(
     level = "GENUS",
     herbarium = "ALCB",
@@ -25,6 +27,7 @@ test_that("reflora_indets filters by level 'GENUS'", {
 
 
 test_that("reflora_indets filters by year range and state", {
+  skip_if_no_reflora()
   df <- reflora_indets(
     level = "FAMILY",
     herbarium = "ALCB",
@@ -41,6 +44,7 @@ test_that("reflora_indets filters by year range and state", {
 
 
 test_that("reflora_indets saves output when save = TRUE", {
+  skip_if_no_reflora()
   tmpdir <- tempdir()
   outfile <- "test_indets"
   df <- reflora_indets(
@@ -59,6 +63,7 @@ test_that("reflora_indets saves output when save = TRUE", {
 
 
 test_that("reflora_indets returns more rows when level is NULL (all indets)", {
+  skip_if_no_reflora()
   all_levels <- reflora_indets(
     level = NULL,
     herbarium = "ALCB",
@@ -78,6 +83,7 @@ test_that("reflora_indets returns more rows when level is NULL (all indets)", {
 
 
 test_that("reflora_indets uses updates = FALSE with provided path", {
+  skip_if_no_reflora()
   temp_path <- tempdir()
   reflora_download(herbarium = "ALCB", dir = temp_path, verbose = FALSE)
 
@@ -96,6 +102,7 @@ test_that("reflora_indets uses updates = FALSE with provided path", {
 
 
 test_that("reflora_indets updates = TRUE and path is given", {
+  skip_if_no_reflora()
   temp_path <- tempdir()
   reflora_download(herbarium = "ALCB",
                    dir = temp_path,
@@ -116,6 +123,7 @@ test_that("reflora_indets updates = TRUE and path is given", {
 
 
 test_that("reflora_indets applies custom reorder", {
+  skip_if_no_reflora()
   df <- reflora_indets(
     level = "FAMILY",
     herbarium = "ALCB",
@@ -129,6 +137,7 @@ test_that("reflora_indets applies custom reorder", {
 
 
 test_that("reflora_indets creates directory if missing", {
+  skip_if_no_reflora()
   tmpdir <- file.path(tempdir(), "new_test_indets_dir")
   if (dir.exists(tmpdir)) unlink(tmpdir, recursive = TRUE)
 
@@ -147,6 +156,7 @@ test_that("reflora_indets creates directory if missing", {
 
 
 test_that("reflora_indets handles non-matching level filter", {
+  skip_if_no_reflora()
   expect_error(
     reflora_indets(
       level = "species", # invalid for this function
@@ -160,6 +170,7 @@ test_that("reflora_indets handles non-matching level filter", {
 
 
 test_that("reflora_indets returns empty for unknown taxon", {
+  skip_if_no_reflora()
   expect_error(
     reflora_indets(
       level = "FAMILY",
@@ -173,6 +184,7 @@ test_that("reflora_indets returns empty for unknown taxon", {
 
 
 test_that("reflora_indets defaults to repatriated = TRUE", {
+  skip_if_no_reflora()
   result <- reflora_indets(
     herbarium = "ALCB",
     repatriated = TRUE,
@@ -185,6 +197,7 @@ test_that("reflora_indets defaults to repatriated = TRUE", {
 
 
 test_that("reflora_indets prints messages with verbose = TRUE", {
+  skip_if_no_reflora()
   expect_message(reflora_indets(herbarium = "ALCB",
                                 level = "FAMILY",
                                 verbose = TRUE,
@@ -193,6 +206,7 @@ test_that("reflora_indets prints messages with verbose = TRUE", {
 
 
 test_that("reflora_indets saves CSV and log", {
+  skip_if_no_reflora()
   tmp <- tempfile()
   dir.create(tmp)
   result <- reflora_indets(herbarium = "ALCB",
