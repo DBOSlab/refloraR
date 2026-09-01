@@ -23,7 +23,7 @@ Description: Provides tools to access and analyze plant specimen records from
     package supports downloading structured Darwin Core (DwC-A) archives and
     integrates with tidyverse workflows for downstream analysis and visualization.
 License: MIT + file LICENSE
-URL: https://dboslab.github.io/refloraR-website/, https://github.com/dboslab/refloraR
+URL: https://dboslab.github.io/refloraR-website/, https://github.com/DBOSlab/refloraR
 BugReports: https://github.com/DBOSlab/refloraR/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
