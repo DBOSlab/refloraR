@@ -5,26 +5,43 @@ export(reflora_indets)
 export(reflora_parse)
 export(reflora_records)
 export(reflora_summary)
-importFrom(dplyr,across)
-importFrom(dplyr,arrange)
-importFrom(dplyr,bind_rows)
-importFrom(dplyr,filter)
-importFrom(dplyr,mutate)
-importFrom(dplyr,recode)
-importFrom(dplyr,select)
+importFrom(dplyr,
+  across,
+  arrange,
+  bind_rows,
+  filter,
+  mutate,
+  recode,
+  select
+)
 importFrom(finch,dwca_read)
+importFrom(httr2,
+  req_perform,
+  req_timeout,
+  req_url_query,
+  req_user_agent,
+  request,
+  resp_body_json
+)
 importFrom(magrittr,"%>%")
 importFrom(stats,setNames)
-importFrom(stringi,stri_detect_regex)
-importFrom(stringi,stri_trans_general)
-importFrom(stringi,stri_trim_both)
-importFrom(stringr,str_extract)
-importFrom(stringr,str_split)
-importFrom(stringr,str_to_title)
+importFrom(stringi,
+  stri_detect_regex,
+  stri_trans_general,
+  stri_trim_both
+)
+importFrom(stringr,
+  str_extract,
+  str_split,
+  str_to_title
+)
 importFrom(tidyr,replace_na)
 importFrom(tidyselect,all_of)
-importFrom(utils,capture.output)
-importFrom(utils,download.file)
-importFrom(utils,read.csv)
-importFrom(utils,unzip)
-importFrom(utils,write.csv)
+importFrom(utils,
+  URLdecode,
+  capture.output,
+  download.file,
+  read.csv,
+  unzip,
+  write.csv
+)

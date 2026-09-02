@@ -12,7 +12,7 @@ Provides tools to access and analyze plant specimen records from Reflora Virtual
 Useful links:
 \itemize{
   \item \url{https://dboslab.github.io/refloraR-website/}
-  \item \url{https://github.com/dboslab/refloraR}
+  \item \url{https://github.com/DBOSlab/refloraR}
   \item Report bugs at \url{https://github.com/DBOSlab/refloraR/issues}
 }
 
@@ -22,6 +22,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Domingos Cardoso \email{domingoscardoso@jbrj.gov.br} (\href{https://orcid.org/0000-0001-7072-2656}{ORCID}) [copyright holder]
   \item Carlos Calderón del Cid \email{caldecid@gmail.com} (\href{https://orcid.org/0000-0002-3897-4615}{ORCID}) [copyright holder]
 }
 

@@ -137,11 +137,13 @@
   }
 
   # Get valid herbarium acronyms from Reflora metadata
-  ipt_info <- .get_ipt_info(herbarium = NULL)
-  correct_acronyms <- ipt_info[[3]]
+  reflora_summary_ipt <- reflora_summary(herbarium = NULL,
+                                         records = "none",
+                                         verbose = FALSE,
+                                         save = FALSE)
 
   # Check if input acronyms are valid
-  invalid <- x[!x %in% correct_acronyms]
+  invalid <- x[!x %in% reflora_summary_ipt$collectionCode]
 
   if (length(invalid) > 0) {
     stop(

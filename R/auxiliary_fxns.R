@@ -1,83 +1,6 @@
 # Auxiliary functions to support main functions
 # Author: Domingos Cardoso
 
-
-#_______________________________________________________________________________
-# Function to get raw metadata from Reflora repository ####
-
-.get_ipt_info <- function(herbarium) {
-
-  ipt_metadata <- readLines("https://ipt.jbrj.gov.br/reflora/dcat",
-                            encoding = "UTF-8",
-                            warn = F)
-
-  pos = which(grepl("dcat[:]downloadURL\\s", ipt_metadata))
-  URLs <- gsub(".*\\s[<]|[>]\\s;$", "", ipt_metadata[pos])
-  herb_URLs <- gsub(".*r[=]|[>]\\s;$", "", URLs)
-  herb_code <- toupper(gsub("_.*", "", herb_URLs))
-
-  ini = which(grepl("a dcat:Dataset ;", ipt_metadata))
-  end = which(grepl("dcat:mediaType \"application/zip\" ;", ipt_metadata))
-  temp <- list()
-  for (i in seq_along(ini)) {
-    temp[[i]] = paste0(ipt_metadata[ini[i]:end[i]], collapse = " | ")
-  }
-  ipt_metadata = temp
-
-  ipt_metadata <- lapply(ipt_metadata, function(x) strsplit(x, "\\s[|]\\s")[[1]])
-
-  herb_code <- gsub("NYH", "NY", herb_code)
-
-  if (!is.null(herbarium)) {
-    ipt_metadata <- ipt_metadata[herb_code %in% herbarium]
-    herb_URLs <- herb_URLs[herb_code %in% herbarium]
-    herb_code <- herb_code[herb_code %in% herbarium]
-  }
-  return(list(ipt_metadata, herb_URLs, herb_code))
-}
-
-
-#_______________________________________________________________________________
-# Function to get summary information of each Reflora-associated collection ####
-
-.get_herb_info <- function(herb_URLs, ipt_metadata, i) {
-
-  herb_url <- paste0("https://ipt.jbrj.gov.br/reflora/resource?r=", herb_URLs[i])
-  version <- readLines(herb_url,
-                       encoding = "UTF-8",
-                       warn = F)
-
-  ini = which(grepl("latestVersion", version))[1]
-  end = which(grepl("\\d{4}-\\d{2}-\\d{2}", version))[1]+1
-
-  version = version[ini:end]
-
-  version <- gsub("(\\s){2,}|\\'|,$", "", version)
-  version <- gsub(".*[>]", "", version)
-
-  contact <- ipt_metadata[[i]][which(grepl("dcat:contactPoint", ipt_metadata[[i]]))[1]]
-  # Regular expression for extracting the name
-  name_pattern <- 'vcard:fn "([^"]+)"'
-  name <- regmatches(contact, gregexpr(name_pattern, contact, perl = TRUE))[[1]]
-  name <- gsub('vcard:fn "|\"', "", name)  # Remove the 'vcard:fn "' part
-
-  # Regular expression for extracting the email
-  email_pattern <- '<mailto:([^>]+)>'
-  email <- regmatches(contact, gregexpr(email_pattern, contact, perl = TRUE))[[1]]
-  email <- gsub('<mailto:|>', "", email)  # Remove the '<mailto:' part
-
-  repatriated <- grepl("-\\sAmostras\\sBrasileiras", ipt_metadata[[i]][2])
-  rights_holder <- gsub("^dct:title\\s\"|\\s-\\sHerb\u00E1rio Virtual.*",
-                        "", ipt_metadata[[i]][2])
-  rights_holder <- gsub("-\\sAmostras\\sBrasileiras.*",
-                        "", rights_holder)
-  rights_holder <- gsub(".*\\s-\\s|^\\s|\\s$|.*(H|h)erbarium-\\s|.*Herb\u00E1rio\\s(da|do)\\s|[.]\\sHerb\u00E1rio\\sVirtual\\s.*",
-                        "", rights_holder)
-
-  return(list(version, name, email, rights_holder, herb_url, repatriated))
-}
-
-
 #_______________________________________________________________________________
 # Function to reorder retrieved data based on specific columns ####
 
@@ -138,108 +61,6 @@
 
   return(columns_to_order)
 }
-
-
-#_______________________________________________________________________________
-# Auxiliary function to fix URL for downloading images ####
-.clean_media_urls_vectorized <- function(media_column) {
-  # Step 1: Split strings by "|" or " | "
-  split_urls <- strsplit(media_column, "\\s*\\|\\s*")
-  all_urls <- trimws(unlist(split_urls))
-
-  # Step 2: Fix AWS-hosted .dzi URLs
-  all_urls <- gsub(
-    "jbrj-public\\.s3(?:-sa-east-1)?\\.amazonaws\\.com/fsi/server\\?type=image&source=DZI/([^/]+)/(.+)\\.dzi",
-    "https://jbrj-public-img.s3.amazonaws.com/JPG/\\1/\\1/\\2.jpg",
-    all_urls,
-    ignore.case = TRUE
-  )
-
-  # Step 3: Handle imagens3/imagens4.jbrj.gov.br
-  img_pattern <- "imagens[34]\\.jbrj\\.gov\\.br/fsi/server\\?type=image&source=([^/]+)/.*?/?(.*?)/([A-Z0-9_\\-]+\\.(?:jpg|JPG))"
-
-  is_match <- grepl(img_pattern, all_urls, perl = TRUE)
-
-  if (any(is_match)) {
-    matched <- all_urls[is_match]
-    cleaned <- vapply(matched, function(m) {
-      parts <- regmatches(m, regexec(img_pattern, m, perl = TRUE))[[1]]
-      if (length(parts) == 4) {
-        herb <- tolower(parts[2])
-        path <- gsub("(^|/)(output[_ ]?\\d{0,8}/?)", "", parts[3], perl = TRUE, ignore.case = TRUE)
-        path <- gsub("^0/", "", path)  # remove any starting "0/" segment
-        file <- tolower(parts[4])
-        paste0("https://jbrj-public-img.s3.amazonaws.com/JPG/", herb, "/", herb, "/", path, "/", file)
-      } else {
-        m
-      }
-    }, character(1))
-    all_urls[is_match] <- cleaned
-  }
-
-  # Step 4: Remove triple herbarium (e.g., /alcb/alcb/alcb → /alcb/alcb)
-  all_urls <- gsub(
-    "(?<=/)([a-z]{2,})/\\1/\\1(?=/)",
-    "\\1/\\1",
-    all_urls,
-    perl = TRUE
-  )
-
-  # Step 5: Fix accidental multiple slashes
-  all_urls <- gsub("(?<!:)//+", "/", all_urls, perl = TRUE)
-
-  # Step 6: Recombine using " | "
-  lengths_vec <- lengths(split_urls)
-  split_back <- split(all_urls, rep(seq_along(lengths_vec), lengths_vec))
-  pasted <- vapply(split_back, function(x) paste(x, collapse = " | "), character(1))
-
-  return(pasted)
-}
-
-
-# .clean_media_urls_vectorized <- function(media_column) {
-#   # Step 1: Split on either "|" or " | " with optional spaces
-#   split_urls <- strsplit(media_column, "\\s*\\|\\s*")
-#
-#   # Step 2: Flatten and trim
-#   all_urls <- trimws(unlist(split_urls))
-#
-#   # Step 3: Replace AWS dzi → JPG
-#   all_urls <- gsub(
-#     "jbrj-public\\.s3(?:[-a-z0-9]*)?\\.amazonaws\\.com/fsi/server\\?type=image&source=DZI/(.*?)(?:\\.dzi)?$",
-#     "https://jbrj-public-img.s3.amazonaws.com/JPG/\\1.jpg",
-#     all_urls,
-#     ignore.case = TRUE
-#   )
-#
-#   # Step 4: Replace imagens4 → JPG
-#   all_urls <- gsub(
-#     "imagens4\\.jbrj\\.gov\\.br/fsi/server\\?type=image&source=([A-Za-z0-9 _/-]+)/([A-Z0-9_]+\\.JPG)",
-#     "https://jbrj-public-img.s3.amazonaws.com/JPG/\\1/\\2",
-#     all_urls,
-#     ignore.case = TRUE
-#   )
-#
-#   # Step 5: Replace imagens3 → JPG
-#   all_urls <- gsub(
-#     "imagens3\\.jbrj\\.gov\\.br/fsi/server\\?type=image&source=([A-Za-z0-9 _/-]+)/([A-Z0-9_]+\\.JPG)",
-#     "https://jbrj-public-img.s3.amazonaws.com/JPG/\\1/\\2",
-#     all_urls,
-#     ignore.case = TRUE
-#   )
-#
-#   # Step 6: Clean slashes and spaces
-#   all_urls <- gsub(" +", " ", all_urls)
-#   all_urls <- gsub("/+", "/", all_urls)
-#   all_urls <- trimws(all_urls)
-#
-#   # Step 7: Recombine with " | "
-#   lengths_vec <- lengths(split_urls)
-#   split_back <- split(all_urls, rep(seq_along(lengths_vec), lengths_vec))
-#   pasted <- vapply(split_back, function(x) paste(x, collapse = " | "), character(1))
-#
-#   return(pasted)
-# }
 
 
 #_______________________________________________________________________________
@@ -312,6 +133,7 @@
     df$taxonRank[df$taxonRank %in% n_diff] <- "GENUS"
   }
 
+
   #_____________________________________________________________________________
   # Cleanup invisible characters  ####
   pattern <- c("^\\p{Z}+|\\p{Z}+$")
@@ -337,6 +159,7 @@
   if (any(tf)) {
     df$infraspecificEpithet[tf] <- stringi::stri_trim_both(df$infraspecificEpithet[tf])
   }
+
 
   #_____________________________________________________________________________
   # $family cleaning ####
@@ -1306,7 +1129,6 @@
 
   # Save the data frame if param save is TRUE
   # Create a new directory to save the results with current date
-  # If there is no directory... make one!
 
   if (!dir.exists(dir)) {
     dir.create(dir)
@@ -1378,3 +1200,59 @@
 
 }
 
+
+#_______________________________________________________________________________
+# Auxiliary function to fix URL for downloading images ####
+.clean_media_urls_vectorized <- function(media_column) {
+  # Step 1: Split strings by "|" or " | "
+  split_urls <- strsplit(media_column, "\\s*\\|\\s*")
+  all_urls <- trimws(unlist(split_urls))
+
+  # Step 2: Fix AWS-hosted .dzi URLs
+  all_urls <- gsub(
+    "jbrj-public\\.s3(?:-sa-east-1)?\\.amazonaws\\.com/fsi/server\\?type=image&source=DZI/([^/]+)/(.+)\\.dzi",
+    "https://jbrj-public-img.s3.amazonaws.com/JPG/\\1/\\1/\\2.jpg",
+    all_urls,
+    ignore.case = TRUE
+  )
+
+  # Step 3: Handle imagens3/imagens4.jbrj.gov.br
+  img_pattern <- "imagens[34]\\.jbrj\\.gov\\.br/fsi/server\\?type=image&source=([^/]+)/.*?/?(.*?)/([A-Z0-9_\\-]+\\.(?:jpg|JPG))"
+
+  is_match <- grepl(img_pattern, all_urls, perl = TRUE)
+
+  if (any(is_match)) {
+    matched <- all_urls[is_match]
+    cleaned <- vapply(matched, function(m) {
+      parts <- regmatches(m, regexec(img_pattern, m, perl = TRUE))[[1]]
+      if (length(parts) == 4) {
+        herb <- tolower(parts[2])
+        path <- gsub("(^|/)(output[_ ]?\\d{0,8}/?)", "", parts[3], perl = TRUE, ignore.case = TRUE)
+        path <- gsub("^0/", "", path)  # remove any starting "0/" segment
+        file <- tolower(parts[4])
+        paste0("https://jbrj-public-img.s3.amazonaws.com/JPG/", herb, "/", herb, "/", path, "/", file)
+      } else {
+        m
+      }
+    }, character(1))
+    all_urls[is_match] <- cleaned
+  }
+
+  # Step 4: Remove triple herbarium (e.g., /alcb/alcb/alcb → /alcb/alcb)
+  all_urls <- gsub(
+    "(?<=/)([a-z]{2,})/\\1/\\1(?=/)",
+    "\\1/\\1",
+    all_urls,
+    perl = TRUE
+  )
+
+  # Step 5: Fix accidental multiple slashes
+  all_urls <- gsub("(?<!:)//+", "/", all_urls, perl = TRUE)
+
+  # Step 6: Recombine using " | "
+  lengths_vec <- lengths(split_urls)
+  split_back <- split(all_urls, rep(seq_along(lengths_vec), lengths_vec))
+  pasted <- vapply(split_back, function(x) paste(x, collapse = " | "), character(1))
+
+  return(pasted)
+}
