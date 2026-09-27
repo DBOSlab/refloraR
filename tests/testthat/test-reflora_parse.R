@@ -103,7 +103,10 @@ test_that("reflora_parse() filters out repatriated collections using mocked IPT 
     error = function(e) conditionMessage(e)
   )
 
-  expect_true(any(grepl("Skipping repatriated collections: 'K'", messages)))
+  # the collection code is wrapped with shQuote(), which is single-quoted on
+  # Unix (type = "sh") but double-quoted on Windows (type = "cmd"), so match
+  # either quote character rather than hardcoding one
+  expect_true(any(grepl("Skipping repatriated collections: [\"']K[\"']", messages)))
   # only the non-repatriated HEPH folder survives filtering, and it then
   # fails path validation because it has no real DwC-A files (expected: we
   # are only exercising the filtering logic here, not a full parse)
