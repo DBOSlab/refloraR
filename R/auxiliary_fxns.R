@@ -1128,6 +1128,35 @@ readLines <- NULL
 
 
 #_______________________________________________________________________________
+# Clean the raw associatedMedia column from DwC-A files ####
+
+# Reflora's raw 'associatedMedia' values are scheme-less references to the
+# JBRJ deep-zoom image (DZI) tile server, e.g.
+# "jbrj-public.s3-sa-east-1.amazonaws.com/fsi/server?type=image&source=DZI/...",
+# optionally with multiple entries separated by "|". This normalizes each
+# entry into a valid, clickable absolute URL (adding "https://" when the
+# scheme is missing) without altering the underlying reference itself.
+.clean_media_urls_vectorized <- function(x) {
+  vapply(x, function(value) {
+    if (is.na(value) || !nzchar(value)) {
+      return(NA_character_)
+    }
+
+    urls <- trimws(strsplit(value, "\\|")[[1]])
+    urls <- urls[nzchar(urls)]
+    if (length(urls) == 0) {
+      return(NA_character_)
+    }
+
+    has_scheme <- grepl("^https?://", urls)
+    urls[!has_scheme] <- paste0("https://", urls[!has_scheme])
+
+    paste(urls, collapse = "|")
+  }, character(1), USE.NAMES = FALSE)
+}
+
+
+#_______________________________________________________________________________
 # Extract each "occurrence.txt" data frame and merge them ####
 
 .merge_occur_txt <- function(dwca_files,

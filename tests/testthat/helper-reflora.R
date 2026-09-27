@@ -162,7 +162,15 @@ skip_if_no_reflora <- function() {
     dateIdentified = c(NA_character_, NA_character_),
     identificationRemarks = c(NA_character_, NA_character_),
     basisOfRecord = c("PreservedSpecimen", "PreservedSpecimen"),
-    associatedMedia = c(NA_character_, NA_character_),
+    # shaped like real Reflora raw values: scheme-less JBRJ deep-zoom (DZI)
+    # tile-server references, sometimes multiple per record separated by "|"
+    associatedMedia = c(
+      "jbrj-public.s3-sa-east-1.amazonaws.com/fsi/server?type=image&source=DZI/heph/heph/0/0/1/1/heph00000001.dzi",
+      paste0(
+        "jbrj-public.s3-sa-east-1.amazonaws.com/fsi/server?type=image&source=DZI/heph/heph/0/0/2/2/heph00000002.dzi|",
+        "jbrj-public.s3-sa-east-1.amazonaws.com/fsi/server?type=image&source=DZI/heph/heph/0/0/2/2/heph00000002_1.dzi"
+      )
+    ),
     stringsAsFactors = FALSE
   )
 

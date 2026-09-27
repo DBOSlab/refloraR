@@ -138,4 +138,9 @@ test_that("reflora_parse() parses mocked DwC-A folders into a named, standardize
   expect_equal(nrow(occ), 2)
   expect_true(all(c("family", "genus", "species", "taxonName") %in% names(occ)))
   expect_equal(occ$family, c("Fabaceae", "Fabaceae"))
+
+  # associatedMedia (present in the fixture, unlike an all-NA column) must
+  # survive .clean_media_urls_vectorized() as valid, scheme-prefixed URLs
+  expect_true(all(grepl("^https://", occ$associatedMedia)))
+  expect_equal(lengths(strsplit(occ$associatedMedia, "\\|")), c(1L, 2L))
 })

@@ -418,6 +418,31 @@ test_that(".std_inside_columns() downgrads taxon rank SUBFAMILY to GENUS when ge
 })
 
 
+# .clean_media_urls_vectorized() ------------------------------------------
+
+test_that(".clean_media_urls_vectorized() adds a scheme and preserves multi-URL cells", {
+  x <- c(
+    "jbrj-public.s3-sa-east-1.amazonaws.com/fsi/server?type=image&source=DZI/heph/heph/0/0/1/1/heph00000001.dzi",
+    paste0(
+      "jbrj-public.s3-sa-east-1.amazonaws.com/fsi/server?type=image&source=DZI/heph/heph/0/0/2/2/heph00000002.dzi|",
+      "jbrj-public.s3-sa-east-1.amazonaws.com/fsi/server?type=image&source=DZI/heph/heph/0/0/2/2/heph00000002_1.dzi"
+    ),
+    "https://already-has-scheme.example.com/x.dzi",
+    NA_character_,
+    ""
+  )
+
+  result <- .clean_media_urls_vectorized(x)
+
+  expect_true(all(grepl("^https://", result[!is.na(result)])))
+  expect_equal(lengths(strsplit(result[1:3], "\\|")), c(1L, 2L, 1L))
+  expect_true(is.na(result[4]))
+  expect_true(is.na(result[5]))
+  # a URL that already has a scheme is not double-prefixed
+  expect_equal(result[3], "https://already-has-scheme.example.com/x.dzi")
+})
+
+
 # .read_ipt_dcat() --------------------------------------------------------
 
 test_that(".read_ipt_dcat() returns the catalog lines on success", {
