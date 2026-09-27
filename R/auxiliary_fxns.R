@@ -1,6 +1,173 @@
 # Auxiliary functions to support main functions
 # Author: Domingos Cardoso
 
+# Registers a namespace binding for the base::readLines() call used below, so
+# testthat::local_mocked_bindings() can mock it in tests without live network
+# access. R's call-position lookup skips non-function bindings, so this NULL
+# placeholder never shadows the real base::readLines() at runtime.
+readLines <- NULL
+
+
+#_______________________________________________________________________________
+# Function to get raw metadata from Reflora repository ####
+
+.read_ipt_dcat <- function(url) {
+
+  tryCatch(
+    readLines(
+      url,
+      encoding = "UTF-8",
+      warn = FALSE
+    ),
+    warning = function(w) {
+      stop(
+        paste0(
+          "Unable to access the Reflora IPT service at:\n",
+          url,
+          "\n\n",
+          "The server may be temporarily unavailable or returning an HTTP error.\n",
+          "Please try again later."
+        ),
+        call. = FALSE
+      )
+    },
+    error = function(e) {
+      stop(
+        paste0(
+          "Unable to access the Reflora IPT service at:\n",
+          url,
+          "\n\n",
+          "The server may be temporarily unavailable or returning an HTTP error.\n",
+          "Please try again later."
+        ),
+        call. = FALSE
+      )
+    }
+  )
+}
+
+
+#_______________________________________________________________________________
+# Function to get a herbarium's IPT resource page ####
+
+.read_ipt_resource_page <- function(url) {
+
+  # The version, publish date and record count needed by .get_herb_info()
+  # sit within the first few hundred lines of the resource page (inside the
+  # "latestVersion" table row). The rest of the page is a full historical
+  # version table that can run past 100 KB and is never used, so read a
+  # bounded number of lines first and only fall back to a full read if that
+  # turns out not to be enough (e.g. an unusually long bilingual description
+  # pushes the table further down the page).
+  page <- readLines(url, n = 900, encoding = "UTF-8", warn = FALSE)
+
+  if (!any(grepl("latestVersion", page))) {
+    page <- readLines(url, encoding = "UTF-8", warn = FALSE)
+  }
+
+  page
+}
+
+
+.get_ipt_info <- function(herbarium) {
+
+  url <- "https://ipt.jbrj.gov.br/reflora/dcat"
+
+  ipt_metadata <- .read_ipt_dcat(url)
+
+  pos = which(grepl("dcat[:]downloadURL\\s", ipt_metadata))
+  URLs <- gsub(".*\\s[<]|[>]\\s;$", "", ipt_metadata[pos])
+  herb_URLs <- gsub(".*r[=]|[>]\\s;$", "", URLs)
+  herb_code <- toupper(gsub("_.*", "", herb_URLs))
+
+  ini = which(grepl("a dcat:Dataset ;", ipt_metadata))
+  end = which(grepl("dcat:mediaType \"application/zip\" ;", ipt_metadata))
+  temp <- list()
+  for (i in seq_along(ini)) {
+    temp[[i]] = paste0(ipt_metadata[ini[i]:end[i]], collapse = " | ")
+  }
+  ipt_metadata = temp
+
+  ipt_metadata <- lapply(ipt_metadata, function(x) strsplit(x, "\\s[|]\\s")[[1]])
+
+  herb_code <- gsub("NYH", "NY", herb_code)
+
+  if (!is.null(herbarium)) {
+    ipt_metadata <- ipt_metadata[herb_code %in% herbarium]
+    herb_URLs <- herb_URLs[herb_code %in% herbarium]
+    herb_code <- herb_code[herb_code %in% herbarium]
+  }
+  return(list(ipt_metadata, herb_URLs, herb_code))
+}
+
+
+#_______________________________________________________________________________
+# Function to get summary information of each Reflora-associated collection ####
+
+.get_herb_info <- function(herb_URLs, ipt_metadata, i) {
+
+  herb_url <- paste0("https://ipt.jbrj.gov.br/reflora/resource?r=", herb_URLs[i])
+
+  version <- .read_ipt_resource_page(herb_url)
+
+  ini = which(grepl("latestVersion", version))[1]
+  end = which(grepl("\\d{4}-\\d{2}-\\d{2}", version))[1]+1
+
+  version = version[ini:end]
+
+  version <- gsub("(\\s){2,}|\\'|,$", "", version)
+  version <- gsub(".*[>]", "", version)
+
+  # Prefer the publish date already present in the single dcat catalog
+  # fetch (dct:modified) over the one scraped above, so the bounded read
+  # does not need to guarantee it reached the version table's date cell.
+  modified <- .extract_dcat_modified(ipt_metadata[[i]])
+  if (!is.na(modified) && nzchar(modified)) {
+    version[2] <- modified
+  }
+
+  contact <- ipt_metadata[[i]][which(grepl("dcat:contactPoint", ipt_metadata[[i]]))[1]]
+  # Regular expression for extracting the name
+  name_pattern <- 'vcard:fn "([^"]+)"'
+  name <- regmatches(contact, gregexpr(name_pattern, contact, perl = TRUE))[[1]]
+  name <- gsub('vcard:fn "|\"', "", name)  # Remove the 'vcard:fn "' part
+
+  # Regular expression for extracting the email
+  email_pattern <- '<mailto:([^>]+)>'
+  email <- regmatches(contact, gregexpr(email_pattern, contact, perl = TRUE))[[1]]
+  email <- gsub('<mailto:|>', "", email)  # Remove the '<mailto:' part
+
+  repatriated <- grepl("-\\sAmostras\\sBrasileiras", ipt_metadata[[i]][2])
+  rights_holder <- gsub("^dct:title\\s\"|\\s-\\sHerb\u00E1rio Virtual.*",
+                        "", ipt_metadata[[i]][2])
+  rights_holder <- gsub("-\\sAmostras\\sBrasileiras.*",
+                        "", rights_holder)
+  rights_holder <- gsub(".*\\s-\\s|^\\s|\\s$|.*(H|h)erbarium-\\s|.*Herb\u00E1rio\\s(da|do)\\s|[.]\\sHerb\u00E1rio\\sVirtual\\s.*",
+                        "", rights_holder)
+
+  return(list(version, name, email, rights_holder, herb_url, repatriated))
+}
+
+.extract_dcat_modified <- function(dataset_lines) {
+  line <- dataset_lines[grepl("dct:modified\\s", dataset_lines)][1]
+  if (is.na(line)) {
+    return(NA_character_)
+  }
+
+  modified <- regmatches(line, regexpr('"[^"]+"', line))
+  if (length(modified) == 0) {
+    return(NA_character_)
+  }
+  modified <- gsub('"', "", modified)
+
+  # e.g. "2026-09-15T01:08-03:00" -> "2026-09-15 01:08"
+  modified <- gsub("T", " ", modified)
+  modified <- gsub("[+-]\\d{2}:\\d{2}$", "", modified)
+
+  modified
+}
+
+
 #_______________________________________________________________________________
 # Function to reorder retrieved data based on specific columns ####
 
@@ -76,17 +243,43 @@
   }
 
   # Standardize and clean taxonRank column
+  # Accented Portuguese synonyms are built at *runtime* with intToUtf8(), not
+  # typed as \uXXXX escapes: under a non-UTF-8 session locale (e.g.
+  # LC_CTYPE=C, common in CI), package sourcing has been observed to parse
+  # \uXXXX escapes into the literal 8-character text "<U+00E9>" instead of
+  # the intended single accented character. intToUtf8() sidesteps that
+  # parse-time escape resolution entirely.
+  e_acute <- intToUtf8(0x00E9)       # \u00e9 -> e acute (e)
+  e_circumflex_up <- intToUtf8(0x00CA)  # \u00ca -> E circumflex (E)
+  e_circumflex <- intToUtf8(0x00EA)  # \u00ea -> e circumflex (e)
+  i_acute <- intToUtf8(0x00ED)       # \u00ed -> i acute (i)
+  i_acute_up <- intToUtf8(0x00CD)    # \u00cd -> I acute (I)
+  a_tilde <- intToUtf8(0x00E3)       # \u00e3 -> a tilde (a)
+  a_tilde_up <- intToUtf8(0x00C3)    # \u00c3 -> A tilde (A)
+
   taxonrank_form <- c("f.", "form", "Forma", "forma", "FORM", "FORMA")
   taxonrank_var <- c("var.", "VAR.", "Variedade", "variedade", "VARIEDADE", "VARIETY", "variety")
-  taxonrank_subsp <- c("subsp.", "ssp.", "subespecie", "Subespecie", "subesp\u00e9cie", "Subesp\u00e9cie", "SUBSP.", "SUBSP", "SUB_ESPECIE", "Infr.", "infr.", "infraspecific", "subspecies", "Subspecies", "SUBSPECIES")
-  taxonrank_species <- c("sp", "sp.", "especie", "ESPECIE", "Especie", "Esp\u00e9cie", "esp\u00e9cie", "ESP\u00caCIE", "species", "Species", "specie", "SPECIES", "SPECIE")
-  taxonrank_genus <- c("genero", "Genero", "GENERO", "G\u00eanero", "g\u00eanero", "G\u00caNERO", "gen.", "genus", "Genus", "GENUS")
+  taxonrank_subsp <- c("subsp.", "ssp.", "subespecie", "Subespecie",
+                       paste0("subesp", e_acute, "cie"), paste0("Subesp", e_acute, "cie"),
+                       "SUBSP.", "SUBSP", "SUB_ESPECIE", "Infr.", "infr.",
+                       "infraspecific", "subspecies", "Subspecies", "SUBSPECIES")
+  taxonrank_species <- c("sp", "sp.", "especie", "ESPECIE", "Especie",
+                         paste0("Esp", e_acute, "cie"), paste0("esp", e_acute, "cie"),
+                         paste0("ESP", e_circumflex_up, "CIE"),
+                         "species", "Species", "specie", "SPECIES", "SPECIE")
+  taxonrank_genus <- c("genero", "Genero", "GENERO",
+                       paste0("G", e_circumflex, "nero"), paste0("g", e_circumflex, "nero"),
+                       paste0("G", e_circumflex_up, "NERO"),
+                       "gen.", "genus", "Genus", "GENUS")
   taxonrank_tribe <- c("tribo", "TRIBO", "tribe", "Tribe", "TRIBE")
   taxonrank_subfam <- c("sub_familia", "SUB_FAMILIA", "subfamily", "Subfamily", "SUBFAMILY")
-  taxonrank_family <- c("fam.", "fam\u00edlia", "Fam\u00edlia", "FAM\u00cdLIA", "familia", "Familia", "FAMILIA", "family", "Family", "FAMILY")
+  taxonrank_family <- c("fam.", paste0("fam", i_acute, "lia"), paste0("Fam", i_acute, "lia"),
+                        paste0("FAM", i_acute_up, "LIA"),
+                        "familia", "Familia", "FAMILIA", "family", "Family", "FAMILY")
   taxonrank_order <- c("ordem", "Ordem", "ORDEM", "order", "Order", "ORDER")
   taxonrank_class <- c("classe", "CLASSE", "class", "Class", "CLASS")
-  taxonrank_division <- c("divisao", "DIVISAO", "divis\u00e3o", "DIVIS\u00c3O", "division", "Division", "DIVISION")
+  taxonrank_division <- c("divisao", "DIVISAO", paste0("divis", a_tilde, "o"),
+                          paste0("DIVIS", a_tilde_up, "O"), "division", "Division", "DIVISION")
   taxonrank_kingdom <- c("reino", "Reino", "REINO", "kingdom", "Kingdom", "KINGDOM")
 
   # Create unified taxon rank mapping
@@ -1198,61 +1391,4 @@
 
   write(c(log_line, stats_summary), file = file.path(dir, "log.txt"), append = TRUE)
 
-}
-
-
-#_______________________________________________________________________________
-# Auxiliary function to fix URL for downloading images ####
-.clean_media_urls_vectorized <- function(media_column) {
-  # Step 1: Split strings by "|" or " | "
-  split_urls <- strsplit(media_column, "\\s*\\|\\s*")
-  all_urls <- trimws(unlist(split_urls))
-
-  # Step 2: Fix AWS-hosted .dzi URLs
-  all_urls <- gsub(
-    "jbrj-public\\.s3(?:-sa-east-1)?\\.amazonaws\\.com/fsi/server\\?type=image&source=DZI/([^/]+)/(.+)\\.dzi",
-    "https://jbrj-public-img.s3.amazonaws.com/JPG/\\1/\\1/\\2.jpg",
-    all_urls,
-    ignore.case = TRUE
-  )
-
-  # Step 3: Handle imagens3/imagens4.jbrj.gov.br
-  img_pattern <- "imagens[34]\\.jbrj\\.gov\\.br/fsi/server\\?type=image&source=([^/]+)/.*?/?(.*?)/([A-Z0-9_\\-]+\\.(?:jpg|JPG))"
-
-  is_match <- grepl(img_pattern, all_urls, perl = TRUE)
-
-  if (any(is_match)) {
-    matched <- all_urls[is_match]
-    cleaned <- vapply(matched, function(m) {
-      parts <- regmatches(m, regexec(img_pattern, m, perl = TRUE))[[1]]
-      if (length(parts) == 4) {
-        herb <- tolower(parts[2])
-        path <- gsub("(^|/)(output[_ ]?\\d{0,8}/?)", "", parts[3], perl = TRUE, ignore.case = TRUE)
-        path <- gsub("^0/", "", path)  # remove any starting "0/" segment
-        file <- tolower(parts[4])
-        paste0("https://jbrj-public-img.s3.amazonaws.com/JPG/", herb, "/", herb, "/", path, "/", file)
-      } else {
-        m
-      }
-    }, character(1))
-    all_urls[is_match] <- cleaned
-  }
-
-  # Step 4: Remove triple herbarium (e.g., /alcb/alcb/alcb → /alcb/alcb)
-  all_urls <- gsub(
-    "(?<=/)([a-z]{2,})/\\1/\\1(?=/)",
-    "\\1/\\1",
-    all_urls,
-    perl = TRUE
-  )
-
-  # Step 5: Fix accidental multiple slashes
-  all_urls <- gsub("(?<!:)//+", "/", all_urls, perl = TRUE)
-
-  # Step 6: Recombine using " | "
-  lengths_vec <- lengths(split_urls)
-  split_back <- split(all_urls, rep(seq_along(lengths_vec), lengths_vec))
-  pasted <- vapply(split_back, function(x) paste(x, collapse = " | "), character(1))
-
-  return(pasted)
 }

@@ -15,14 +15,6 @@ importFrom(dplyr,
   select
 )
 importFrom(finch,dwca_read)
-importFrom(httr2,
-  req_perform,
-  req_timeout,
-  req_url_query,
-  req_user_agent,
-  request,
-  resp_body_json
-)
 importFrom(magrittr,"%>%")
 importFrom(stats,setNames)
 importFrom(stringi,
@@ -38,7 +30,6 @@ importFrom(stringr,
 importFrom(tidyr,replace_na)
 importFrom(tidyselect,all_of)
 importFrom(utils,
-  URLdecode,
   capture.output,
   download.file,
   read.csv,

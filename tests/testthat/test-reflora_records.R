@@ -370,3 +370,75 @@ test_that("reflora_records triggers dwca update message with path and updates = 
 #   )
 #   expect_s3_class(result, "data.frame")
 # })
+
+
+# The tests below mock reflora_download()/reflora_parse() so reflora_records()'s
+# own orchestration logic (filtering, reordering, NA-column removal, CSV/log
+# saving) is covered without any network access or real DwC-A files.
+
+test_that("reflora_records() filters, reorders and saves results from mocked dwca data", {
+  testthat::local_mocked_bindings(
+    reflora_download = function(...) invisible(NULL),
+    reflora_parse = function(...) .fake_dwca_files(),
+    .package = "refloraR"
+  )
+
+  tmp_dir <- file.path(tempdir(), "reflora_records_mock")
+  on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
+
+  df <- reflora_records(taxon = "Fabaceae",
+                        verbose = FALSE,
+                        save = TRUE,
+                        dir = tmp_dir,
+                        filename = "mock_search")
+
+  expect_s3_class(df, "data.frame")
+  expect_equal(nrow(df), 2)
+  expect_true(all(df$family == "Fabaceae"))
+  expect_true(file.exists(file.path(tmp_dir, "mock_search.csv")))
+  expect_true(file.exists(file.path(tmp_dir, "log.txt")))
+})
+
+test_that("reflora_records() drops indeterminate specimens when indets = FALSE", {
+  testthat::local_mocked_bindings(
+    reflora_download = function(...) invisible(NULL),
+    reflora_parse = function(...) .fake_dwca_files(),
+    .package = "refloraR"
+  )
+
+  df <- reflora_records(indets = FALSE, verbose = FALSE, save = FALSE)
+  expect_equal(nrow(df), 1)
+  expect_equal(df$taxonRank, "SPECIES")
+})
+
+test_that("reflora_records() validates herbarium, state and recordYear, reusing a given path", {
+  testthat::local_mocked_bindings(
+    reflora_download = function(...) stop("network should not be reached"),
+    reflora_parse = function(...) .fake_dwca_files(),
+    .arg_check_herbarium = function(x, verbose) invisible(TRUE),
+    .package = "refloraR"
+  )
+
+  df <- reflora_records(herbarium = "HEPH",
+                        state = "Bahia",
+                        recordYear = c("2020", "2021"),
+                        path = tempdir(),
+                        updates = FALSE,
+                        verbose = TRUE,
+                        save = FALSE)
+
+  expect_s3_class(df, "data.frame")
+  expect_equal(nrow(df), 2)
+})
+
+test_that("reflora_records() reuses a previously downloaded path without updating when updates = FALSE", {
+  testthat::local_mocked_bindings(
+    reflora_download = function(...) stop("network should not be reached"),
+    reflora_parse = function(...) .fake_dwca_files(),
+    .package = "refloraR"
+  )
+
+  df <- reflora_records(path = tempdir(), updates = FALSE, verbose = FALSE, save = FALSE)
+  expect_s3_class(df, "data.frame")
+  expect_equal(nrow(df), 2)
+})

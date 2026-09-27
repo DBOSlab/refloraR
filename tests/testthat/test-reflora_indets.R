@@ -246,3 +246,74 @@ test_that("reflora_indets saves CSV and log", {
 #   expect_true(all(!repatriated_codes %in% found))
 # })
 
+
+# The tests below mock reflora_download()/reflora_parse() so reflora_indets()'s
+# own orchestration logic (level filtering, reordering, saving) is covered
+# without any network access or real DwC-A files.
+
+test_that("reflora_indets() keeps only higher-rank indeterminate taxa by default", {
+  testthat::local_mocked_bindings(
+    reflora_download = function(...) invisible(NULL),
+    reflora_parse = function(...) .fake_dwca_files(),
+    .package = "refloraR"
+  )
+
+  df <- reflora_indets(verbose = FALSE, save = FALSE)
+  expect_s3_class(df, "data.frame")
+  expect_equal(nrow(df), 1)
+  expect_equal(df$taxonRank, "FAMILY")
+})
+
+test_that("reflora_indets() filters by level = 'GENUS', state and recordYear, reusing a given path", {
+  testthat::local_mocked_bindings(
+    reflora_download = function(...) stop("network should not be reached"),
+    reflora_parse = function(...) .fake_dwca_files(),
+    .arg_check_herbarium = function(x, verbose) invisible(TRUE),
+    .package = "refloraR"
+  )
+
+  fake <- .fake_dwca_files()
+  fake$HEPH$data$`occurrence.txt`$taxonRank <- c("GENUS", "FAMILY")
+  testthat::local_mocked_bindings(
+    reflora_parse = function(...) fake,
+    .package = "refloraR"
+  )
+
+  df <- reflora_indets(level = "GENUS",
+                       herbarium = "HEPH",
+                       state = "Bahia",
+                       recordYear = c("2020", "2021"),
+                       path = tempdir(),
+                       updates = FALSE,
+                       verbose = TRUE,
+                       save = FALSE)
+
+  expect_equal(nrow(df), 1)
+  expect_equal(df$taxonRank, "GENUS")
+})
+
+test_that("reflora_indets() validates the level argument", {
+  expect_error(reflora_indets(level = "SPECIES", verbose = FALSE, save = FALSE),
+               "invalid")
+})
+
+test_that("reflora_indets() filters by level = 'FAMILY' and saves results", {
+  testthat::local_mocked_bindings(
+    reflora_download = function(...) invisible(NULL),
+    reflora_parse = function(...) .fake_dwca_files(),
+    .package = "refloraR"
+  )
+
+  tmp_dir <- file.path(tempdir(), "reflora_indets_mock")
+  on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
+
+  df <- reflora_indets(level = "FAMILY",
+                       verbose = FALSE,
+                       save = TRUE,
+                       dir = tmp_dir,
+                       filename = "mock_indets")
+
+  expect_equal(nrow(df), 1)
+  expect_true(file.exists(file.path(tmp_dir, "mock_indets.csv")))
+})
+

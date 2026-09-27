@@ -75,26 +75,30 @@ reflora_download <- function(herbarium = NULL,
     dir.create(dir)
   }
 
-  # Get raw metadata from Reflora repository
-  reflora_summary_ipt <- reflora_summary(herbarium,
-                                         records = "none",
-                                         verbose = FALSE,
-                                         save = FALSE)
-
-  herb_URLs = reflora_summary_ipt$resourceKey
-  herb_code = reflora_summary_ipt$collectionCode
+  # Get raw metadata from IPT Reflora
+  ipt_info <- .get_ipt_info(herbarium)
+  ipt_metadata = ipt_info[[1]]
+  herb_URLs = ipt_info[[2]]
+  herb_code = ipt_info[[3]]
 
   for (i in seq_along(herb_URLs)) {
 
+    herb_info <- .get_herb_info(herb_URLs, ipt_metadata, i)
+
+    n <- as.numeric(gsub(",", "", herb_info[[1]][3]))
+    if (n == 0) {
+      next
+    }
+
     summary_df <- data.frame(collectionCode = herb_code[i],
-                             rightsHolder = reflora_summary_ipt$rightsHolder[i],
-                             Repatriated = reflora_summary_ipt$Repatriated[i],
-                             contactPoint = reflora_summary_ipt$contactPoint[i],
-                             hasEmail = reflora_summary_ipt$hasEmail[i],
-                             Version = reflora_summary_ipt$Version[i],
-                             Published.on = reflora_summary_ipt$Published.on[i],
-                             Records = NA,
-                             Reflora_URL = reflora_summary_ipt$Reflora_URL[i])
+                             rightsHolder = herb_info[[4]][1],
+                             Repatriated = herb_info[[6]][1],
+                             contactPoint = herb_info[[2]][1],
+                             hasEmail = herb_info[[3]][1],
+                             Version = herb_info[[1]][1],
+                             Published.on = herb_info[[1]][2],
+                             Records = n,
+                             Reflora_URL = herb_info[[5]])
 
     # Do not download repatriated collections if repatriated = FALSE
     if (!repatriated && isTRUE(summary_df$Repatriated)) {

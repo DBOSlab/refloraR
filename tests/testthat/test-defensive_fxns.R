@@ -74,3 +74,47 @@ test_that(".arg_check_state handles case-insensitive acronyms", {
   expect_equal(result, c("Rio de Janeiro", "Minas Gerais", "São Paulo"))
 })
 
+
+test_that(".arg_check_herbarium accepts codes present in the IPT catalog", {
+  testthat::local_mocked_bindings(
+    .get_ipt_info = function(herbarium) list(list(), c("heph", "alcb_herbarium"), c("HEPH", "ALCB")),
+    .package = "refloraR"
+  )
+
+  expect_true(isTRUE(.arg_check_herbarium(c("HEPH", "ALCB"), verbose = FALSE)))
+})
+
+test_that(".arg_check_herbarium errors on codes not present in the IPT catalog", {
+  testthat::local_mocked_bindings(
+    .get_ipt_info = function(herbarium) list(list(), c("heph"), c("HEPH")),
+    .package = "refloraR"
+  )
+
+  expect_error(
+    .arg_check_herbarium(c("HEPH", "FAKE"), verbose = FALSE),
+    "not recognized by Reflora"
+  )
+})
+
+test_that(".arg_check_herbarium is a no-op for NULL/empty input and never hits the network", {
+  testthat::local_mocked_bindings(
+    .get_ipt_info = function(herbarium) stop("network should not be reached"),
+    .package = "refloraR"
+  )
+
+  expect_true(isTRUE(.arg_check_herbarium(NULL, verbose = FALSE)))
+  expect_true(isTRUE(.arg_check_herbarium(character(), verbose = FALSE)))
+})
+
+test_that(".arg_check_herbarium prints a checking message when verbose = TRUE", {
+  testthat::local_mocked_bindings(
+    .get_ipt_info = function(herbarium) list(list(), c("heph"), c("HEPH")),
+    .package = "refloraR"
+  )
+
+  expect_message(
+    .arg_check_herbarium("HEPH", verbose = TRUE),
+    "Checking whether the input herbarium code exists"
+  )
+})
+

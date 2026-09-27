@@ -417,3 +417,151 @@ test_that(".std_inside_columns() downgrads taxon rank SUBFAMILY to GENUS when ge
   expect_equal(df_clean$taxonRank[2], "SUBFAMILY")
 })
 
+
+# .read_ipt_dcat() --------------------------------------------------------
+
+test_that(".read_ipt_dcat() returns the catalog lines on success", {
+  testthat::local_mocked_bindings(
+    readLines = function(con, ...) c("line1", "line2"),
+    .package = "refloraR"
+  )
+
+  expect_equal(.read_ipt_dcat("https://ipt.jbrj.gov.br/reflora/dcat"), c("line1", "line2"))
+})
+
+test_that(".read_ipt_dcat() reports a friendly error when the IPT is unreachable", {
+  testthat::local_mocked_bindings(
+    readLines = function(con, ...) stop("connection refused"),
+    .package = "refloraR"
+  )
+
+  expect_error(
+    .read_ipt_dcat("https://ipt.jbrj.gov.br/reflora/dcat"),
+    "Unable to access the Reflora IPT service"
+  )
+})
+
+
+# .get_ipt_info() -------------------------------------------------------
+
+test_that(".get_ipt_info() parses collection codes, URLs and metadata from a single dcat fetch", {
+  testthat::local_mocked_bindings(
+    .read_ipt_dcat = function(url) .fake_dcat_lines(),
+    .package = "refloraR"
+  )
+
+  info <- .get_ipt_info(NULL)
+  ipt_metadata <- info[[1]]
+  herb_URLs <- info[[2]]
+  herb_code <- info[[3]]
+
+  expect_length(herb_URLs, 3)
+  expect_equal(herb_URLs, c("heph", "p_reflora", "nyh"))
+
+  # collection code is everything before the first underscore in the
+  # resource key, upper-cased; NYH is additionally corrected to NY
+  expect_equal(herb_code, c("HEPH", "P", "NY"))
+
+  expect_length(ipt_metadata, 3)
+  expect_true(any(grepl("dct:modified", ipt_metadata[[1]])))
+})
+
+test_that(".get_ipt_info() filters to the requested herbarium codes only", {
+  testthat::local_mocked_bindings(
+    .read_ipt_dcat = function(url) .fake_dcat_lines(),
+    .package = "refloraR"
+  )
+
+  info <- .get_ipt_info(c("HEPH", "NY"))
+  expect_equal(info[[3]], c("HEPH", "NY"))
+  expect_length(info[[1]], 2)
+})
+
+
+# .extract_dcat_modified() -----------------------------------------------
+
+test_that(".extract_dcat_modified() converts dct:modified to 'YYYY-MM-DD HH:MM'", {
+  lines <- c('dct:title "X" ;', 'dct:modified "2026-09-15T01:08-03:00" ;', 'dct:language <...> .')
+  expect_equal(.extract_dcat_modified(lines), "2026-09-15 01:08")
+})
+
+test_that(".extract_dcat_modified() returns NA when dct:modified is absent", {
+  lines <- c('dct:title "X" ;', 'dct:language <...> .')
+  expect_true(is.na(.extract_dcat_modified(lines)))
+})
+
+test_that(".extract_dcat_modified() returns NA when the value is unquoted/malformed", {
+  lines <- c('dct:modified 2026-09-15T01:08-03:00 ;')
+  expect_true(is.na(.extract_dcat_modified(lines)))
+})
+
+
+# .read_ipt_resource_page() ------------------------------------------------
+
+test_that(".read_ipt_resource_page() uses the bounded read when it already contains the version table", {
+  calls <- list()
+  testthat::local_mocked_bindings(
+    readLines = function(con, n = -1L, ...) {
+      calls[[length(calls) + 1]] <<- n
+      .fake_resource_page()
+    },
+    .package = "refloraR"
+  )
+
+  page <- .read_ipt_resource_page("https://ipt.jbrj.gov.br/reflora/resource?r=heph")
+
+  expect_length(calls, 1L)
+  expect_equal(calls[[1]], 900)
+  expect_true(any(grepl("latestVersion", page)))
+})
+
+test_that(".read_ipt_resource_page() falls back to a full read when the bounded read misses the version table", {
+  calls <- list()
+  testthat::local_mocked_bindings(
+    readLines = function(con, n = -1L, ...) {
+      calls[[length(calls) + 1]] <<- n
+      if (identical(n, 900)) {
+        # bounded read: version table pushed past the truncation point
+        return(rep("<!-- padding -->", 5))
+      }
+      # unbounded fallback read: version table is present
+      .fake_resource_page()
+    },
+    .package = "refloraR"
+  )
+
+  page <- .read_ipt_resource_page("https://ipt.jbrj.gov.br/reflora/resource?r=heph")
+
+  expect_length(calls, 2L)
+  expect_equal(calls[[1]], 900)
+  expect_equal(calls[[2]], -1L)
+  expect_true(any(grepl("latestVersion", page)))
+})
+
+
+# .get_herb_info() --------------------------------------------------------
+
+test_that(".get_herb_info() parses version, records, contact and repatriation status", {
+  testthat::local_mocked_bindings(
+    .read_ipt_resource_page = function(url) .fake_resource_page(),
+    .package = "refloraR"
+  )
+
+  ipt_info <- list(
+    list(.fake_dcat_lines()[6:15], .fake_dcat_lines()[25:34]),
+    c("heph", "p_reflora")
+  )
+  herb_info_heph <- .get_herb_info(ipt_info[[2]], ipt_info[[1]], 1)
+
+  expect_equal(herb_info_heph[[1]][1], "1.223")
+  # the dcat dct:modified date takes priority over the page-scraped one
+  expect_equal(herb_info_heph[[1]][2], "2026-09-15 01:08")
+  expect_equal(herb_info_heph[[1]][3], "28,697")
+  expect_equal(herb_info_heph[[2]], "Roberta Chacon")
+  expect_equal(herb_info_heph[[3]], "rgchacon@gmail.com")
+  expect_false(herb_info_heph[[6]])
+
+  herb_info_p <- .get_herb_info(ipt_info[[2]], ipt_info[[1]], 2)
+  expect_true(herb_info_p[[6]])
+})
+

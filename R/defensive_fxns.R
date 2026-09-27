@@ -91,15 +91,37 @@
 # Check the state input
 .arg_check_state <- function(x) {
 
-  valid_states <- c("Acre" = "AC", "Alagoas" = "AL", "Amap\u00e1" = "AP", "Amazonas" = "AM",
-                    "Bahia" = "BA", "Cear\u00e1" = "CE", "Distrito Federal" = "DF",
-                    "Esp\u00edrito Santo" = "ES", "Goi\u00e1s" = "GO", "Maranh\u00e3o" = "MA",
-                    "Mato Grosso" = "MT", "Mato Grosso do Sul" = "MS", "Minas Gerais" = "MG",
-                    "Par\u00e1" = "PA", "Para\u00edba" = "PB", "Paran\u00e1" = "PR", "Pernambuco" = "PE",
-                    "Piau\u00ed" = "PI", "Rio de Janeiro" = "RJ", "Rio Grande do Norte" = "RN",
-                    "Rio Grande do Sul" = "RS", "Rond\u00f4nia" = "RO", "Roraima" = "RR",
-                    "Santa Catarina" = "SC", "S\u00e3o Paulo" = "SP", "Sergipe" = "SE",
-                    "Tocantins" = "TO")
+  # Accented state names are built at *runtime* with intToUtf8(), not typed
+  # as \uXXXX escapes: under a non-UTF-8 session locale (e.g. LC_CTYPE=C,
+  # common in CI), package sourcing has been observed to parse \uXXXX
+  # escapes into the literal 8-character text "<U+00E3>" instead of the
+  # intended single accented character, which no amount of post-hoc
+  # Encoding<- can recover. intToUtf8() sidesteps that parse-time escape
+  # resolution entirely.
+  a_acute <- intToUtf8(0x00E1)  # \u00e1 -> a acute (a)
+  e_acute <- intToUtf8(0x00E9)  # \u00e9 -> e acute (e)
+  i_acute <- intToUtf8(0x00ED)  # \u00ed -> i acute (i)
+  a_tilde <- intToUtf8(0x00E3)  # \u00e3 -> a tilde (a)
+  o_circumflex <- intToUtf8(0x00F4)  # \u00f4 -> o circumflex (o)
+
+  valid_states <- stats::setNames(
+    c("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS",
+      "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC",
+      "SP", "SE", "TO"),
+    c("Acre", "Alagoas", paste0("Amap", a_acute), "Amazonas", "Bahia",
+      paste0("Cear", a_acute), "Distrito Federal",
+      paste0("Esp", i_acute, "rito Santo"), paste0("Goi", a_acute, "s"),
+      paste0("Maranh", a_tilde, "o"), "Mato Grosso", "Mato Grosso do Sul",
+      "Minas Gerais", paste0("Par", a_acute), paste0("Para", i_acute, "ba"),
+      paste0("Paran", a_acute), "Pernambuco", paste0("Piau", i_acute),
+      "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul",
+      paste0("Rond", o_circumflex, "nia"), "Roraima", "Santa Catarina",
+      paste0("S", a_tilde, "o Paulo"), "Sergipe", "Tocantins")
+  )
+
+  if (identical(Encoding(x), "unknown")) {
+    Encoding(x) <- "UTF-8"
+  }
 
   valid_states_full <- names(valid_states)
   valid_states_acronyms <- unname(valid_states)
@@ -136,14 +158,14 @@
     message("Checking whether the input herbarium code exists in the Reflora...")
   }
 
-  # Get valid herbarium acronyms from Reflora metadata
-  reflora_summary_ipt <- reflora_summary(herbarium = NULL,
-                                         records = "none",
-                                         verbose = FALSE,
-                                         save = FALSE)
+  # Only the dcat catalog (a single request) is needed to validate herbarium
+  # acronyms, so avoid the full reflora_summary(), which additionally scrapes
+  # every herbarium's individual resource page for version/record counts.
+  ipt_info <- .get_ipt_info(NULL)
+  valid_codes <- ipt_info[[3]]
 
   # Check if input acronyms are valid
-  invalid <- x[!x %in% reflora_summary_ipt$collectionCode]
+  invalid <- x[!x %in% valid_codes]
 
   if (length(invalid) > 0) {
     stop(

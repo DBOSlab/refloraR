@@ -24,6 +24,27 @@ retrieving and filtering occurrence records, and identifying
 indeterminate specimens, all via the [Reflora
 IPT](https://ipt.jbrj.gov.br/reflora/).
 
+## Workflow
+
+<img src="inst/figures/refloraR_workflow.png" alt="refloraR workflow diagram" width="100%" />
+
+Workflow for retrieving and processing data using the `refloraR`
+package. (1) It starts by querying available collections through the
+Reflora Integrated Publishing Toolkit (IPT) node hosted by the Global
+Biodiversity Information Facility (GBIF). (2) `reflora_summary()`
+inspects available collections and metadata. (3) Users can download
+Darwin Core Archive (DwC‐A) files for selected herbaria using
+`reflora_download()`; these files are parsed and standardized locally
+using `reflora_parse()`. (4) `reflora_records()` retrieves occurrence
+records based on taxonomic, geographic, and temporal criteria. (5)
+`reflora_indets()` extracts occurrence data for indeterminate specimens
+(e.g., identified only to family or genus level). (6) Final outputs can
+be used to support floristic, taxonomic, or biogeographic research or as
+an indicator of taxonomic gaps within and among collections. The package
+requires an internet connection only for initial queries and
+downloading/updating herbarium data. All other functions can operate
+offline if data have been previously downloaded.
+
 ## Installation
 
 You can install the development version of `refloraR` from
@@ -42,16 +63,12 @@ BiocManager::install("DBOSlab/jabotR", dependencies = TRUE)
 library(refloraR)
 ```
 
-  
-  
-
 ## Usage
 
 A general description of the main functions available in `refloraR` is
 provided below. These functions support a workflow from summarizing and
 downloading original Reflora collections to parsing specimen records,
-filtering occurrence data, and retrieving indeterminate specimens.  
-  
+filtering occurrence data, and retrieving indeterminate specimens.
 
 #### *1. `reflora_summary`: Summarizing Reflora collections*
 
@@ -59,7 +76,7 @@ The following code can be used to extract a summary of all
 Reflora-associated collections, including herbarium acronym, curator’s
 email contact, number of records and a direct link to the original
 Reflora Integrated Publishing Toolkit
-([IPT](https://ipt.jbrj.gov.br/reflora)).  
+([IPT](https://ipt.jbrj.gov.br/reflora)).
 
 ``` r
 library(refloraR)
@@ -70,9 +87,8 @@ summary_df <- reflora_summary(verbose = TRUE,
                               dir = "reflora_summary")
 ```
 
-  
 By specifying a vector of herbarium acronyms, the user can extract a
-summary for just the specific herbarium collection.  
+summary for just the specific herbarium collection.
 
 ``` r
 summary_some_df <- reflora_summary(herbarium = c("ALCB", "RB", "HUEFS", "US", "K"),
@@ -82,24 +98,20 @@ summary_some_df <- reflora_summary(herbarium = c("ALCB", "RB", "HUEFS", "US", "K
                                    dir = "reflora_summary")
 ```
 
-  
 The `records` argument controls whether GBIF is queried for indexed
 occurrence counts. Use `records = "gbif"` (the default) to populate the
 `Records` column, or `records = "none"` to skip those requests and get a
-faster, metadata-only summary (`Records` is returned as `NA`).  
+faster, metadata-only summary (`Records` is returned as `NA`).
 
 ``` r
 summary_fast_df <- reflora_summary(records = "none",
                                    save = FALSE)
 ```
 
-  
-  
-
 #### *2. `reflora_download`: Downloading Reflora specimen records*
 
 The following code can be used to download original specimen records in
-DwC-A format and associated metada for all Reflora collections.  
+DwC-A format and associated metada for all Reflora collections.
 
 ``` r
 library(refloraR)
@@ -108,9 +120,8 @@ reflora_download(verbose = TRUE,
                  dir = "reflora_download")
 ```
 
-  
 By specifying a vector of herbarium acronyms, the user can download
-specimens records for just the specific herbarium collection.  
+specimens records for just the specific herbarium collection.
 
 ``` r
 reflora_download(herbarium = c("ALCB", "HUEFS", "RB", "US", "K"),
@@ -118,10 +129,8 @@ reflora_download(herbarium = c("ALCB", "HUEFS", "RB", "US", "K"),
                  dir = "reflora_download")
 ```
 
-  
 The downloaded DwC-A folders can subsequently be parsed with
-`reflora_parse()` or reused by other `refloraR` functions.  
-  
+`reflora_parse()` or reused by other `refloraR` functions.
 
 #### *3. `reflora_parse`: Parsing downloaded DwC-A files*
 
@@ -129,18 +138,17 @@ The downloaded DwC-A folders can subsequently be parsed with
 their occurrence records and associated metadata into R objects. It is
 useful when DwC-A files have already been downloaded using
 `reflora_download()` and the user wants to inspect or manipulate the
-original data directly.  
+original data directly.
 
 The following code parses all DwC-A folders located in the
-`"reflora_download"` directory.  
+`"reflora_download"` directory.
 
 ``` r
 dwca <- reflora_parse(path = "reflora_download",
                       verbose = TRUE)
 ```
 
-  
-Specific herbarium collections can also be selected.  
+Specific herbarium collections can also be selected.
 
 ``` r
 dwca_some <- reflora_parse(path = "reflora_download",
@@ -148,20 +156,18 @@ dwca_some <- reflora_parse(path = "reflora_download",
                            verbose = TRUE)
 ```
 
-  
 The function returns a named list containing parsed DwC-A data and
-associated metadata for each collection.  
-  
+associated metadata for each collection.
 
 #### *4. `reflora_records`: Retrieving and filtering specimen records*
 
 `reflora_records()` retrieves occurrence records from Reflora and allows
 users to filter specimens by herbarium, taxon, Brazilian state and
 collection year. The function can automatically download and parse the
-required DwC-A files or reuse files that have already been downloaded.  
+required DwC-A files or reuse files that have already been downloaded.
 
 For example, Fabaceae records from selected Reflora collections can be
-retrieved with:  
+retrieved with:
 
 ``` r
 fabaceae_records <- reflora_records(herbarium = c("ALCB", "HUEFS", "K", "RB"),
@@ -170,8 +176,7 @@ fabaceae_records <- reflora_records(herbarium = c("ALCB", "HUEFS", "K", "RB"),
                                     save = FALSE)
 ```
 
-  
-Taxonomic, geographic, and temporal filters can be combined.  
+Taxonomic, geographic, and temporal filters can be combined.
 
 ``` r
 filtered_records <- reflora_records(herbarium = "RB",
@@ -182,9 +187,8 @@ filtered_records <- reflora_records(herbarium = "RB",
                                     save = FALSE)
 ```
 
-  
 Previously downloaded DwC-A files can be reused by defining `path` and
-setting `updates = FALSE`.  
+setting `updates = FALSE`.
 
 ``` r
 filtered_records <- reflora_records(herbarium = "RB",
@@ -195,10 +199,9 @@ filtered_records <- reflora_records(herbarium = "RB",
                                     save = FALSE)
 ```
 
-  
 By default, indeterminate specimens are retained. Setting
 `indets = FALSE` removes records that are not identified to species
-level.  
+level.
 
 ``` r
 species_records <- reflora_records(herbarium = "RB",
@@ -208,11 +211,9 @@ species_records <- reflora_records(herbarium = "RB",
                                    save = FALSE)
 ```
 
-  
 When `save = TRUE`, the retrieved records are saved as a CSV file and a
 `log.txt` file containing summary information is generated in the output
-directory.  
-  
+directory.
 
 #### *5. `reflora_indets`: Retrieving indeterminate specimens*
 
@@ -220,10 +221,10 @@ directory.
 that are not identified to species level. The function can be used to
 identify specimens determined only to higher taxonomic ranks,
 particularly family or genus, which can be useful for collection
-management and taxonomic curation.  
+management and taxonomic curation.
 
 For example, family-level indeterminate Fabaceae records can be
-retrieved with:  
+retrieved with:
 
 ``` r
 family_indets <- reflora_indets(level = "FAMILY",
@@ -233,8 +234,7 @@ family_indets <- reflora_indets(level = "FAMILY",
                                 save = FALSE)
 ```
 
-  
-Genus-level indeterminate records can be retrieved with:  
+Genus-level indeterminate records can be retrieved with:
 
 ``` r
 genus_indets <- reflora_indets(level = "GENUS",
@@ -244,8 +244,7 @@ genus_indets <- reflora_indets(level = "GENUS",
                                save = FALSE)
 ```
 
-  
-Geographic and temporal filters can also be applied.  
+Geographic and temporal filters can also be applied.
 
 ``` r
 filtered_indets <- reflora_indets(level = "FAMILY",
@@ -257,10 +256,8 @@ filtered_indets <- reflora_indets(level = "FAMILY",
                                   save = FALSE)
 ```
 
-  
 When `level = NULL`, all supported higher-rank indeterminate records are
-retained. Previously downloaded Reflora DwC-A files can also be
-reused.  
+retained. Previously downloaded Reflora DwC-A files can also be reused.
 
 ``` r
 family_indets <- reflora_indets(level = "FAMILY",
@@ -272,14 +269,10 @@ family_indets <- reflora_indets(level = "FAMILY",
                                 save = FALSE)
 ```
 
-  
-  
-
 ## Documentation
 
 Full function documentation and articles are available at the `refloraR`
-[website](https://dboslab.github.io/refloraR-website/).  
-  
+[website](https://dboslab.github.io/refloraR-website/).
 
 ## Citation
 

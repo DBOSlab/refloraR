@@ -7,7 +7,6 @@
 reflora_summary(herbarium = NULL,
                 verbose = TRUE,
                 save = TRUE,
-                records = c("gbif", "none"),
                 dir = "reflora_summary")
 }
 \arguments{
@@ -19,9 +18,6 @@ all Reflora-hosted herbaria.}
 summarizing specimen records will not be printed in the console in full.}
 
 \item{save}{Logical, if \code{TRUE}, the search results will be saved on disk.}
-
-\item{records}{Character. Use \code{"gbif"} to request indexed occurrence counts,
-or \code{"none"} to skip those requests and return \code{NA} in \code{Records}.}
 
 \item{dir}{Pathway to the computer's directory, where the table-formatted
 summary will be saved. The default is to create a directory named
@@ -71,16 +67,6 @@ accessible through a Brazilian public infrastructure (HVR/IPT), even when the
 physical specimens remain curated in the holding herbarium. The
 \code{reflora_summary()} output includes a repatriation status field to help
 users identify these digitally repatriated collections.
-
-The \code{Records} column reports the number of occurrences currently indexed by
-GBIF, which can differ temporarily from the number of rows in the newest IPT
-archive while GBIF is crawling or processing a newly published version.
-}
-\details{
-Discovery and metadata come from the GBIF Registry API. Reflora IPT URLs are
-returned as identifiers but are not opened by this function. A failure in an
-individual GBIF occurrence-count request therefore produces \code{NA} only for
-that dataset rather than aborting the entire summary.
 }
 \examples{
 \dontrun{
@@ -90,9 +76,6 @@ reflora_summary(
   herbarium = c("ALCB", "HUEFS"),
   save = FALSE
 )
-
-# Faster metadata-only summary
-reflora_summary(records = "none", save = FALSE)
 }
 
 }

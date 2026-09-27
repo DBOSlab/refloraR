@@ -133,3 +133,115 @@ test_that("reflora_download prints messages with verbose = TRUE", {
                                   verbose = TRUE))
   unlink(tmp_dir, recursive = TRUE)
 })
+
+
+# The tests below mock .get_ipt_info()/.get_herb_info() so reflora_download()'s
+# own orchestration logic (directory creation, per-collection row assembly,
+# zero-record skipping, repatriated-collection skipping, already-downloaded
+# detection) is covered without any network access or actual DwC-A downloads.
+
+test_that("reflora_download() skips collections with zero records", {
+  fake_info <- list(list(character(0)), c("zero_herb"), c("ZERO"))
+  fake_row <- list(c("1.0", "2020-01-01 00:00", "0"), "Nobody", NA_character_,
+                    "Nowhere", "https://ipt.jbrj.gov.br/reflora/resource?r=zero_herb", FALSE)
+
+  testthat::local_mocked_bindings(
+    .get_ipt_info = function(herbarium) fake_info,
+    .get_herb_info = function(herb_URLs, ipt_metadata, i) fake_row,
+    .package = "refloraR"
+  )
+
+  tmp_dir <- file.path(tempdir(), "reflora_download_mock_zero")
+  on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
+
+  reflora_download(verbose = FALSE, dir = tmp_dir)
+  expect_equal(list.files(tmp_dir), character(0))
+})
+
+test_that("reflora_download() does not re-download an already-present collection", {
+  fake_info <- list(list(character(0)), c("heph"), c("HEPH"))
+  fake_row <- list(c("1.223", "2026-09-15 01:08", "28,697"), "Roberta Chacon", "rgchacon@gmail.com",
+                    "Jardim Botânico de Brasília", "https://ipt.jbrj.gov.br/reflora/resource?r=heph", FALSE)
+
+  testthat::local_mocked_bindings(
+    .get_ipt_info = function(herbarium) fake_info,
+    .get_herb_info = function(herb_URLs, ipt_metadata, i) fake_row,
+    .package = "refloraR"
+  )
+  testthat::local_mocked_bindings(
+    download.file = function(...) stop("network should not be reached"),
+    unzip = function(...) stop("network should not be reached"),
+    .package = "utils"
+  )
+
+  tmp_dir <- file.path(tempdir(), "reflora_download_mock_cached")
+  on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
+  # Version "1.223" -> already-downloaded folder is "dwca_heph_v1_223"
+  cached_dir <- file.path(tmp_dir, "dwca_heph_v1_223")
+  dir.create(cached_dir, recursive = TRUE)
+  file.create(file.path(cached_dir, "occurrence.txt"))
+
+  expect_silent(reflora_download(verbose = FALSE, dir = tmp_dir))
+})
+
+test_that("reflora_download() downloads, extracts and saves a new collection", {
+  fake_info <- list(list(character(0)), c("heph"), c("HEPH"))
+  fake_row <- list(c("1.223", "2026-09-15 01:08", "28,697"), "Roberta Chacon", "rgchacon@gmail.com",
+                    "Jardim Botânico de Brasília", "https://ipt.jbrj.gov.br/reflora/resource?r=heph", FALSE)
+
+  testthat::local_mocked_bindings(
+    .get_ipt_info = function(herbarium) fake_info,
+    .get_herb_info = function(herb_URLs, ipt_metadata, i) fake_row,
+    .arg_check_herbarium = function(x, verbose) invisible(TRUE),
+    .package = "refloraR"
+  )
+  testthat::local_mocked_bindings(
+    download.file = function(url, destfile, ...) {
+      file.create(destfile)
+      invisible(0L)
+    },
+    unzip = function(zipfile, exdir, ...) {
+      dir.create(exdir, recursive = TRUE, showWarnings = FALSE)
+      file.create(file.path(exdir, "occurrence.txt"))
+      invisible(NULL)
+    },
+    .package = "utils"
+  )
+
+  tmp_dir <- file.path(tempdir(), "reflora_download_mock_full")
+  on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
+
+  expect_message(
+    reflora_download(herbarium = "HEPH", verbose = TRUE, dir = tmp_dir),
+    "HEPH collection sucessfully downloaded"
+  )
+
+  extracted <- list.files(tmp_dir, recursive = TRUE)
+  expect_true(any(grepl("occurrence\\.txt$", extracted)))
+  expect_true(any(grepl("HEPH_Reflora\\.csv$", extracted)))
+})
+
+test_that("reflora_download() skips repatriated collections when repatriated = FALSE", {
+  fake_info <- list(list(character(0)), c("k_reflora"), c("K"))
+  fake_row <- list(c("1.0", "2026-01-01 00:00", "1,000"), "Someone", "someone@example.com",
+                    "Royal Botanic Gardens, Kew", "https://ipt.jbrj.gov.br/reflora/resource?r=k_reflora", TRUE)
+
+  testthat::local_mocked_bindings(
+    .get_ipt_info = function(herbarium) fake_info,
+    .get_herb_info = function(herb_URLs, ipt_metadata, i) fake_row,
+    .package = "refloraR"
+  )
+  testthat::local_mocked_bindings(
+    download.file = function(...) stop("network should not be reached"),
+    unzip = function(...) stop("network should not be reached"),
+    .package = "utils"
+  )
+
+  tmp_dir <- file.path(tempdir(), "reflora_download_mock_repatriated")
+  on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
+
+  expect_message(
+    reflora_download(repatriated = FALSE, verbose = TRUE, dir = tmp_dir),
+    "Skipping repatriated collection: K"
+  )
+})
