@@ -54,9 +54,9 @@ You can install the development version of `refloraR` from
 if (!requireNamespace("BiocManager", quietly = TRUE)) 
 install.packages("BiocManager") 
 
-# Install the development version of jabotR from GitHub, 
+# Install the development version of refloraR from GitHub, 
 # together with its required dependencies 
-BiocManager::install("DBOSlab/jabotR", dependencies = TRUE)
+BiocManager::install("DBOSlab/refloraR", dependencies = TRUE)
 ```
 
 ``` r
