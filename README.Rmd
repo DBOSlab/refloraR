@@ -231,4 +231,4 @@ Full function documentation and articles are available at the `refloraR` [websit
 
 
 ## Citation
-Calderón del Cid, C.; Versiane, A.F.A.; Leitman, P.; Filardi, F.R.; Forzza, R.C. & Cardoso, D. 2026. _refloraR_: An R package for efficiently retrieving and analyzing plant specimen data from the Herbário Virtual Reflora. Applications in Plant Sciences. https://github.com/DBOSlab/refloraR
+Calderón del Cid, C.; Versiane, A.F.A.; Leitman, P.; Filardi, F.R.; Forzza, R.C. & Cardoso, D. 2026. _refloraR_: An R package for efficiently retrieving and analyzing plant specimen data from the Herbário Virtual Reflora. _Applications in Plant Sciences_ e70081. [https://doi.org/10.1002/aps3.70081](https://doi.org/10.1002/aps3.70081)
