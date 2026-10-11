@@ -206,11 +206,9 @@ test_that("reflora_download() downloads, extracts and saves a new collection", {
     unzip = function(zipfile, exdir) {
       dir.create(exdir, recursive = TRUE, showWarnings = FALSE)
       writeLines("occurrence", file.path(exdir, "occurrence.txt"))
-      writeLines("distribution", file.path(exdir, "distribution.txt"))
       invisible(character(0))
     },
-    .package = "utils",
-    .env = env
+    .package = "utils"
   )
 
   tmp_dir <- file.path(tempdir(), "reflora_download_mock_full")
@@ -250,3 +248,4 @@ test_that("reflora_download() skips repatriated collections when repatriated = F
     "Skipping repatriated collection: K"
   )
 })
+

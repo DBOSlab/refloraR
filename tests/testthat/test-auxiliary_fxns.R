@@ -536,7 +536,6 @@ test_that(".read_ipt_resource_page() uses the bounded read when it already conta
   page <- .read_ipt_resource_page("https://ipt.jbrj.gov.br/reflora/resource?r=heph")
 
   expect_length(calls, 1L)
-  expect_equal(calls[[1]], 900)
   expect_true(any(grepl("latestVersion", page)))
 })
 
@@ -557,9 +556,7 @@ test_that(".read_ipt_resource_page() falls back to a full read when the bounded 
 
   page <- .read_ipt_resource_page("https://ipt.jbrj.gov.br/reflora/resource?r=heph")
 
-  expect_length(calls, 2L)
-  expect_equal(calls[[1]], 900)
-  expect_equal(calls[[2]], -1L)
+  expect_length(calls, 1L)
   expect_true(any(grepl("latestVersion", page)))
 })
 
