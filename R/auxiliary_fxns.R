@@ -1,11 +1,18 @@
 # Auxiliary functions to support main functions
 # Author: Domingos Cardoso
 
+
 # Registers a namespace binding for the base::readLines() call used below, so
 # testthat::local_mocked_bindings() can mock it in tests without live network
 # access. R's call-position lookup skips non-function bindings, so this NULL
 # placeholder never shadows the real base::readLines() at runtime.
 readLines <- NULL
+
+#_______________________________________________________________________________
+# Shared HTTP headers for the JBRJ IPT metadata and archive requests.
+.ipt_http_headers <- function() {
+  c(`User-Agent` = "Mozilla/5.0 (compatible; floraR/1; Linux)")
+}
 
 
 #_______________________________________________________________________________
@@ -13,9 +20,15 @@ readLines <- NULL
 
 .read_ipt_dcat <- function(url) {
 
+  ipt_connection <- base::url(
+    url,
+    headers = .ipt_http_headers()
+  )
+  on.exit(close(ipt_connection), add = TRUE)
+
   tryCatch(
     readLines(
-      url,
+      ipt_connection,
       encoding = "UTF-8",
       warn = FALSE
     ),
@@ -59,15 +72,23 @@ readLines <- NULL
   # bounded number of lines first and only fall back to a full read if that
   # turns out not to be enough (e.g. an unusually long bilingual description
   # pushes the table further down the page).
-  page <- readLines(url, n = 900, encoding = "UTF-8", warn = FALSE)
+  ipt_connection <- base::url(
+    url,
+    headers = .ipt_http_headers()
+  )
+  on.exit(close(ipt_connection), add = TRUE)
+  page <- readLines(ipt_connection,
+                    encoding = "UTF-8",
+                    warn = FALSE)
 
   if (!any(grepl("latestVersion", page))) {
-    page <- readLines(url, encoding = "UTF-8", warn = FALSE)
+    page <- readLines(ipt_connection,
+                      encoding = "UTF-8",
+                      warn = FALSE)
   }
 
   page
 }
-
 
 .get_ipt_info <- function(herbarium) {
 

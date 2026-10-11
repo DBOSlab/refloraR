@@ -196,16 +196,21 @@ test_that("reflora_download() downloads, extracts and saves a new collection", {
     .package = "refloraR"
   )
   testthat::local_mocked_bindings(
-    download.file = function(url, destfile, ...) {
-      file.create(destfile)
+    download.file = function(url, destfile, method, headers) {
+      expect_identical(method, "libcurl")
+      expect_identical(headers,
+                       c(`User-Agent` = "Mozilla/5.0 (compatible; floraR/1; Linux)"))
+      writeLines("mock zip content", destfile)
       invisible(0L)
     },
-    unzip = function(zipfile, exdir, ...) {
+    unzip = function(zipfile, exdir) {
       dir.create(exdir, recursive = TRUE, showWarnings = FALSE)
-      file.create(file.path(exdir, "occurrence.txt"))
-      invisible(NULL)
+      writeLines("occurrence", file.path(exdir, "occurrence.txt"))
+      writeLines("distribution", file.path(exdir, "distribution.txt"))
+      invisible(character(0))
     },
-    .package = "utils"
+    .package = "utils",
+    .env = env
   )
 
   tmp_dir <- file.path(tempdir(), "reflora_download_mock_full")
