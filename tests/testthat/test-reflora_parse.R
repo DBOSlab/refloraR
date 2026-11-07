@@ -147,3 +147,59 @@ test_that("reflora_parse() parses mocked DwC-A folders into a named, standardize
   expect_true(all(grepl("^https://", occ$associatedMedia)))
   expect_equal(lengths(strsplit(occ$associatedMedia, "\\|")), c(1L, 2L))
 })
+
+
+test_that("reflora_parse() standardizes metadata and gives every herbarium the same columns", {
+  testthat::local_mocked_bindings(
+    dwca_read = function(input, ...) {
+      .fake_messy_dwca_object(basename(input),
+                              herbarium = if (grepl("herb_a", input)) "A" else "B")
+    },
+    .package = "finch"
+  )
+
+  tmp_dir <- file.path(tempdir(), "reflora_parse_std_mock")
+  on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
+  for (folder in c("dwca_herb_a_v1", "dwca_herb_b_v1")) {
+    dir.create(file.path(tmp_dir, folder), recursive = TRUE)
+    file.create(file.path(tmp_dir, folder, c("identification.txt", "occurrence.txt")))
+  }
+
+  parsed <- reflora_parse(path = tmp_dir, verbose = FALSE)
+  a <- parsed[["dwca_herb_a_v1"]][["data"]][["occurrence.txt"]]
+  b <- parsed[["dwca_herb_b_v1"]][["data"]][["occurrence.txt"]]
+
+  # same columns, in the same order, with the same classes ...
+  expect_identical(names(a), names(b))
+  expect_identical(vapply(a, function(x) class(x)[1], ""),
+                   vapply(b, function(x) class(x)[1], ""))
+  # ... so the herbaria can be row-bound directly
+  expect_no_error(all_occ <- dplyr::bind_rows(a, b))
+  expect_equal(nrow(all_occ), 4)
+  # columns a herbarium does not publish are NA, not missing
+  expect_true(all(is.na(b$typeStatus)))
+  expect_true(all(is.na(b$fieldNumber)))
+  expect_equal(a$fieldNumber, c("F1", "F2"))
+
+  # country: English names and ISO codes
+  expect_equal(a$country, c("Brazil", "Brazil"))
+  expect_equal(a$countryCode, c("BR", "BR"))
+  expect_equal(b$country, c("Germany", NA))
+  expect_equal(b$countryCode, c("DE", NA))
+
+  # Brazilian states: canonical names, only for Brazilian records
+  expect_equal(a$stateProvince,
+               c(paste0("Goi", intToUtf8(0x00E1), "s"), "Minas Gerais"))
+  expect_equal(b$stateProvince, c("Goias", "Minas Gerias"))
+
+  expect_equal(a$typeStatus, c("HOLOTYPE", "ISOTYPE"))
+  expect_equal(a$identificationQualifier, c("cf.", "aff."))
+  expect_equal(a$family[1], "Lamiaceae")
+
+  # impossible dates and coordinates are blanked
+  expect_equal(a$year, c(2020L, NA))
+  expect_equal(a$month, c(5L, NA))
+  expect_equal(a$day, c(5L, NA))
+  expect_equal(a$decimalLatitude, c(-12.9, NA))
+  expect_equal(a$decimalLongitude, c(-38.5, NA))
+})

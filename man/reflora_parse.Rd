@@ -50,6 +50,45 @@ Read Darwin Core Archive (DwC-A) files from any downloaded dwca
 folder at \href{https://ipt.jbrj.gov.br/reflora/}{Reflora Virtual Herbarium}
 hosted by the \href{https://www.gov.br/jbrj/pt-br}{Rio de Janeiro Botanical Garden}.
 }
+\details{
+Besides cleaning the taxonomic columns, \code{reflora_parse()} standardizes
+the metadata that each herbarium fills in differently, so that the records
+of different collections can be combined directly (e.g., with
+\code{dplyr::bind_rows()}):
+\itemize{
+\item \code{country} and \code{countryCode}: country names written in any
+of the languages found in the collections (e.g., "Brasil", "Bresil",
+"Alemanha", "E.U.A."), including common typos, are converted to English
+names (e.g., "Brazil", "Germany", "United States") and the missing ISO
+3166-1 alpha-2 country codes are filled in. A valid \code{countryCode}
+always takes precedence over the text. Placeholders (e.g., "?",
+"s.loc.", "Indeterminado") and text that is not a country become
+\code{NA}.
+\item \code{stateProvince}: for Brazilian records, state names are
+standardized to their official names (e.g., "Goias", "GO" and "Goyaz"
+become "Goiás"; "Minas Gerias" becomes "Minas Gerais"), including
+values corrupted by the source herbarium (accents exported as blanks or
+truncated names).
+\item \code{typeStatus}: English upper-case terms (e.g., "Holotipo" and
+"HOLOTYPUS" become "HOLOTYPE").
+\item \code{identificationQualifier}: "cf." and "aff.".
+\item \code{family}: the conserved alternative family names Labiatae,
+Umbelliferae, Compositae, Cruciferae, Gramineae, Leguminosae and Palmae
+are replaced by Lamiaceae, Apiaceae, Asteraceae, Brassicaceae, Poaceae,
+Fabaceae and Arecaceae.
+\item \code{year}, \code{month}, \code{day}, \code{decimalLatitude},
+\code{decimalLongitude}, \code{minimumElevationInMeters} and
+\code{maximumElevationInMeters}: impossible values (e.g., month 1774,
+latitude 123456) are converted to \code{NA}. Both coordinates are
+blanked when either one is impossible.
+\item All text columns have leading, trailing and repeated blanks
+(including non-breaking spaces) removed, and empty strings become
+\code{NA}.
+\item Every herbarium is returned with the same columns, in the same
+order and with the same classes. Columns that a herbarium does not publish
+are filled with \code{NA}.
+}
+}
 \examples{
 \dontrun{
 

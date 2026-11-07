@@ -14,7 +14,6 @@ importFrom(dplyr,
   recode,
   select
 )
-importFrom(finch,dwca_read)
 importFrom(magrittr,"%>%")
 importFrom(stats,setNames)
 importFrom(stringi,

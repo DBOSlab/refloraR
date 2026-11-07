@@ -180,6 +180,48 @@ skip_if_no_reflora <- function() {
   )
 }
 
+# A raw (pre-standardization) finch::dwca_read()-shaped object whose metadata
+# mimics the inconsistencies found across Reflora herbaria: country names in
+# several languages, Brazilian states with typos or accents stripped, type
+# status in Latin/Portuguese, conserved family names, impossible dates and
+# coordinates, and a different set/class of columns per herbarium. Built
+# without non-ASCII literals so it does not depend on the session locale.
+.fake_messy_dwca_object <- function(folder_name, herbarium = c("A", "B")) {
+  herbarium <- match.arg(herbarium)
+  obj <- .fake_raw_dwca_object(folder_name)
+  occ <- obj$data[["occurrence.txt"]]
+
+  occ$family <- c("Labiatae", "Fabaceae")
+  occ$year <- c("2020", "0")
+  occ$month <- c("5", "1774")
+  occ$day <- c("5", "40")
+  occ$decimalLatitude <- c(-12.9, 123456)
+  occ$decimalLongitude <- c(-38.5, 5)
+  occ$verbatimLatitude <- c("12.9S", NA)
+  occ$verbatimLongitude <- c("38.5W", NA)
+  occ$stateProvince <- c("Goias", "Minas Gerias")
+
+  if (herbarium == "A") {
+    occ$country <- c("Brasil", "Brasi")
+    occ$countryCode <- c(NA, NA)
+    occ$typeStatus <- c("Holotipo", "ISOTYPUS")
+    occ$identificationQualifier <- c("CF", "aff")
+    occ$fieldNumber <- c("F1", "F2")
+  } else {
+    # herbarium B: other language/typos, integer occurrenceID, and it does not
+    # publish typeStatus, identificationQualifier or fieldNumber at all
+    occ$country <- c("Alemanha", "?")
+    occ$countryCode <- c("DE", NA)
+    occ$occurrenceID <- 1:2
+    occ$typeStatus <- NULL
+    occ$identificationQualifier <- NULL
+    occ$fieldNumber <- NULL
+  }
+
+  obj$data[["occurrence.txt"]] <- occ
+  obj
+}
+
 .fake_resource_page <- function(version = "1.223",
                                 published = "2026-09-15 01:08:54",
                                 records = "28,697",
