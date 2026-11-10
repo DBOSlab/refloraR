@@ -196,8 +196,10 @@ test_that("reflora_download() downloads, extracts and saves a new collection", {
     .package = "refloraR"
   )
   testthat::local_mocked_bindings(
-    download.file = function(url, destfile, method, headers) {
+    download.file = function(url, destfile, method, mode, headers) {
       expect_identical(method, "libcurl")
+      # binary mode, so the zip is not corrupted on Windows
+      expect_identical(mode, "wb")
       expect_identical(headers,
                        c(`User-Agent` = "Mozilla/5.0 (compatible; floraR/1; Linux)"))
       writeLines("mock zip content", destfile)
