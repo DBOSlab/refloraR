@@ -395,6 +395,10 @@ test_that("reflora_records() filters, reorders and saves results from mocked dwc
   expect_s3_class(df, "data.frame")
   expect_equal(nrow(df), 2)
   expect_true(all(df$family == "Fabaceae"))
+  # the DwC-A 'id' stays the first column after filtering and reordering,
+  # in the returned data frame and in the saved CSV
+  expect_identical(names(df)[1], "id")
+  expect_identical(names(utils::read.csv(file.path(tmp_dir, "mock_search.csv")))[1], "id")
   expect_true(file.exists(file.path(tmp_dir, "mock_search.csv")))
   expect_true(file.exists(file.path(tmp_dir, "log.txt")))
 })

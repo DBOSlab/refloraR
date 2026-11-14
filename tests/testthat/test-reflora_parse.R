@@ -141,6 +141,7 @@ test_that("reflora_parse() parses mocked DwC-A folders into a named, standardize
   expect_equal(nrow(occ), 2)
   expect_true(all(c("family", "genus", "species", "taxonName") %in% names(occ)))
   expect_equal(occ$family, c("Fabaceae", "Fabaceae"))
+  expect_identical(names(occ)[1], "id")
 
   # associatedMedia (present in the fixture, unlike an all-NA column) must
   # survive .clean_media_urls_vectorized() as valid, scheme-prefixed URLs
@@ -171,6 +172,11 @@ test_that("reflora_parse() standardizes metadata and gives every herbarium the s
 
   # same columns, in the same order, with the same classes ...
   expect_identical(names(a), names(b))
+  # ... with the DwC-A core 'id' always first (character), NA if not published
+  expect_identical(names(a)[1], "id")
+  expect_type(a$id, "character")
+  expect_equal(a$id, c("4855584", "4855585"))
+  expect_true(all(is.na(b$id)))
   expect_identical(vapply(a, function(x) class(x)[1], ""),
                    vapply(b, function(x) class(x)[1], ""))
   # ... so the herbaria can be row-bound directly

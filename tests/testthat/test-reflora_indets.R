@@ -262,6 +262,7 @@ test_that("reflora_indets() keeps only higher-rank indeterminate taxa by default
   expect_s3_class(df, "data.frame")
   expect_equal(nrow(df), 1)
   expect_equal(df$taxonRank, "FAMILY")
+  expect_identical(names(df)[1], "id")
 })
 
 test_that("reflora_indets() filters by level = 'GENUS', state and recordYear, reusing a given path", {

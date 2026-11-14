@@ -8,6 +8,7 @@ Inspecting 40 Reflora herbaria (390,889 records) showed that the metadata suppli
 - `stateProvince` of Brazilian records with the official state names (e.g., `Goias`, `GO`, `Goyaz` and values corrupted at the source such as `Goi  s` all become `Goiás`), so filtering with `reflora_records(state = ...)` no longer misses spelling variants.
 - `typeStatus` in English upper case (e.g., `Holotipo` becomes `HOLOTYPE`) and `identificationQualifier` as `cf.`/`aff.`.
 - Conserved family names replaced by their `-aceae` equivalents (`Labiatae` → `Lamiaceae`, `Umbelliferae` → `Apiaceae`, `Compositae` → `Asteraceae`, `Cruciferae` → `Brassicaceae`, `Gramineae` → `Poaceae`, `Leguminosae` → `Fabaceae`, `Palmae` → `Arecaceae`).
+- The Darwin Core Archive core identifier `id` is now kept as the first column (as character) of every parsed herbarium, and therefore of the output of `reflora_records()` and `reflora_indets()`; it was previously dropped.
 - Impossible `year`, `month`, `day`, coordinate and elevation values set to `NA`; leading/trailing/repeated blanks (including non-breaking spaces) removed from all text columns.
 
 ## Bug fixes

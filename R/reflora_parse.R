@@ -83,6 +83,8 @@
 #'   \item Every herbarium is returned with the same columns, in the same
 #'   order and with the same classes. Columns that a herbarium does not publish
 #'   are filled with \code{NA}.
+#'   \item The \code{id} column, the core identifier of each record in the
+#'   Darwin Core Archive, is kept as the first column (as character).
 #' }
 #'
 #' @seealso \code{\link{reflora_download}}
@@ -162,8 +164,11 @@ reflora_parse <- function(path = NULL,
                                                     encoding = "UTF-8",
                                                     na.strings = ""))
 
-  # Order and clean specific columns within dwca_files
+  # Order and clean specific columns within dwca_files. 'id' is the Darwin Core
+  # Archive core identifier (the first column of every occurrence.txt) and is
+  # always kept as the first column.
   fields <- c(
+    "id",
     "occurrenceID",
     "institutionCode",
     "collectionCode",

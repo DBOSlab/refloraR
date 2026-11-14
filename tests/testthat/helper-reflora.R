@@ -87,6 +87,7 @@ skip_if_no_reflora <- function() {
 # tests without needing real Darwin Core Archive files or finch::dwca_read().
 .fake_dwca_files <- function() {
   occurrence <- data.frame(
+    id = c("4855584", "4855585"),
     occurrenceID = c("HEPH:1", "HEPH:2"),
     collectionCode = c("HEPH", "HEPH"),
     catalogNumber = c("1", "2"),
@@ -126,6 +127,7 @@ skip_if_no_reflora <- function() {
 # call to finch::dwca_read() without needing a real Darwin Core Archive.
 .fake_raw_dwca_object <- function(folder_name = "dwca_heph_v1") {
   occurrence <- data.frame(
+    id = c(4855584L, 4855585L),
     occurrenceID = c("HEPH:1", "HEPH:2"),
     catalogNumber = c("1", "2"),
     collectionCode = c("HEPH", "HEPH"),
@@ -209,10 +211,11 @@ skip_if_no_reflora <- function() {
     occ$fieldNumber <- c("F1", "F2")
   } else {
     # herbarium B: other language/typos, integer occurrenceID, and it does not
-    # publish typeStatus, identificationQualifier or fieldNumber at all
+    # publish id, typeStatus, identificationQualifier or fieldNumber at all
     occ$country <- c("Alemanha", "?")
     occ$countryCode <- c("DE", NA)
     occ$occurrenceID <- 1:2
+    occ$id <- NULL
     occ$typeStatus <- NULL
     occ$identificationQualifier <- NULL
     occ$fieldNumber <- NULL

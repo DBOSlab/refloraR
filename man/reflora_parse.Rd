@@ -87,6 +87,8 @@ blanked when either one is impossible.
 \item Every herbarium is returned with the same columns, in the same
 order and with the same classes. Columns that a herbarium does not publish
 are filled with \code{NA}.
+\item The \code{id} column, the core identifier of each record in the
+Darwin Core Archive, is kept as the first column (as character).
 }
 }
 \examples{
